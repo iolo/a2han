@@ -1,0 +1,176 @@
+Modules list:
+-------------
+hcat.o:
+    CODE              Offs=000000  Size=00000F  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000013  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(callmain.o):
+    CODE              Offs=00000F  Size=000017  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000004  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(condes.o):
+    CODE              Offs=000026  Size=00000C  Align=00001  Fill=0000
+    DATA              Offs=000004  Size=000025  Align=00001  Fill=0000
+    ONCE              Offs=000000  Size=00000C  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(cputc.o):
+    CODE              Offs=000032  Size=000043  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(cputs.o):
+    CODE              Offs=000075  Size=000023  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(crt0.o):
+    CODE              Offs=000098  Size=000012  Align=00001  Fill=0000
+    RODATA            Offs=000013  Size=000007  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000003  Align=00001  Fill=0000
+    STARTUP           Offs=000000  Size=000034  Align=00001  Fill=0000
+    ONCE              Offs=00000C  Size=00006A  Align=00001  Fill=0000
+    INIT              Offs=000000  Size=00001D  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(exehdr.o):
+    EXEHDR            Offs=000000  Size=00003A  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(gotoxy.o):
+    CODE              Offs=0000AA  Size=000011  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(popa.o):
+    CODE              Offs=0000BB  Size=00000C  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(pushax.o):
+    CODE              Offs=0000C7  Size=00001A  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(vtabz.o):
+    LOWCODE           Offs=000000  Size=00000A  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(zerobss.o):
+    CODE              Offs=0000E1  Size=000023  Align=00001  Fill=0000
+/usr/share/cc65/lib/apple2.lib(zeropage.o):
+    ZEROPAGE          Offs=000000  Size=00001A  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+ZEROPAGE              000080  000099  00001A  00001
+EXEHDR                0007C9  000802  00003A  00001
+STARTUP               000803  000836  000034  00001
+LOWCODE               000837  000840  00000A  00001
+CODE                  000841  000944  000104  00001
+RODATA                000945  00095E  00001A  00001
+DATA                  00095F  00098A  00002C  00001
+INIT                  00098B  0009A7  00001D  00001
+ONCE                  0009A8  000A1D  000076  00001
+
+
+Exports list by name:
+---------------------
+VTABZ                     000837 RLA    __BSS_RUN__               0009A8 RLA    
+__BSS_SIZE__              000000 REA    __CONSTRUCTOR_COUNT__     000000 REA    
+__CONSTRUCTOR_TABLE__     000A1E RLA    __DESTRUCTOR_COUNT__      000000 REA    
+__DESTRUCTOR_TABLE__      00095F RLA    __EXEHDR__                000001 REA    
+__FILETYPE__              000006 REA    __HIMEM__                 009600 REA    
+__LCADDR__                00D400 REA    __LCSIZE__                000C00 REA    
+__LC_LAST__               00D400 RLA    __LC_START__              00D400 RLA    
+__MAIN_LAST__             000A1E RLA    __MAIN_START__            000803 RLA    
+__ONCE_LOAD__             0009A8 RLA    __ONCE_RUN__              0009A8 RLA    
+__ONCE_SIZE__             000076 REA    __STACKSIZE__             000800 REA    
+__STARTUP__               000001 REA    _cputc                    000878 RLA    
+_cputs                    0008C0 RLA    _main                     000841 RLA    
+callmain                  000850 RLA    donelib                   000867 RLA    
+gotoxy                    0008EB RLA    initlib                   0009A8 RLA    
+popa                      0008FC RLA    ptr1                      000088 RLZ    
+pushax                    00090C RLA    sp                        000080 RLZ    
+tmp1                      000090 RLZ    zerobss                   000922 RLA    
+
+
+
+Exports list by value:
+----------------------
+__BSS_SIZE__              000000 REA    __CONSTRUCTOR_COUNT__     000000 REA    
+__DESTRUCTOR_COUNT__      000000 REA    __EXEHDR__                000001 REA    
+__STARTUP__               000001 REA    __FILETYPE__              000006 REA    
+__ONCE_SIZE__             000076 REA    sp                        000080 RLZ    
+ptr1                      000088 RLZ    tmp1                      000090 RLZ    
+__STACKSIZE__             000800 REA    __MAIN_START__            000803 RLA    
+VTABZ                     000837 RLA    _main                     000841 RLA    
+callmain                  000850 RLA    donelib                   000867 RLA    
+_cputc                    000878 RLA    _cputs                    0008C0 RLA    
+gotoxy                    0008EB RLA    popa                      0008FC RLA    
+pushax                    00090C RLA    zerobss                   000922 RLA    
+__DESTRUCTOR_TABLE__      00095F RLA    __BSS_RUN__               0009A8 RLA    
+__ONCE_LOAD__             0009A8 RLA    __ONCE_RUN__              0009A8 RLA    
+initlib                   0009A8 RLA    __CONSTRUCTOR_TABLE__     000A1E RLA    
+__MAIN_LAST__             000A1E RLA    __LCSIZE__                000C00 REA    
+__HIMEM__                 009600 REA    __LCADDR__                00D400 REA    
+__LC_LAST__               00D400 RLA    __LC_START__              00D400 RLA    
+
+
+
+Imports list:
+-------------
+VTABZ (vtabz.o):
+    cputc.o                   apple2/cputc.s(13)
+    gotoxy.o                  apple2/gotoxy.s(9)
+__BSS_RUN__ ([linker generated]):
+    zerobss.o                 common/zerobss.s(8)
+__BSS_SIZE__ ([linker generated]):
+    zerobss.o                 common/zerobss.s(8)
+__CONSTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s(18)
+__CONSTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s(18)
+__DESTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s(19)
+__DESTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s(19)
+__EXEHDR__ (exehdr.o):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(7)
+__FILETYPE__ ([linker generated]):
+    exehdr.o                  apple2/exehdr.s(9)
+__HIMEM__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(18)
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(17)
+__LCADDR__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(19)
+__LCSIZE__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(19)
+__LC_LAST__ ([linker generated]):
+    crt0.o                    apple2/crt0.s(13)
+__LC_START__ ([linker generated]):
+    crt0.o                    apple2/crt0.s(13)
+__MAIN_LAST__ ([linker generated]):
+    exehdr.o                  apple2/exehdr.s(10)
+__MAIN_START__ ([linker generated]):
+    exehdr.o                  apple2/exehdr.s(10)
+__ONCE_LOAD__ ([linker generated]):
+    crt0.o                    apple2/crt0.s(12)
+__ONCE_RUN__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(18)
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(18)
+__ONCE_SIZE__ ([linker generated]):
+    crt0.o                    apple2/crt0.s(12)
+__STACKSIZE__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2.cfg(18)
+__STARTUP__ (crt0.o):
+    hcat.o                    hcat.s(13)
+_cputc (cputc.o):
+    cputs.o                   conio/cputs.s(9)
+_cputs (cputs.o):
+    hcat.o                    hcat.s(14)
+_main (hcat.o):
+    callmain.o                runtime/callmain.s(11)
+callmain (callmain.o):
+    crt0.o                    apple2/crt0.s(11)
+donelib (condes.o):
+    crt0.o                    apple2/crt0.s(10)
+gotoxy (gotoxy.o):
+    cputc.o                   apple2/cputc.s(13)
+    cputs.o                   conio/cputs.s(9)
+initlib (condes.o):
+    crt0.o                    apple2/crt0.s(10)
+popa (popa.o):
+    gotoxy.o                  apple2/gotoxy.s(9)
+ptr1 (zeropage.o):
+    zerobss.o                 common/zerobss.s(9)
+    cputs.o                   conio/cputs.s(10)
+pushax (pushax.o):
+    callmain.o                runtime/callmain.s(11)
+sp (zeropage.o):
+    pushax.o                  runtime/pushax.s(8)
+    popa.o                    runtime/popa.s(8)
+    crt0.o                    /build/cc65-5FfAbq/cc65-2.19/asminc/zeropage.inc(11)
+tmp1 (zeropage.o):
+    cputs.o                   conio/cputs.s(10)
+zerobss (zerobss.o):
+    crt0.o                    apple2/crt0.s(11)
+
