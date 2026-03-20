@@ -75,7 +75,15 @@ build/          ; build output directory
 
 - The program is written in 6502 assembly language, and assembled using `ca65` from the `cc65` toolchain.
 - The program hooks keyboard input (KSW) and console output (CSW) to provide Hangul input and output.
-- Character sequences entered between `Ctrl-E` and `Ctrl-K` are treated as **N-byte Hangul** and transcoded into **modified Unicode** before reaching the text framebuffer.
+- Plain text is the default mode.
+- Public `nbytes` is a mixed-text encoding: plain text passes through unchanged, and bytes between `Ctrl-K` and `Ctrl-E` are treated as Hangul payloads.
+- The bytes inside a delimited `nbytes` span use the internal Hangul composition grammar and are transcoded into **modified Unicode** before reaching the text framebuffer.
+
+Design model:
+
+- On a modern machine, UTF-8 is decoded into Unicode before rendering.
+- In this project, `nbytes` is decoded/transcoded into `modified` before rendering.
+- The analogy is useful, but not exact: public `nbytes` is a mixed-text transport, and its delimited payload is closer to an input grammar over Hangul components than a strict byte serialization of `modified`.
 
 ### Runtime Model
 
@@ -100,7 +108,9 @@ e: ㄸ, o: ㅒ, p: ㅖ, q: ㅃ, r: ㄲ, t: ㅆ, w: ㅉ,
 
 ### Modified Unicode Encoding
 
-Standard UCS-2 conflicts with the [Apple II character set](https://en.wikipedia.org/wiki/Apple_II_character_set):
+Standard Hangul code points cannot be written directly into the
+[Apple II character set](https://en.wikipedia.org/wiki/Apple_II_character_set)
+space without conflicts:
 
 - ASCII characters `0x00-0x7F` are displayed as `0x80-0xFF` in the Apple II text framebuffer.
 - `0x00-0x4F` maps to `INVERSE` characters.
@@ -113,26 +123,26 @@ This project reuses the `FLASH` range for Hangul characters:
 
 ### Examples
 
-- `PRINT "ABC";CHR$(5);"RK";CHR$(11)` in Applesoft BASIC displays `ABC가`.
-  The corresponding text buffer bytes are `41 42 43 c1 c2 c3 4c 00`.
-- Typing `ABC<Ctrl-E>RK<Ctrl-K>` from the keyboard also displays `ABC가`.
-  The corresponding text framebuffer bytes are `c1 c2 c3 4c 00`.
+- `PRINT "ABC";CHR$(11);"GKS";CHR$(5)` in Applesoft BASIC displays `ABC한`.
+  The corresponding text buffer bytes are `41 42 43 c1 c2 c3 75 5c`.
+- Typing `ABC<Ctrl-K>GKS<Ctrl-E>` from the keyboard also displays `ABC한`.
+  The corresponding text framebuffer bytes are `c1 c2 c3 75 5c`.
 
 Interpretation:
 
-- `CHR$(5)` is `Ctrl-E`, the start delimiter for N-byte Hangul input.
-- `CHR$(11)` is `Ctrl-K`, the end delimiter.
-- `RK` is the N-byte input sequence for `가`.
-- `4c 00` is the `modified` code point written for that syllable.
+- `CHR$(11)` is `Ctrl-K`, the start delimiter for N-byte Hangul input.
+- `CHR$(5)` is `Ctrl-E`, the end delimiter.
+- `GKS` is the internal Hangul payload for `한`.
+- `75 5c` is the `modified` code point written for that syllable.
 
 ## Host Utilities
 
-### Convert Between `N-byte Hangul` and `Unicode`
+### Convert Between `UTF-8`, `Modified Unicode`, and `N-byte Hangul`
 
 ```
 python3 hconv.py <options>
-  -f, --from-code=<encoding>   `unicode`, `modified`, or `nbytes`
-  -t, --to-code=<encoding>     `unicode`, `modified`, or `nbytes`
+  -f, --from-code=<encoding>   `utf8`, `modified`, or `nbytes`
+  -t, --to-code=<encoding>     `utf8`, `modified`, or `nbytes`
   -i, --input <file>           input file; reads from stdin if omitted
   -o, --output <file>          output file; writes to stdout if omitted
   -h, --help                   show this help message and exit
@@ -141,7 +151,7 @@ python3 hconv.py <options>
 ## Notes for Humans and Agents
 
 - Treat the AppleII-VGA firmware mapping as part of the ABI. Do not change the remap ranges casually.
-- Distinguish clearly between three layers: `nbytes` input encoding, `modified` framebuffer encoding, and Unicode on the host side.
+- Distinguish clearly between three layers: public `nbytes` transport, internal Hangul payload grammar, and `modified` framebuffer encoding.
 - When documenting behavior, describe which path is being discussed: keyboard hook, console hook, file conversion, or firmware rendering.
 - The README describes encoding intent and externally visible behavior. Assembly source remains the authority for exact hook and memory semantics.
 

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "utf8_to_modified_ga",
+    "from": "utf8",
+    "to": "modified",
+    "input_text": "가",
+    "expected_hex": "4c00"
+  },
+  {
+    "id": "modified_to_utf8_ga",
+    "from": "modified",
+    "to": "utf8",
+    "input_hex": "4c00",
+    "expected_text": "가"
+  },
+  {
+    "id": "nbytes_to_utf8_ga",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRK\u0005",
+    "expected_text": "가"
+  },
+  {
+    "id": "utf8_to_nbytes_ga",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "가",
+    "expected_text": "\u000bRK\u0005"
+  },
+  {
+    "id": "nbytes_to_utf8_gak",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRKR\u0005",
+    "expected_text": "각"
+  },
+  {
+    "id": "utf8_to_nbytes_gwa",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "과",
+    "expected_text": "\u000bRHK\u0005"
+  },
+  {
+    "id": "nbytes_to_utf8_gwaen",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRHOS\u0005",
+    "expected_text": "괜"
+  },
+  {
+    "id": "nbytes_to_utf8_yae",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bDo\u0005",
+    "expected_text": "얘"
+  },
+  {
+    "id": "nbytes_to_utf8_gga",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000brK\u0005",
+    "expected_text": "까"
+  },
+  {
+    "id": "nbytes_to_utf8_ggagg",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000brKr\u0005",
+    "expected_text": "깎"
+  },
+  {
+    "id": "nbytes_to_utf8_yet",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bDpT\u0005",
+    "expected_text": "옛"
+  },
+  {
+    "id": "utf8_to_nbytes_han",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "한",
+    "expected_text": "\u000bGKS\u0005"
+  },
+  {
+    "id": "utf8_to_modified_han",
+    "from": "utf8",
+    "to": "modified",
+    "input_text": "한",
+    "expected_hex": "755c"
+  },
+  {
+    "id": "utf8_to_nbytes_jamo_wa",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "ㅘ",
+    "expected_text": "\u000bHK\u0005"
+  },
+  {
+    "id": "utf8_to_nbytes_jamo_giyeok_sios",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "ㄳ",
+    "expected_text": "\u000bRT\u0005"
+  },
+  {
+    "id": "punctuation_passthrough_nbytes_to_utf8",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRK\u0005!",
+    "expected_text": "가!"
+  },
+  {
+    "id": "punctuation_passthrough_utf8_to_nbytes",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "가!",
+    "expected_text": "\u000bRK\u0005!"
+  },
+  {
+    "id": "mixed_ascii_hangul_utf8_to_nbytes",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "ABC",
+    "expected_text": "ABC"
+  },
+  {
+    "id": "mixed_ascii_hangul_utf8_to_nbytes_with_span",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "A가B",
+    "expected_text": "A\u000bRK\u0005B"
+  },
+  {
+    "id": "mixed_ascii_multi_hangul_utf8_to_nbytes",
+    "from": "utf8",
+    "to": "nbytes",
+    "input_text": "ABC한국123",
+    "expected_text": "ABC\u000bGKS\u0005\u000bRNR\u0005123"
+  },
+  {
+    "id": "mixed_ascii_multi_hangul_nbytes_to_utf8",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "ABC\u000bGKS\u0005\u000bRNR\u0005123",
+    "expected_text": "ABC한국123"
+  },
+  {
+    "id": "empty_nbytes_span",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "A\u000b\u0005B",
+    "expected_text": "AB"
+  },
+  {
+    "id": "stray_ctrl_e_passthrough",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "A\u0005B",
+    "expected_text": "A\u0005B"
+  },
+  {
+    "id": "error_invalid_nbytes_symbol",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b@\u0005",
+    "expect_error": "invalid_nbytes_byte"
+  },
+  {
+    "id": "error_nested_ctrl_k_in_span",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bR\u000bK\u0005",
+    "expect_error": "invalid_nbytes_byte"
+  },
+  {
+    "id": "error_unterminated_nbytes_span",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRK",
+    "expect_error": "unterminated_nbytes_span"
+  },
+  {
+    "id": "error_invalid_modified_range",
+    "from": "modified",
+    "to": "utf8",
+    "input_hex": "1234",
+    "expect_error": "invalid_modified_codepoint"
+  },
+  {
+    "id": "error_odd_modified_length",
+    "from": "modified",
+    "to": "utf8",
+    "input_hex": "4c",
+    "expect_error": "invalid_modified_length"
+  }
+]
