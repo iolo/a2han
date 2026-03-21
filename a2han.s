@@ -122,11 +122,23 @@ output_overflow_store:
         jmp     output_return
 
 output_start_span:
+        lda     output_state
+        bne     output_store_literal
         lda     #STATE_ACTIVE
         sta     output_state
         lda     #$00
         sta     output_length
         sta     output_overflow
+        jmp     output_return
+
+output_store_literal:
+        ldx     output_length
+        cpx     #NBYTES_MAX
+        bcs     output_overflow_store
+        lda     output_char
+        sta     output_buffer,x
+        inx
+        stx     output_length
         jmp     output_return
 
 output_end_or_pass:
@@ -222,6 +234,8 @@ flush_input_span:
         rts
 
 flush_output_span:
+        lda     output_overflow
+        bne     flush_output_raw
         lda     #<output_buffer
         sta     <parse_ptr
         lda     #>output_buffer
@@ -231,6 +245,29 @@ flush_output_span:
         lda     #PARSE_MODE_FALLBACK
         sta     parse_mode
         jsr     parse_and_emit_span
+        lda     #STATE_IDLE
+        sta     output_state
+        lda     #$00
+        sta     output_length
+        sta     output_overflow
+        rts
+
+flush_output_raw:
+        lda     #CTRL_K
+        jsr     call_saved_output
+        ldx     #$00
+
+flush_output_raw_loop:
+        cpx     output_length
+        bcs     flush_output_raw_done
+        lda     output_buffer,x
+        jsr     call_saved_output
+        inx
+        bne     flush_output_raw_loop
+
+flush_output_raw_done:
+        lda     #CTRL_E
+        jsr     call_saved_output
         lda     #STATE_IDLE
         sta     output_state
         lda     #$00
@@ -425,6 +462,7 @@ emit_modified_jamo:
         sta     code_hi
         lda     jamo_kind
         beq     emit_initial_jamo
+        jmp     emit_vowel_jamo
 
 emit_initial_jamo:
         lda     token_value

@@ -47,6 +47,7 @@ images: dsk po
 check:
 	$(PYTHON) tests/run_golden.py
 	$(PYTHON) tests/run_corpus_roundtrip.py
+	$(PYTHON) tests/run_console_output_path.py
 
 check-tools:
 	@command -v $(CL65) >/dev/null 2>&1 || { echo "missing required tool: $(CL65)" >&2; exit 1; }

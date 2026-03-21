@@ -83,6 +83,16 @@ There are three relevant runtime paths:
 4. Transcoded bytes are written in a form compatible with the Apple II text
    framebuffer and AppleII-VGA custom firmware.
 
+Resident fail-soft behavior on this path is:
+
+- stray `Ctrl-E` outside an active span passes through unchanged
+- nested `Ctrl-K` inside an active span is treated as literal payload data
+- if a span overflows the resident buffer, the closing `Ctrl-E` flushes the
+  buffered span back out as raw delimited text rather than emitting partial
+  Hangul conversion
+- if output ends before `Ctrl-E` arrives, the span remains unterminated and no
+  Hangul conversion occurs for the buffered bytes
+
 ### File/Host Conversion Path
 
 1. Host data is read as `utf8`, `modified`, or `nbytes`.
@@ -112,6 +122,8 @@ Open point:
   active `nbytes` span.
 - Resident code should treat a missing end delimiter as an unterminated span and
   fail soft.
+- Host-side conversion remains strict: malformed delimited input is still an
+  error rather than resident-style fail-soft behavior.
 
 ## `nbytes` Encoding
 
