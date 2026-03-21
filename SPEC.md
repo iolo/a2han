@@ -167,7 +167,9 @@ Standalone jamo are representable directly:
 
 - basic jamo use the one-byte mapping above
 - double consonants use the documented lowercase single-byte forms
-- compound vowels/final clusters use the multi-byte sequences in this section
+- compound vowels use the multi-byte sequences in this section
+- compound final clusters are not standalone tokens by default; they become
+  meaningful only when assigned to the `T` position during syllable composition
 
 ### Composition Rules
 
@@ -177,9 +179,9 @@ byte-to-codepoint map.
 For delimited payload `nbytes -> utf8` conversion, parse greedily from left to
 right using the following model:
 
-1. Decode each byte or byte pair into a jamo token using the base table and the
-   compound-jamo table above.
-2. Attempt to form a Hangul syllable as:
+1. Decode each byte or byte pair into a neutral jamo-like token stream using
+   the base table and the compound-jamo table above.
+2. Attempt to form a Hangul syllable by assigning positional roles:
    `L` initial consonant + `V` medial vowel + optional `T` final consonant.
 3. Use standard Unicode Hangul composition:
    `0xAC00 + (L_index * 21 * 28) + (V_index * 28) + T_index`
@@ -187,6 +189,16 @@ right using the following model:
 5. If a potential final consonant can also begin the next syllable, treat it as
    final only when the following token cannot start a valid medial sequence for
    the current syllable split. This matches normal two-beolsik parsing.
+
+Important interpretation note:
+
+- outside a composed syllable, tokens are just consonants (`ja-eum`) or vowels
+  (`mo-eum`)
+- `choseong` and `jongseong` are positional roles assigned during syllable
+  composition, not inherent token identities
+- consecutive consonant bytes do not merge into a doubled consonant unless the
+  explicit lowercase doubled token is used; for example, `RR` is `ㄱ` + `ㄱ`,
+  not `ㄲ`
 
 Normative token classes:
 
@@ -200,9 +212,12 @@ Normative token classes:
 Fallback rules:
 
 - an isolated consonant token that cannot participate in a syllable is emitted
-  as a compatibility jamo character
+  as a standalone consonant jamo
 - an isolated vowel token that cannot participate in a syllable is emitted as a
-  compatibility jamo character
+  standalone vowel jamo
+- a compound final cluster token should not be emitted as a standalone final by
+  default; if no valid syllable uses it as `T`, resident behavior may fail soft
+  rather than invent a standalone `jongseong`
 - ASCII digits, spaces, and punctuation bytes that are not part of the mapping
   pass through unchanged when they appear inside a delimited `nbytes` span
 - an invalid byte terminates host-side conversion with an error

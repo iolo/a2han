@@ -29,25 +29,36 @@ make
 make dsk
 ```
 
+Status: TODO/TBD. This remains a project goal, but current development is
+centered on the ProDOS path.
+
 ### Create Apple II ProDOS disk image
 
 ```
 make po
 ```
 
+Status: primary active target.
+
 ### Run the program
 
-Boot the Apple II from the generated disk image, then run `A2HAN`:
+Boot the Apple II from the generated disk image, then load `A2HAN`.
+The currently verified development path is:
 
 ```
-] BRUN A2HAN
+] BLOAD A2HAN
+] CALL 24576
 ```
+
+`BRUN A2HAN` should not yet be treated as the primary development workflow.
 
 Run the Applesoft BASIC demo:
 
 ```
 ] RUN DEMO
 ```
+
+Status: TODO/TBD.
 
 Run `HCAT` to display a Hangul text file:
 
@@ -58,12 +69,14 @@ ENCODING: (U)nicode, (M)odified, (N)bytes:
 ...
 ```
 
+Status: TODO/TBD. `HCAT` is still only a placeholder C build target.
+
 ## Directory Structure
 
 ```
 a2han.s         ; main program source code
-demo.bas        ; demo program written in Applesoft BASIC
-hcat.s          ; utility to display a Hangul text file on the Apple II screen
+a2han-dos.s     ; deferred DOS-oriented experiment
+hcat.c          ; placeholder C utility built with cc65
 Makefile        ; build script
 hconv.py        ; utility to convert between different encodings
 build/          ; build output directory
@@ -73,8 +86,15 @@ build/          ; build output directory
 
 ## Technical Details
 
-- The program is written in 6502 assembly language, and assembled using `ca65` from the `cc65` toolchain.
-- The program hooks keyboard input (KSW) and console output (CSW) to provide Hangul input and output.
+- `a2han` is written in 6502 assembly language and assembled using the `cc65`
+  toolchain.
+- `hcat` currently builds from `hcat.c` as a placeholder.
+- The current active runtime path is ProDOS-first.
+- The resident parser currently supports delimiter detection, buffered spans,
+  simple syllables, compound vowels, compound final clusters in syllable
+  position, and explicit lowercase doubled tokens.
+- The program hooks keyboard input and console output to provide Hangul input
+  and output.
 - Plain text is the default mode.
 - Public `nbytes` is a mixed-text encoding: plain text passes through unchanged, and bytes between `Ctrl-K` and `Ctrl-E` are treated as Hangul payloads.
 - The bytes inside a delimited `nbytes` span use the internal Hangul composition grammar and are transcoded into **modified Unicode** before reaching the text framebuffer.
@@ -90,6 +110,9 @@ Design model:
 - Keyboard path: intercept raw input, recognize Hangul sequences, transcode them, then emit display bytes.
 - Output path: intercept console output, detect encoded Hangul sequences, and write framebuffer-compatible bytes.
 - Rendering path: the AppleII-VGA custom firmware interprets the remapped code points and draws glyphs.
+- Standalone fallback should be understood as neutral `ja-eum` / `mo-eum`
+  tokens. Positional roles like `choseong` and `jongseong` exist only inside a
+  composed syllable.
 
 > Note: The custom AppleII-VGA firmware renders the `modified` encoding from the Apple II text framebuffer (`0x400-0x7FF`). That rendering logic is out of scope for this project; see the firmware source for details.
 
@@ -127,6 +150,8 @@ This project reuses the `FLASH` range for Hangul characters:
   The corresponding text buffer bytes are `41 42 43 c1 c2 c3 75 5c`.
 - Typing `ABC<Ctrl-K>GKS<Ctrl-E>` from the keyboard also displays `ABC한`.
   The corresponding text framebuffer bytes are `c1 c2 c3 75 5c`.
+- `RHK` composes `과`.
+- `RHOS` composes `괜`.
 
 Interpretation:
 
@@ -154,6 +179,8 @@ python3 hconv.py <options>
 - Distinguish clearly between three layers: public `nbytes` transport, internal Hangul payload grammar, and `modified` framebuffer encoding.
 - When documenting behavior, describe which path is being discussed: keyboard hook, console hook, file conversion, or firmware rendering.
 - The README describes encoding intent and externally visible behavior. Assembly source remains the authority for exact hook and memory semantics.
+- Keep DOS `.dsk`, `HCAT`, and `demo.bas` visible in the docs as project goals,
+  but mark them honestly when they are still TODO/TBD.
 
 ---
 May the **SOURCE** be with you!

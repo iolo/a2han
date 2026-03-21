@@ -60,6 +60,12 @@ Why this comes first:
 
 ### M3. Build and Packaging Scaffold
 
+Status:
+
+- largely complete for the current ProDOS-first workflow
+- `make`, `make build`, and `make po` are active
+- DOS packaging remains visible as a goal, but is not the current focus
+
 Deliverables:
 
 - `Makefile`
@@ -73,6 +79,11 @@ Exit criteria:
 - build steps are scripted rather than manual
 
 ### M4. Resident Skeleton
+
+Status:
+
+- complete for the current development path
+- resident load/install is stable enough to continue parser work
 
 Deliverables:
 
@@ -89,6 +100,13 @@ Exit criteria:
 
 ### M5. Keyboard Path
 
+Status:
+
+- implemented for the current parser scope
+- delimiter detection, buffering, and composed Hangul emission are working
+- standalone fallback is now based on neutral consonant/vowel tokens rather
+  than positional `choseong` / `jongseong` assumptions
+
 Deliverables:
 
 - delimiter detection
@@ -99,10 +117,16 @@ Deliverables:
 
 Exit criteria:
 
-- `Ctrl-E ... Ctrl-K` sequences produce expected Hangul
+- `Ctrl-K ... Ctrl-E` sequences produce expected Hangul
 - malformed input follows the decided fail-soft behavior
 
 ### M6. Console Output Path
+
+Status:
+
+- partially implemented
+- current runtime behavior is close enough to continue, but this path still
+  needs explicit cleanup and documentation against BASIC output examples
 
 Deliverables:
 
@@ -117,9 +141,13 @@ Exit criteria:
 
 ### M7. File Utility
 
+Status:
+
+- not started beyond the placeholder `hcat.c` build target
+
 Deliverables:
 
-- `hcat.s`
+- `hcat.c` or `hcat.s`
 - file display path with selectable source encoding
 
 Exit criteria:
@@ -128,6 +156,12 @@ Exit criteria:
 - operator can choose the decoding mode at runtime
 
 ### M8. Demo and Verification
+
+Status:
+
+- host-side tests exist
+- Apple II verification has been manual and iterative
+- `demo.bas` is still pending
 
 Deliverables:
 
@@ -157,17 +191,16 @@ Exit criteria:
 
 Immediate next steps:
 
-1. complete the unresolved parts of `SPEC.md`
-2. define golden conversion vectors
-3. implement `hconv.py`
+1. document the current resident/runtime behavior clearly
+2. tighten console-path behavior against documented BASIC examples
+3. implement `HCAT`
+4. add `demo.bas`
 
 After that:
 
-1. add `Makefile`
-2. add resident skeleton
-3. implement keyboard path
-4. implement console path
-5. add `hcat.s` and `demo.bas`
+1. revisit DOS packaging and runtime behavior
+2. harden reinstall/lifecycle behavior
+3. write a manual verification checklist
 
 ## Non-Goals for Early Milestones
 

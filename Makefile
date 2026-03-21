@@ -28,7 +28,8 @@ DSK_IMAGE := $(BUILD_DIR)/a2han.dsk
 
 PRODOS_VOLUME ?= A2HAN
 DOS33_VOLUME ?= 254
-A2HAN_LOAD_ADDR ?= 2051
+A2HAN_START_ADDR ?= 0x6000
+A2HAN_LOAD_ADDR ?= 24576
 HCAT_LOAD_ADDR ?= 2051
 
 .PHONY: all build dsk po images check check-tools check-packager clean help
@@ -73,7 +74,7 @@ $(MAP_STAMP): | $(BUILD_STAMP)
 	@touch $@
 
 $(A2HAN_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
-	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) -m $(MAP_DIR)/A2HAN.map -o $@ $<
+	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) -m $(MAP_DIR)/A2HAN.map -o $@ $<
 
 $(HCAT_BIN): $(HCAT_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/HCAT.map -o $@ $<
@@ -114,5 +115,6 @@ help:
 		'  PACKAGER=a2kit              Disk image packager (implemented)' \
 		'  CC65_TARGET=apple2          cc65 target passed to cl65' \
 		'  LINK_CFG=apple2-asm.cfg     ld65 config used by cl65' \
+		'  A2HAN_START_ADDR=38400      Resident load/link address for A2HAN' \
 		'  A2HAN_LOAD_ADDR=<addr>      Required for disk packaging' \
 		'  HCAT_LOAD_ADDR=<addr>       Required for disk packaging'
