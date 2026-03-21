@@ -146,7 +146,13 @@ Status:
 - basic implementation is now in place
 - `HCAT` prompts for filename and source encoding, then streams `utf8`,
   `modified`, or `nbytes` content to the display path
+- content rendering now bypasses stdio/conio and writes Apple II text memory
+  directly
+- pagination now stops at the bottom line and waits for a key instead of
+  scrolling
 - richer operator UX and broader file-handling polish remain open
+- current blocking issue: real Apple II runs can still drop to the monitor
+  after some amount of `HCAT` output, so renderer stability needs investigation
 
 Deliverables:
 
@@ -194,10 +200,10 @@ Exit criteria:
 
 Immediate next steps:
 
-1. document the current resident/runtime behavior clearly
-2. tighten console-path behavior against documented BASIC examples
-3. implement `HCAT`
-4. add `demo.bas`
+1. investigate the real-hardware `HCAT` crash after paged output
+2. document the current resident/runtime behavior clearly
+3. add `demo.bas`
+4. write a short manual verification checklist around `A2HAN` and `HCAT`
 
 After that:
 

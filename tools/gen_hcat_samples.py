@@ -34,8 +34,10 @@ def encode_hcat_modified_sample(text: str) -> bytes:
 
     for ch in text:
         cp = ord(ch)
-        if cp < 0x80:
-            out.append(cp)
+        if ch == "\r" or ch == "\n":
+            out.append(ord("\n"))
+        elif cp < 0x80:
+            out.append(cp | 0x80)
         elif 0x1100 <= cp <= 0x11FF:
             mapped = cp - 0xD000
             out.extend(((mapped >> 8) & 0xFF, mapped & 0xFF))

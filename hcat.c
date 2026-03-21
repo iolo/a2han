@@ -5,6 +5,10 @@
 #define CTRL_E 0x05
 #define CTRL_K 0x0B
 #define SPAN_MAX 512
+#define SCREEN_COLS 40
+#define SCREEN_ROWS 24
+#define TEXT_PAGE1 0x0400
+#define DISPLAY_SPACE 0xA0
 
 enum encoding_mode {
     ENCODING_UTF8,
@@ -68,6 +72,8 @@ static int saw_cr = 0;
 static char last_error[96];
 static unsigned char span_buffer[SPAN_MAX];
 static char filename_buffer[128];
+static unsigned char screen_x = 0;
+static unsigned char screen_y = 0;
 
 static void set_error(const char* message)
 {
@@ -75,34 +81,98 @@ static void set_error(const char* message)
     last_error[sizeof(last_error) - 1] = '\0';
 }
 
-static int emit_raw_byte(unsigned char value)
+static unsigned int screen_addr(unsigned char x, unsigned char y)
 {
-    return fputc(value, stdout) != EOF;
+    return TEXT_PAGE1 + ((unsigned int)(y & 0x07u) << 7) + ((unsigned int)(y >> 3) * SCREEN_COLS) + x;
 }
 
-static int emit_text_byte(unsigned char value)
+static void screen_poke(unsigned int addr, unsigned char value)
+{
+    *(unsigned char*)addr = value;
+}
+
+static void clear_row(unsigned char y)
+{
+    unsigned char x;
+    unsigned int addr = screen_addr(0, y);
+
+    for (x = 0; x < SCREEN_COLS; ++x) {
+        screen_poke(addr + x, DISPLAY_SPACE);
+    }
+}
+
+static void hhome(void)
+{
+    unsigned char y;
+
+    for (y = 0; y < SCREEN_ROWS; ++y) {
+        clear_row(y);
+    }
+
+    screen_x = 0;
+    screen_y = 0;
+    saw_cr = 0;
+}
+
+static void wait_for_page(void)
+{
+    cgetc();
+    hhome();
+}
+
+static void hnewline(void)
+{
+    screen_x = 0;
+    if (screen_y + 1 < SCREEN_ROWS) {
+        ++screen_y;
+    } else {
+        wait_for_page();
+    }
+}
+
+static int hput_raw_byte(unsigned char value)
 {
     if (value == '\r') {
         saw_cr = 1;
-        return emit_raw_byte('\r');
+        hnewline();
+        return 1;
     }
     if (value == '\n') {
         if (saw_cr) {
             saw_cr = 0;
             return 1;
         }
-        return emit_raw_byte('\r');
+        hnewline();
+        return 1;
     }
     saw_cr = 0;
-    return emit_raw_byte(value);
+
+    screen_poke(screen_addr(screen_x, screen_y), value);
+    if (screen_x + 1 < SCREEN_COLS) {
+        ++screen_x;
+    } else {
+        hnewline();
+    }
+    return 1;
+}
+
+static int hput_text_byte(unsigned char value)
+{
+    if (value == '\r' || value == '\n') {
+        return hput_raw_byte(value);
+    }
+    if (value < 0x20u) {
+        return 1;
+    }
+    return hput_raw_byte((unsigned char)(value | 0x80u));
 }
 
 static int emit_modified_pair(unsigned int value)
 {
-    if (!emit_raw_byte((unsigned char)((value >> 8) & 0xFF))) {
+    if (!hput_raw_byte((unsigned char)((value >> 8) & 0xFF))) {
         return 0;
     }
-    return emit_raw_byte((unsigned char)(value & 0xFF));
+    return hput_raw_byte((unsigned char)(value & 0xFF));
 }
 
 static int emit_modified_syllable(unsigned char l_index, unsigned char v_index, unsigned char t_index)
@@ -289,7 +359,7 @@ static int convert_nbytes_payload(const unsigned char* data, unsigned int len)
         }
 
         if (is_safe_nbytes_byte(data[i])) {
-            if (!emit_text_byte(data[i])) {
+            if (!hput_text_byte(data[i])) {
                 set_error("output failed");
                 return 0;
             }
@@ -308,7 +378,7 @@ static int stream_modified_file(FILE* fp)
 {
     int ch;
     while ((ch = fgetc(fp)) != EOF) {
-        if (!emit_raw_byte((unsigned char)ch)) {
+        if (!hput_raw_byte((unsigned char)ch)) {
             set_error("output failed");
             return 0;
         }
@@ -361,7 +431,7 @@ static int stream_utf8_file(FILE* fp)
         unsigned char byte = (unsigned char)ch;
 
         if (byte < 0x80u) {
-            if (!emit_text_byte(byte)) {
+            if (!hput_text_byte(byte)) {
                 set_error("output failed");
                 return 0;
             }
@@ -417,7 +487,7 @@ static int stream_nbytes_file(FILE* fp)
                 span_len = 0;
                 continue;
             }
-            if (!emit_text_byte(byte)) {
+            if (!hput_text_byte(byte)) {
                 set_error("output failed");
                 return 0;
             }
@@ -537,6 +607,8 @@ int main(void)
         cputs("ERROR: OPEN FAILED\r");
         return 1;
     }
+
+    hhome();
 
     if (!stream_file(fp, encoding)) {
         fclose(fp);

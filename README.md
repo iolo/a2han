@@ -81,6 +81,14 @@ Current limits:
 - UTF-8 support is intentionally narrow; unsupported non-Hangul Unicode code
   points stop the display with an error.
 - `nbytes` spans are validated and must terminate cleanly.
+- `HCAT` now renders file content by writing Apple II text-page memory
+  directly rather than using stdio/conio character output for the content
+  stream.
+- `HCAT` no longer scrolls; when it reaches the bottom line it waits for a key
+  press, clears the screen, and resumes from the top.
+- Real Apple II testing found that `HCAT` now displays content correctly, but
+  it can still crash to the monitor after some amount of output. This remains
+  under investigation.
 
 The generated ProDOS image currently bundles matching pangram samples for each
 mode:
@@ -88,6 +96,9 @@ mode:
 - `PANGUTF8` for `ENCODING: U`
 - `PANGMOD` for `ENCODING: M`
 - `PANGNBYTES` for `ENCODING: N`
+
+These samples are the current recommended smoke-test inputs for `HCAT` on real
+hardware.
 
 ## Directory Structure
 
