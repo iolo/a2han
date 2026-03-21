@@ -69,14 +69,32 @@ ENCODING: (U)nicode, (M)odified, (N)bytes:
 ...
 ```
 
-Status: TODO/TBD. `HCAT` is still only a placeholder C build target.
+Status: basic implementation is in place. `HCAT` can prompt for a filename and
+source encoding, then display:
+
+- `utf8`: ASCII plus modern Hangul syllables/jamo transcoded to `modified`
+- `modified`: raw framebuffer-oriented Hangul bytes streamed directly
+- `nbytes`: mixed text plus delimited Hangul spans decoded and rendered
+
+Current limits:
+
+- UTF-8 support is intentionally narrow; unsupported non-Hangul Unicode code
+  points stop the display with an error.
+- `nbytes` spans are validated and must terminate cleanly.
+
+The generated ProDOS image currently bundles matching pangram samples for each
+mode:
+
+- `PANGUTF8` for `ENCODING: U`
+- `PANGMOD` for `ENCODING: M`
+- `PANGNBYTES` for `ENCODING: N`
 
 ## Directory Structure
 
 ```
 a2han.s         ; main program source code
 a2han-dos.s     ; deferred DOS-oriented experiment
-hcat.c          ; placeholder C utility built with cc65
+hcat.c          ; interactive Hangul file viewer built with cc65
 Makefile        ; build script
 hconv.py        ; utility to convert between different encodings
 build/          ; build output directory
@@ -88,7 +106,8 @@ build/          ; build output directory
 
 - `a2han` is written in 6502 assembly language and assembled using the `cc65`
   toolchain.
-- `hcat` currently builds from `hcat.c` as a placeholder.
+- `hcat` now provides a minimal interactive file-view utility for `utf8`,
+  `modified`, and `nbytes` input files.
 - The current active runtime path is ProDOS-first.
 - The resident parser currently supports delimiter detection, buffered spans,
   simple syllables, compound vowels, compound final clusters in syllable

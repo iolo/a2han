@@ -12,8 +12,10 @@ LINK_CFG ?= apple2-asm.cfg
 
 BUILD_DIR ?= build
 MAP_DIR := $(BUILD_DIR)/map
+SAMPLE_DIR := $(BUILD_DIR)/samples
 BUILD_STAMP := $(BUILD_DIR)/.dir
 MAP_STAMP := $(MAP_DIR)/.dir
+SAMPLE_STAMP := $(SAMPLE_DIR)/.dir
 
 A2HAN_SRC ?= a2han.s
 HCAT_SRC ?= hcat.c
@@ -25,6 +27,10 @@ PROGRAM_BINS := $(A2HAN_BIN) $(HCAT_BIN)
 
 PO_IMAGE := $(BUILD_DIR)/a2han.po
 DSK_IMAGE := $(BUILD_DIR)/a2han.dsk
+PANGRAM_UTF8_SAMPLE := $(SAMPLE_DIR)/pangram_hcat.utf8.txt
+PANGRAM_MODIFIED_SAMPLE := $(SAMPLE_DIR)/pangram_hcat.modified.bin
+PANGRAM_NBYTES_SAMPLE := $(SAMPLE_DIR)/pangram_hcat.nbytes.txt
+HCAT_SAMPLE_FILES := $(PANGRAM_UTF8_SAMPLE) $(PANGRAM_MODIFIED_SAMPLE) $(PANGRAM_NBYTES_SAMPLE)
 
 PRODOS_VOLUME ?= A2HAN
 DOS33_VOLUME ?= 254
@@ -74,24 +80,37 @@ $(MAP_STAMP): | $(BUILD_STAMP)
 	@mkdir -p $(MAP_DIR)
 	@touch $@
 
+$(SAMPLE_STAMP): | $(BUILD_STAMP)
+	@mkdir -p $(SAMPLE_DIR)
+	@touch $@
+
 $(A2HAN_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) -m $(MAP_DIR)/A2HAN.map -o $@ $<
 
 $(HCAT_BIN): $(HCAT_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/HCAT.map -o $@ $<
 
-$(PO_IMAGE): $(PROGRAM_BINS) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
+$(HCAT_SAMPLE_FILES): tests/han_pangram.utf8.txt tools/gen_hcat_samples.py hconv.py | $(SAMPLE_STAMP)
+	$(PYTHON) tools/gen_hcat_samples.py
+
+$(PO_IMAGE): $(PROGRAM_BINS) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
 	@rm -f $@
 	$(A2KIT) mkdsk -t po -o prodos -v $(PRODOS_VOLUME) -d $@
 	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_BIN) $@/A2HAN
 	$(A2KIT) cp -a $(HCAT_LOAD_ADDR) $(HCAT_BIN) $@/HCAT
+	$(A2KIT) put -d $@ -f PANGUTF8 -t raw < $(PANGRAM_UTF8_SAMPLE)
+	$(A2KIT) put -d $@ -f PANGMOD -t raw < $(PANGRAM_MODIFIED_SAMPLE)
+	$(A2KIT) put -d $@ -f PANGNBYTES -t raw < $(PANGRAM_NBYTES_SAMPLE)
 	@if [ -f "$(DEMO_SRC)" ]; then $(A2KIT) cp "$(DEMO_SRC)" "$@/DEMO"; fi
 
-$(DSK_IMAGE): $(PROGRAM_BINS) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
+$(DSK_IMAGE): $(PROGRAM_BINS) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
 	@rm -f $@
 	$(A2KIT) mkdsk -t do -o dos33 -v $(DOS33_VOLUME) -d $@
 	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_BIN) $@/A2HAN
 	$(A2KIT) cp -a $(HCAT_LOAD_ADDR) $(HCAT_BIN) $@/HCAT
+	$(A2KIT) put -d $@ -f PANGUTF8 -t raw < $(PANGRAM_UTF8_SAMPLE)
+	$(A2KIT) put -d $@ -f PANGMOD -t raw < $(PANGRAM_MODIFIED_SAMPLE)
+	$(A2KIT) put -d $@ -f PANGNBYTES -t raw < $(PANGRAM_NBYTES_SAMPLE)
 	@if [ -f "$(DEMO_SRC)" ]; then $(A2KIT) cp "$(DEMO_SRC)" "$@/DEMO"; fi
 
 $(A2HAN_SRC) $(HCAT_SRC):

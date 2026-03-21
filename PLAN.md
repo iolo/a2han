@@ -143,7 +143,10 @@ Exit criteria:
 
 Status:
 
-- not started beyond the placeholder `hcat.c` build target
+- basic implementation is now in place
+- `HCAT` prompts for filename and source encoding, then streams `utf8`,
+  `modified`, or `nbytes` content to the display path
+- richer operator UX and broader file-handling polish remain open
 
 Deliverables:
 
