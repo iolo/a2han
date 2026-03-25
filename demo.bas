@@ -1,0 +1,6 @@
+10 K$=CHR$(11):E$=CHR$(5)
+20 PRINT K$;"GKS";E$
+30 PRINT "GKS"
+40 INPUT A$
+50 PRINT A$
+

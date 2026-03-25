@@ -21,9 +21,10 @@ A2HAN_SRC ?= a2han.s
 HCAT_SRC ?= hcat.c
 DEMO_SRC ?= demo.bas
 
-A2HAN_BIN := $(BUILD_DIR)/A2HAN
+A2HAN_PRODOS_BIN := $(BUILD_DIR)/A2HAN.PRO
+A2HAN_DOS33_BIN := $(BUILD_DIR)/A2HAN.DOS
 HCAT_BIN := $(BUILD_DIR)/HCAT
-PROGRAM_BINS := $(A2HAN_BIN) $(HCAT_BIN)
+PROGRAM_BINS := $(A2HAN_PRODOS_BIN) $(A2HAN_DOS33_BIN) $(HCAT_BIN)
 
 PO_IMAGE := $(BUILD_DIR)/a2han.po
 DSK_IMAGE := $(BUILD_DIR)/a2han.dsk
@@ -84,8 +85,11 @@ $(SAMPLE_STAMP): | $(BUILD_STAMP)
 	@mkdir -p $(SAMPLE_DIR)
 	@touch $@
 
-$(A2HAN_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
-	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) -m $(MAP_DIR)/A2HAN.map -o $@ $<
+$(A2HAN_PRODOS_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
+	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) --asm-define A2HAN_TARGET_PRODOS=1 -m $(MAP_DIR)/A2HAN-PRODOS.map -o $@ $<
+
+$(A2HAN_DOS33_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
+	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) --asm-define A2HAN_TARGET_DOS33=1 -m $(MAP_DIR)/A2HAN-DOS33.map -o $@ $<
 
 $(HCAT_BIN): $(HCAT_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/HCAT.map -o $@ $<
@@ -93,20 +97,20 @@ $(HCAT_BIN): $(HCAT_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 $(HCAT_SAMPLE_FILES): tests/han_pangram.utf8.txt tools/gen_hcat_samples.py hconv.py | $(SAMPLE_STAMP)
 	$(PYTHON) tools/gen_hcat_samples.py
 
-$(PO_IMAGE): $(PROGRAM_BINS) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
+$(PO_IMAGE): $(A2HAN_PRODOS_BIN) $(HCAT_BIN) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
 	@rm -f $@
 	$(A2KIT) mkdsk -t po -o prodos -v $(PRODOS_VOLUME) -d $@
-	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_BIN) $@/A2HAN
+	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_PRODOS_BIN) $@/A2HAN
 	$(A2KIT) cp -a $(HCAT_LOAD_ADDR) $(HCAT_BIN) $@/HCAT
 	$(A2KIT) put -d $@ -f PANGUTF8 -t raw < $(PANGRAM_UTF8_SAMPLE)
 	$(A2KIT) put -d $@ -f PANGMOD -t raw < $(PANGRAM_MODIFIED_SAMPLE)
 	$(A2KIT) put -d $@ -f PANGNBYTES -t raw < $(PANGRAM_NBYTES_SAMPLE)
 	@if [ -f "$(DEMO_SRC)" ]; then $(A2KIT) cp "$(DEMO_SRC)" "$@/DEMO"; fi
 
-$(DSK_IMAGE): $(PROGRAM_BINS) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
+$(DSK_IMAGE): $(A2HAN_DOS33_BIN) $(HCAT_BIN) $(HCAT_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
 	@rm -f $@
 	$(A2KIT) mkdsk -t do -o dos33 -v $(DOS33_VOLUME) -d $@
-	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_BIN) $@/A2HAN
+	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_DOS33_BIN) $@/A2HAN
 	$(A2KIT) cp -a $(HCAT_LOAD_ADDR) $(HCAT_BIN) $@/HCAT
 	$(A2KIT) put -d $@ -f PANGUTF8 -t raw < $(PANGRAM_UTF8_SAMPLE)
 	$(A2KIT) put -d $@ -f PANGMOD -t raw < $(PANGRAM_MODIFIED_SAMPLE)
@@ -122,12 +126,12 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 help:
-	@printf '%s\n' \
-		'Targets:' \
-		'  make            Build A2HAN (assembly) and HCAT (C) with cc65/cl65' \
-		'  make dsk        Create build/a2han.dsk with a2kit' \
-		'  make po         Create build/a2han.po with a2kit' \
-		'  make images     Build both disk images' \
+		@printf '%s\n' \
+			'Targets:' \
+			'  make            Build A2HAN.PRO, A2HAN.DOS, and HCAT with cc65/cl65' \
+			'  make dsk        Create build/a2han.dsk with a2kit' \
+			'  make po         Create build/a2han.po with a2kit' \
+			'  make images     Build both disk images' \
 		'  make check      Run host-side converter tests' \
 		'  make clean      Remove build artifacts' \
 		'' \

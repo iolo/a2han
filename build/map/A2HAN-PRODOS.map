@@ -1,0 +1,35 @@
+Modules list:
+-------------
+a2han.o:
+    CODE              Offs=000000  Size=0003CF  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=0000F9  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=00005D  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000002  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+ZEROPAGE              000000  000001  000002  00001
+CODE                  006000  0063CE  0003CF  00001
+RODATA                0063CF  0064C7  0000F9  00001
+DATA                  0064C8  006524  00005D  00001
+
+
+Exports list by name:
+---------------------
+__MAIN_LAST__             006525 RLA    
+
+
+Exports list by value:
+----------------------
+__MAIN_LAST__             006525 RLA    
+
+
+Imports list:
+-------------
+__MAIN_LAST__ ([linker generated]):
+    [linker generated]        /usr/share/cc65/cfg/apple2-asm.cfg(13)
+    [linker generated]        /usr/share/cc65/cfg/apple2-asm.cfg(13)
+

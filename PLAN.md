@@ -62,9 +62,11 @@ Why this comes first:
 
 Status:
 
-- largely complete for the current ProDOS-first workflow
-- `make`, `make build`, and `make po` are active
-- DOS packaging remains visible as a goal, but is not the current focus
+- active for both ProDOS and DOS 3.3 packaging
+- `make build` now produces separate `A2HAN.PRO` and `A2HAN.DOS` binaries from
+  the shared `a2han.s` source
+- `make po` and `make dsk` package the matching OS-specific binary into each
+  image
 
 Deliverables:
 
@@ -207,7 +209,7 @@ Immediate next steps:
 
 After that:
 
-1. revisit DOS packaging and runtime behavior
+1. verify DOS 3.3 runtime behavior on real hardware or emulator
 2. harden reinstall/lifecycle behavior
 3. write a manual verification checklist
 

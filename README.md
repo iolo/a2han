@@ -29,8 +29,8 @@ make
 make dsk
 ```
 
-Status: TODO/TBD. This remains a project goal, but current development is
-centered on the ProDOS path.
+Status: active target. `make dsk` now packages the DOS-specific `A2HAN`
+binary built from the shared `a2han.s` source.
 
 ### Create Apple II ProDOS disk image
 
@@ -38,19 +38,21 @@ centered on the ProDOS path.
 make po
 ```
 
-Status: primary active target.
+Status: active target. `make po` packages the ProDOS-specific `A2HAN` binary
+built from the shared `a2han.s` source.
 
 ### Run the program
 
 Boot the Apple II from the generated disk image, then load `A2HAN`.
-The currently verified development path is:
+The current manual load/install path is:
 
 ```
 ] BLOAD A2HAN
 ] CALL 24576
 ```
 
-`BRUN A2HAN` should not yet be treated as the primary development workflow.
+This applies to both the ProDOS and DOS 3.3 disk images. `BRUN A2HAN` should
+not yet be treated as the primary development workflow.
 
 Run the Applesoft BASIC demo:
 
@@ -90,7 +92,7 @@ Current limits:
   it can still crash to the monitor after some amount of output. This remains
   under investigation.
 
-The generated ProDOS image currently bundles matching pangram samples for each
+The generated disk images currently bundle matching pangram samples for each
 mode:
 
 - `PANGUTF8` for `ENCODING: U`
@@ -104,11 +106,12 @@ hardware.
 
 ```
 a2han.s         ; main program source code
-a2han-dos.s     ; deferred DOS-oriented experiment
 hcat.c          ; interactive Hangul file viewer built with cc65
 Makefile        ; build script
 hconv.py        ; utility to convert between different encodings
 build/          ; build output directory
+    A2HAN.PRO   ; ProDOS-specific build from a2han.s
+    A2HAN.DOS   ; DOS 3.3-specific build from a2han.s
     a2han.po    ; Apple II ProDOS disk image
     a2han.dsk   ; Apple II DOS disk image
 ```
@@ -117,9 +120,12 @@ build/          ; build output directory
 
 - `a2han` is written in 6502 assembly language and assembled using the `cc65`
   toolchain.
+- `a2han` is built from a single shared source file, `a2han.s`, with
+  build-time conditionals selecting either the ProDOS BASIC vectors or the DOS
+  3.3 `KSW`/`CSW` hook path.
 - `hcat` now provides a minimal interactive file-view utility for `utf8`,
   `modified`, and `nbytes` input files.
-- The current active runtime path is ProDOS-first.
+- The resident install path now supports both ProDOS and DOS 3.3 builds.
 - The resident parser currently supports delimiter detection, buffered spans,
   simple syllables, compound vowels, compound final clusters in syllable
   position, and explicit lowercase doubled tokens.
@@ -137,12 +143,30 @@ Design model:
 
 ### Runtime Model
 
-- Keyboard path: intercept raw input, recognize Hangul sequences, transcode them, then emit display bytes.
+- Keyboard path: intercept raw input, preserve `Ctrl-K ... Ctrl-E` text as
+  `nbytes` for Applesoft/BASIC storage, and optionally provide user feedback
+  such as delimiter bells. The keyboard hook does not render Hangul directly.
 - Output path: intercept console output, detect encoded Hangul sequences, and write framebuffer-compatible bytes.
 - Rendering path: the AppleII-VGA custom firmware interprets the remapped code points and draws glyphs.
 - Standalone fallback should be understood as neutral `ja-eum` / `mo-eum`
   tokens. Positional roles like `choseong` and `jongseong` exist only inside a
   composed syllable.
+
+### Hook Rules
+
+- ProDOS and DOS 3.3 do not use equivalent hook chaining semantics even though
+  both expose input/output vectors.
+- In the ProDOS build, `a2han` installs into the BASIC vectors and chains
+  through the original saved vectors for pass-through behavior.
+- In the DOS 3.3 build, `a2han` installs into `CSW`/`KSW` and must call
+  `DOSFET` (`JSR $03EA`) immediately after patching those vectors.
+- In the DOS 3.3 build, pass-through must not chain through the pre-install
+  `CSW`/`KSW` targets. That path can loop back into the hook machinery and
+  recurse.
+- Instead, DOS 3.3 pass-through should use stable ROM entry points:
+  `COUT1` for output and `KEYIN` for input.
+- Practical rule: ProDOS chains through saved vectors; DOS 3.3 bypasses saved
+  hook targets and uses ROM routines after installing `CSW`/`KSW`.
 
 > Note: The custom AppleII-VGA firmware renders the `modified` encoding from the Apple II text framebuffer (`0x400-0x7FF`). That rendering logic is out of scope for this project; see the firmware source for details.
 
@@ -209,8 +233,8 @@ python3 hconv.py <options>
 - Distinguish clearly between three layers: public `nbytes` transport, internal Hangul payload grammar, and `modified` framebuffer encoding.
 - When documenting behavior, describe which path is being discussed: keyboard hook, console hook, file conversion, or firmware rendering.
 - The README describes encoding intent and externally visible behavior. Assembly source remains the authority for exact hook and memory semantics.
-- Keep DOS `.dsk`, `HCAT`, and `demo.bas` visible in the docs as project goals,
-  but mark them honestly when they are still TODO/TBD.
+- Keep unfinished pieces like `demo.bas` visible in the docs, but do not label
+  shipped build targets as TODO when they are already implemented.
 
 ---
 May the **SOURCE** be with you!

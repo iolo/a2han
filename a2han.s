@@ -1,8 +1,15 @@
         .setcpu "6502"
 
-BASIC_GLOBAL    = $BE00
-BASIC_VECTOUT   = $BE30
-BASIC_VECTIN    = $BE32
+.ifdef A2HAN_TARGET_DOS33
+HOOK_OUTPUT_VEC = $0036
+HOOK_INPUT_VEC  = $0038
+DOSFET          = $03EA
+KEYIN           = $FD1B
+.else
+HOOK_OUTPUT_VEC = $BE30
+HOOK_INPUT_VEC  = $BE32
+.endif
+BELL            = $FF3A
 COUT1           = $FDF0
 CTRL_E          = $05
 CTRL_K          = $0B
@@ -20,48 +27,33 @@ JAMO_KIND_VOWEL   = $01
         .segment "CODE"
 
 start:
-        jsr     check_environment
-        bcs     unsupported_environment
         jsr     install_hooks
         jsr     print_banner
         rts
 
-unsupported_environment:
-        jsr     print_unsupported
-        rts
-
-check_environment:
-        lda     BASIC_GLOBAL
-        cmp     #$4C
-        bne     not_prodos
-        lda     BASIC_GLOBAL+3
-        cmp     #$4C
-        bne     not_prodos
-        clc
-        rts
-
-not_prodos:
-        sec
-        rts
-
 install_hooks:
-        lda     BASIC_VECTOUT
+.ifndef A2HAN_TARGET_DOS33
+        lda     HOOK_OUTPUT_VEC
         sta     saved_output
-        lda     BASIC_VECTOUT+1
+        lda     HOOK_OUTPUT_VEC+1
         sta     saved_output+1
-        lda     BASIC_VECTIN
+        lda     HOOK_INPUT_VEC
         sta     saved_input
-        lda     BASIC_VECTIN+1
+        lda     HOOK_INPUT_VEC+1
         sta     saved_input+1
+.endif
 
         lda     #<output_hook
-        sta     BASIC_VECTOUT
+        sta     HOOK_OUTPUT_VEC
         lda     #>output_hook
-        sta     BASIC_VECTOUT+1
+        sta     HOOK_OUTPUT_VEC+1
         lda     #<input_hook
-        sta     BASIC_VECTIN
+        sta     HOOK_INPUT_VEC
         lda     #>input_hook
-        sta     BASIC_VECTIN+1
+        sta     HOOK_INPUT_VEC+1
+.ifdef A2HAN_TARGET_DOS33
+        jsr     DOSFET
+.endif
         rts
 
 print_banner:
@@ -75,19 +67,6 @@ print_loop:
         bne     print_loop
 
 print_done:
-        rts
-
-print_unsupported:
-        ldx     #$00
-
-unsupported_loop:
-        lda     unsupported_banner,x
-        beq     unsupported_done
-        jsr     COUT1
-        inx
-        bne     unsupported_loop
-
-unsupported_done:
         rts
 
 output_hook:
@@ -160,77 +139,19 @@ output_return:
         rts
 
 input_hook:
-input_fetch:
         jsr     call_saved_input
         sta     input_char
         and     #$7F
         cmp     #CTRL_K
-        beq     input_start_span
+        beq     input_ring_bell
         cmp     #CTRL_E
-        beq     input_end_or_pass
+        bne     input_return_char
 
-        lda     input_state
-        beq     input_return_char
-
-        ldx     input_length
-        cpx     #NBYTES_MAX
-        bcs     input_overflow_store
-        lda     input_char
-        sta     input_buffer,x
-        inx
-        stx     input_length
-        jmp     input_fetch
-
-input_overflow_store:
-        lda     #$01
-        sta     input_overflow
-        jmp     input_fetch
-
-input_start_span:
-        lda     input_state
-        bne     input_store_literal
-        lda     #STATE_ACTIVE
-        sta     input_state
-        lda     #$00
-        sta     input_length
-        sta     input_overflow
-        jmp     input_fetch
-
-input_store_literal:
-        ldx     input_length
-        cpx     #NBYTES_MAX
-        bcs     input_fetch
-        lda     input_char
-        sta     input_buffer,x
-        inx
-        stx     input_length
-        jmp     input_fetch
-
-input_end_or_pass:
-        lda     input_state
-        beq     input_return_char
-        jsr     flush_input_span
-        jmp     input_fetch
+input_ring_bell:
+        jsr     BELL
 
 input_return_char:
         lda     input_char
-        rts
-
-flush_input_span:
-        lda     #<input_buffer
-        sta     <parse_ptr
-        lda     #>input_buffer
-        sta     <parse_ptr+1
-        lda     input_length
-        sta     parse_length
-        lda     #PARSE_MODE_COMPOSEONLY
-        sta     parse_mode
-        jsr     parse_and_emit_span
-        lda     #STATE_IDLE
-        sta     input_state
-        lda     #$00
-        sta     input_length
-        sta     input_overflow
         rts
 
 flush_output_span:
@@ -681,10 +602,6 @@ banner:
         .byte   $C9, $CE, $D3, $D4, $C1, $CC, $CC, $C5, $C4
         .byte   $8D, $00
 
-unsupported_banner:
-        .byte   $D0, $D2, $CF, $C4, $CF, $D3, $A0
-        .byte   $CF, $CE, $CC, $D9, $8D, $00
-
 initial_chars:
         .byte   'R', 'r', 'S', 'E', 'e', 'F', 'A', 'Q', 'q', 'T', 't', 'D', 'W', 'w'
         .byte   'C', 'Z', 'X', 'V', 'G'
@@ -740,7 +657,11 @@ v_offset_hi:
 saved_output:
         .word   COUT1
 saved_input:
+.ifdef A2HAN_TARGET_DOS33
+        .word   KEYIN
+.else
         .word   $0000
+.endif
 
 input_state:
         .byte   STATE_IDLE
