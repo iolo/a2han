@@ -14,8 +14,8 @@ if str(ROOT) not in sys.path:
 from hconv import (
     BASE_NBYTES_TO_JAMO,
     COMPOUND_NBYTES_TO_JAMO,
-    CTRL_E,
-    CTRL_K,
+    SPAN_END,
+    SPAN_START,
     L_SET,
     T_SET,
     V_SET,
@@ -117,7 +117,7 @@ def simulate_console_output(stream: str) -> bytes:
 
     for ch in stream:
         masked = chr(ord(ch) & 0x7F)
-        if masked == CTRL_K:
+        if masked == SPAN_START:
             if state_active:
                 if len(buffer) >= NBYTES_MAX:
                     overflow = True
@@ -129,14 +129,14 @@ def simulate_console_output(stream: str) -> bytes:
                 buffer.clear()
             continue
 
-        if masked == CTRL_E:
+        if masked == SPAN_END:
             if not state_active:
                 out.extend(ch.encode("utf-8"))
                 continue
             if overflow:
-                out.extend(CTRL_K.encode("utf-8"))
+                out.extend(SPAN_START.encode("utf-8"))
                 out.extend("".join(buffer).encode("utf-8"))
-                out.extend(CTRL_E.encode("utf-8"))
+                out.extend(SPAN_END.encode("utf-8"))
             else:
                 out.extend(convert_payload_fail_soft("".join(buffer)))
             state_active = False
@@ -166,27 +166,27 @@ def main() -> int:
     cases = [
         require_equal(
             case_id="console_basic_span_to_modified",
-            actual=simulate_console_output(CTRL_K + "GKS" + CTRL_E),
+            actual=simulate_console_output(SPAN_START + "GKS" + SPAN_END),
             expected=bytes.fromhex("755c"),
         ),
         require_equal(
-            case_id="console_stray_ctrl_e_passthrough",
-            actual=simulate_console_output("A" + CTRL_E + "B"),
-            expected=("A" + CTRL_E + "B").encode("utf-8"),
+            case_id="console_stray_span_end_passthrough",
+            actual=simulate_console_output("A" + SPAN_END + "B"),
+            expected=("A" + SPAN_END + "B").encode("utf-8"),
         ),
         require_equal(
             case_id="console_nested_ctrl_k_is_literal_and_fails_soft",
-            actual=simulate_console_output(CTRL_K + "R" + CTRL_K + "K" + CTRL_E),
+            actual=simulate_console_output(SPAN_START + "R" + SPAN_START + "K" + SPAN_END),
             expected=bytes.fromhex("41000b4161"),
         ),
         require_equal(
             case_id="console_overflow_span_roundtrips_raw",
-            actual=simulate_console_output(CTRL_K + ("R" * (NBYTES_MAX + 1)) + CTRL_E),
-            expected=(CTRL_K + ("R" * NBYTES_MAX) + CTRL_E).encode("utf-8"),
+            actual=simulate_console_output(SPAN_START + ("R" * (NBYTES_MAX + 1)) + SPAN_END),
+            expected=(SPAN_START + ("R" * NBYTES_MAX) + SPAN_END).encode("utf-8"),
         ),
         require_equal(
             case_id="console_standalone_vowel_emits_modified_jamo",
-            actual=simulate_console_output(CTRL_K + "HK" + CTRL_E),
+            actual=simulate_console_output(SPAN_START + "HK" + SPAN_END),
             expected=bytes.fromhex("416a"),
         ),
     ]

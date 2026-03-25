@@ -17,7 +17,7 @@
     "id": "nbytes_to_utf8_ga",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bRK\u0005",
+    "input_text": "\u000bRK\u0001",
     "expected_text": "가"
   },
   {
@@ -25,13 +25,13 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "가",
-    "expected_text": "\u000bRK\u0005"
+    "expected_text": "\u000bRK\u0001"
   },
   {
     "id": "nbytes_to_utf8_gak",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bRKR\u0005",
+    "input_text": "\u000bRKR\u0001",
     "expected_text": "각"
   },
   {
@@ -39,41 +39,41 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "과",
-    "expected_text": "\u000bRHK\u0005"
+    "expected_text": "\u000bRHK\u0001"
   },
   {
     "id": "nbytes_to_utf8_gwaen",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bRHOS\u0005",
+    "input_text": "\u000bRHOS\u0001",
     "expected_text": "괜"
   },
   {
     "id": "nbytes_to_utf8_yae",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bDo\u0005",
+    "input_text": "\u000bDo\u0001",
     "expected_text": "얘"
   },
   {
     "id": "nbytes_to_utf8_gga",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000brK\u0005",
+    "input_text": "\u000brK\u0001",
     "expected_text": "까"
   },
   {
     "id": "nbytes_to_utf8_ggagg",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000brKr\u0005",
+    "input_text": "\u000brKr\u0001",
     "expected_text": "깎"
   },
   {
     "id": "nbytes_to_utf8_yet",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bDpT\u0005",
+    "input_text": "\u000bDpT\u0001",
     "expected_text": "옛"
   },
   {
@@ -81,7 +81,7 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "한",
-    "expected_text": "\u000bGKS\u0005"
+    "expected_text": "\u000bGKS\u0001"
   },
   {
     "id": "utf8_to_modified_han",
@@ -95,20 +95,20 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "ㅘ",
-    "expected_text": "\u000bHK\u0005"
+    "expected_text": "\u000bHK\u0001"
   },
   {
     "id": "utf8_to_nbytes_jamo_giyeok_sios",
     "from": "utf8",
     "to": "nbytes",
     "input_text": "ㄳ",
-    "expected_text": "\u000bRT\u0005"
+    "expected_text": "\u000bRT\u0001"
   },
   {
     "id": "punctuation_passthrough_nbytes_to_utf8",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bRK\u0005!",
+    "input_text": "\u000bRK\u0001!",
     "expected_text": "가!"
   },
   {
@@ -116,7 +116,7 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "가!",
-    "expected_text": "\u000bRK\u0005!"
+    "expected_text": "\u000bRK\u0001!"
   },
   {
     "id": "mixed_ascii_hangul_utf8_to_nbytes",
@@ -130,48 +130,48 @@
     "from": "utf8",
     "to": "nbytes",
     "input_text": "A가B",
-    "expected_text": "A\u000bRK\u0005B"
+    "expected_text": "A\u000bRK\u0001B"
   },
   {
     "id": "mixed_ascii_multi_hangul_utf8_to_nbytes",
     "from": "utf8",
     "to": "nbytes",
     "input_text": "ABC한국123",
-    "expected_text": "ABC\u000bGKS\u0005\u000bRNR\u0005123"
+    "expected_text": "ABC\u000bGKS\u0001\u000bRNR\u0001123"
   },
   {
     "id": "mixed_ascii_multi_hangul_nbytes_to_utf8",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "ABC\u000bGKS\u0005\u000bRNR\u0005123",
+    "input_text": "ABC\u000bGKS\u0001\u000bRNR\u0001123",
     "expected_text": "ABC한국123"
   },
   {
     "id": "empty_nbytes_span",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "A\u000b\u0005B",
+    "input_text": "A\u000b\u0001B",
     "expected_text": "AB"
   },
   {
-    "id": "stray_ctrl_e_passthrough",
+    "id": "stray_ctrl_a_passthrough",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "A\u0005B",
-    "expected_text": "A\u0005B"
+    "input_text": "A\u0001B",
+    "expected_text": "A\u0001B"
   },
   {
     "id": "error_invalid_nbytes_symbol",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000b@\u0005",
+    "input_text": "\u000b@\u0001",
     "expect_error": "invalid_nbytes_byte"
   },
   {
     "id": "error_nested_ctrl_k_in_span",
     "from": "nbytes",
     "to": "utf8",
-    "input_text": "\u000bR\u000bK\u0005",
+    "input_text": "\u000bR\u000bK\u0001",
     "expect_error": "invalid_nbytes_byte"
   },
   {

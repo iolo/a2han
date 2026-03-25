@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define CTRL_E 0x05
-#define CTRL_K 0x0B
+#define SPAN_END 0x01
+#define SPAN_START 0x0B
 #define SPAN_MAX 512
 #define SCREEN_COLS 40
 #define SCREEN_ROWS 24
@@ -482,7 +482,7 @@ static int stream_nbytes_file(FILE* fp)
         unsigned char byte = (unsigned char)ch;
 
         if (!in_span) {
-            if (byte == CTRL_K) {
+            if (byte == SPAN_START) {
                 in_span = 1;
                 span_len = 0;
                 continue;
@@ -494,7 +494,7 @@ static int stream_nbytes_file(FILE* fp)
             continue;
         }
 
-        if (byte == CTRL_E) {
+        if (byte == SPAN_END) {
             if (!convert_nbytes_payload(span_buffer, span_len)) {
                 return 0;
             }

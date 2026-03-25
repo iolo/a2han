@@ -119,7 +119,7 @@ Deliverables:
 
 Exit criteria:
 
-- `Ctrl-K ... Ctrl-E` sequences produce expected Hangul
+- `Ctrl-K ... Ctrl-A` sequences produce expected Hangul
 - malformed input follows the decided fail-soft behavior
 
 ### M6. Console Output Path

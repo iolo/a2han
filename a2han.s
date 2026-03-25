@@ -11,8 +11,8 @@ HOOK_INPUT_VEC  = $BE32
 .endif
 BELL            = $FF3A
 COUT1           = $FDF0
-CTRL_E          = $05
-CTRL_K          = $0B
+SPAN_END        = $01
+SPAN_START      = $0B
 NBYTES_MAX      = $20
 
 STATE_IDLE      = $00
@@ -78,9 +78,9 @@ output_hook:
 
         lda     output_char
         and     #$7F
-        cmp     #CTRL_K
+        cmp     #SPAN_START
         beq     output_start_span
-        cmp     #CTRL_E
+        cmp     #SPAN_END
         beq     output_end_or_pass
 
         lda     output_state
@@ -142,9 +142,9 @@ input_hook:
         jsr     call_saved_input
         sta     input_char
         and     #$7F
-        cmp     #CTRL_K
+        cmp     #SPAN_START
         beq     input_ring_bell
-        cmp     #CTRL_E
+        cmp     #SPAN_END
         bne     input_return_char
 
 input_ring_bell:
@@ -174,7 +174,7 @@ flush_output_span:
         rts
 
 flush_output_raw:
-        lda     #CTRL_K
+        lda     #SPAN_START
         jsr     call_saved_output
         ldx     #$00
 
@@ -187,7 +187,7 @@ flush_output_raw_loop:
         bne     flush_output_raw_loop
 
 flush_output_raw_done:
-        lda     #CTRL_E
+        lda     #SPAN_END
         jsr     call_saved_output
         lda     #STATE_IDLE
         sta     output_state

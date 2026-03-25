@@ -60,7 +60,7 @@ Use this analogy to reason about layering, not to assume exact equivalence.
 - Used for delimited inline Hangul input and text interchange where direct
   framebuffer codes are not appropriate.
 - Public `nbytes` uses plain text as the default mode.
-- Bytes inside a `Ctrl-K` ... `Ctrl-E` span are interpreted as the internal
+- Bytes inside a `Ctrl-K` ... `Ctrl-A` span are interpreted as the internal
   Hangul syllable grammar rather than literal ASCII text.
 
 ## Runtime Paths
@@ -85,12 +85,12 @@ There are three relevant runtime paths:
 
 Resident fail-soft behavior on this path is:
 
-- stray `Ctrl-E` outside an active span passes through unchanged
+- stray `Ctrl-A` outside an active span passes through unchanged
 - nested `Ctrl-K` inside an active span is treated as literal payload data
-- if a span overflows the resident buffer, the closing `Ctrl-E` flushes the
+- if a span overflows the resident buffer, the closing `Ctrl-A` flushes the
   buffered span back out as raw delimited text rather than emitting partial
   Hangul conversion
-- if output ends before `Ctrl-E` arrives, the span remains unterminated and no
+- if output ends before `Ctrl-A` arrives, the span remains unterminated and no
   Hangul conversion occurs for the buffered bytes
 
 ### File/Host Conversion Path
@@ -104,7 +104,7 @@ Resident fail-soft behavior on this path is:
 Delimited Hangul input is framed by:
 
 - `Ctrl-K` (`0x0B`): start delimiter
-- `Ctrl-E` (`0x05`): end delimiter
+- `Ctrl-A` (`0x01`): end delimiter
 
 Normative behavior:
 
@@ -243,19 +243,19 @@ internal payload for each encodable Hangul character:
 - precomposed Hangul syllables are decomposed into `L`, `V`, optional `T`, then
   re-encoded as canonical internal `nbytes` payloads
 - standalone Hangul jamo are encoded using the base or compound-jamo table
-- each encodable Hangul character is wrapped in `Ctrl-K` ... `Ctrl-E`
+- each encodable Hangul character is wrapped in `Ctrl-K` ... `Ctrl-A`
 
 Canonical examples:
 
 ```text
-가 -> <Ctrl-K>RK<Ctrl-E>
-각 -> <Ctrl-K>RKR<Ctrl-E>
-과 -> <Ctrl-K>RHK<Ctrl-E>
-괜 -> <Ctrl-K>RHOS<Ctrl-E>
-한 -> <Ctrl-K>GKS<Ctrl-E>
-힣 -> <Ctrl-K>GLG<Ctrl-E>
-ㅘ -> <Ctrl-K>HK<Ctrl-E>
-ㄳ -> <Ctrl-K>RT<Ctrl-E>
+가 -> <Ctrl-K>RK<Ctrl-A>
+각 -> <Ctrl-K>RKR<Ctrl-A>
+과 -> <Ctrl-K>RHK<Ctrl-A>
+괜 -> <Ctrl-K>RHOS<Ctrl-A>
+한 -> <Ctrl-K>GKS<Ctrl-A>
+힣 -> <Ctrl-K>GLG<Ctrl-A>
+ㅘ -> <Ctrl-K>HK<Ctrl-A>
+ㄳ -> <Ctrl-K>RT<Ctrl-A>
 ```
 
 ## `modified` Encoding
@@ -331,7 +331,7 @@ Interpretation note:
 Input:
 
 ```text
-ABC<Ctrl-K>GKS<Ctrl-E>
+ABC<Ctrl-K>GKS<Ctrl-A>
 ```
 
 Expected visible result:
@@ -353,7 +353,7 @@ Host-side policy:
 - invalid `nbytes` byte: fail with error
 - invalid byte inside a delimited `nbytes` span: fail with error
 - unterminated delimited `nbytes` span: fail with error
-- stray `Ctrl-E` outside a delimited span: pass through unchanged
+- stray `Ctrl-A` outside a delimited span: pass through unchanged
 - invalid UTF-8 input: fail with error
 - decoded code points outside ASCII and supported Hangul ranges: fail with error
 - out-of-range `modified` values: fail with error

@@ -157,8 +157,8 @@ L_SET = set(L_TABLE)
 V_SET = set(V_TABLE)
 T_SET = set(T_TABLE[1:])
 ASCII_SAFE_NBYTES = set(" \t\r\n0123456789!\"#$%&'()*+,-./:;<=>?[\\]^_`{|}~")
-CTRL_K = "\x0b"
-CTRL_E = "\x05"
+SPAN_START = "\x0b"
+SPAN_END = "\x01"
 
 
 @dataclass(frozen=True)
@@ -357,12 +357,12 @@ def decode_nbytes(text: str) -> str:
     i = 0
     while i < len(text):
         ch = text[i]
-        if ch != CTRL_K:
+        if ch != SPAN_START:
             out.append(ch)
             i += 1
             continue
 
-        end = text.find(CTRL_E, i + 1)
+        end = text.find(SPAN_END, i + 1)
         if end == -1:
             raise ConversionError("unterminated_nbytes_span", "unterminated nbytes span")
         payload = text[i + 1 : end]
@@ -382,9 +382,9 @@ def encode_nbytes(text: str) -> str:
 
     for ch in text:
         if _is_hangul_encodable_in_nbytes(ch):
-            out.append(CTRL_K)
+            out.append(SPAN_START)
             out.append(encode_nbytes_syllables(ch))
-            out.append(CTRL_E)
+            out.append(SPAN_END)
             continue
         out.append(ch)
 

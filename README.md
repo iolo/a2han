@@ -132,7 +132,7 @@ build/          ; build output directory
 - The program hooks keyboard input and console output to provide Hangul input
   and output.
 - Plain text is the default mode.
-- Public `nbytes` is a mixed-text encoding: plain text passes through unchanged, and bytes between `Ctrl-K` and `Ctrl-E` are treated as Hangul payloads.
+- Public `nbytes` is a mixed-text encoding: plain text passes through unchanged, and bytes between `Ctrl-K` and `Ctrl-A` are treated as Hangul payloads.
 - The bytes inside a delimited `nbytes` span use the internal Hangul composition grammar and are transcoded into **modified Unicode** before reaching the text framebuffer.
 
 Design model:
@@ -143,7 +143,7 @@ Design model:
 
 ### Runtime Model
 
-- Keyboard path: intercept raw input, preserve `Ctrl-K ... Ctrl-E` text as
+- Keyboard path: intercept raw input, preserve `Ctrl-K ... Ctrl-A` text as
   `nbytes` for Applesoft/BASIC storage, and optionally provide user feedback
   such as delimiter bells. The keyboard hook does not render Hangul directly.
 - Output path: intercept console output, detect encoded Hangul sequences, and write framebuffer-compatible bytes.
@@ -202,7 +202,7 @@ This project reuses the `FLASH` range for Hangul characters:
 
 - `PRINT "ABC";CHR$(11);"GKS";CHR$(5)` in Applesoft BASIC displays `ABC한`.
   The corresponding text buffer bytes are `41 42 43 c1 c2 c3 75 5c`.
-- Typing `ABC<Ctrl-K>GKS<Ctrl-E>` from the keyboard also displays `ABC한`.
+- Typing `ABC<Ctrl-K>GKS<Ctrl-A>` from the keyboard also displays `ABC한`.
   The corresponding text framebuffer bytes are `c1 c2 c3 75 5c`.
 - `RHK` composes `과`.
 - `RHOS` composes `괜`.
@@ -210,7 +210,7 @@ This project reuses the `FLASH` range for Hangul characters:
 Interpretation:
 
 - `CHR$(11)` is `Ctrl-K`, the start delimiter for N-byte Hangul input.
-- `CHR$(5)` is `Ctrl-E`, the end delimiter.
+- `CHR$(1)` is `Ctrl-A`, the end delimiter.
 - `GKS` is the internal Hangul payload for `한`.
 - `75 5c` is the `modified` code point written for that syllable.
 
