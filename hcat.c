@@ -1,20 +1,13 @@
+#include "hconv.h"
+
 #include <conio.h>
 #include <stdio.h>
 #include <string.h>
 
-#define SPAN_END 0x01
-#define SPAN_START 0x0B
-#define SPAN_MAX 512
 #define SCREEN_COLS 40
 #define SCREEN_ROWS 24
 #define TEXT_PAGE1 0x0400
 #define DISPLAY_SPACE 0xA0
-
-enum encoding_mode {
-    ENCODING_UTF8,
-    ENCODING_MODIFIED,
-    ENCODING_NBYTES
-};
 
 struct single_map {
     unsigned char ch;
@@ -70,7 +63,6 @@ static const unsigned char final_low_bytes[] = {
 
 static int saw_cr = 0;
 static char last_error[96];
-static unsigned char span_buffer[SPAN_MAX];
 static char filename_buffer[128];
 static unsigned char screen_x = 0;
 static unsigned char screen_y = 0;
@@ -198,6 +190,29 @@ static int emit_modified_final(unsigned char t_index)
         return 0;
     }
     return emit_modified_pair(0x4100u + (unsigned int)final_low_bytes[t_index]);
+}
+
+static int emit_modified_codepoint(uint32_t cp)
+{
+    unsigned int mapped;
+
+    if (!hconv_map_modified_codepoint(cp, &mapped)) {
+        set_error(hconv_error_detail());
+        return 0;
+    }
+
+    if (!emit_modified_pair(mapped)) {
+        set_error("output failed");
+        return 0;
+    }
+
+    return 1;
+}
+
+static int emit_modified_codepoint_cb(void* ctx, uint32_t cp)
+{
+    (void)ctx;
+    return emit_modified_codepoint(cp);
 }
 
 static int map_single(const struct single_map* table, unsigned int count, unsigned char ch, unsigned char* out_index)
@@ -440,6 +455,7 @@ static int stream_utf8_file(FILE* fp)
 
         {
             unsigned long codepoint;
+            unsigned int mapped;
             if (!decode_utf8_sequence(fp, byte, &codepoint)) {
                 return 0;
             }
@@ -448,23 +464,15 @@ static int stream_utf8_file(FILE* fp)
                 continue;
             }
 
-            if (0x1100u <= codepoint && codepoint <= 0x11FFu) {
-                if (!emit_modified_pair((unsigned int)(codepoint - 0xD000u))) {
+            if (hconv_map_modified_codepoint((uint32_t)codepoint, &mapped)) {
+                if (!emit_modified_pair(mapped)) {
                     set_error("output failed");
                     return 0;
                 }
                 continue;
             }
 
-            if (0xAC00u <= codepoint && codepoint <= 0xD7A3u) {
-                if (!emit_modified_pair((unsigned int)(codepoint - 0x6000u))) {
-                    set_error("output failed");
-                    return 0;
-                }
-                continue;
-            }
-
-            set_error("unsupported Unicode code point");
+            set_error(hconv_error_detail());
             return 0;
         }
     }
@@ -474,45 +482,26 @@ static int stream_utf8_file(FILE* fp)
 
 static int stream_nbytes_file(FILE* fp)
 {
-    unsigned int span_len = 0;
-    int in_span = 0;
+    struct hconv_nbytes_decoder decoder;
     int ch;
 
+    decoder.in_span = 0;
+    hconv_nbytes_decoder_init(&decoder);
+
     while ((ch = fgetc(fp)) != EOF) {
-        unsigned char byte = (unsigned char)ch;
-
-        if (!in_span) {
-            if (byte == SPAN_START) {
-                in_span = 1;
-                span_len = 0;
-                continue;
-            }
-            if (!hput_text_byte(byte)) {
+        if (!hconv_nbytes_decode_byte(&decoder, (unsigned char)ch,
+                emit_modified_codepoint_cb, NULL)) {
+            if (hconv_error_detail()[0] != '\0') {
+                set_error(hconv_error_detail());
+            } else {
                 set_error("output failed");
-                return 0;
             }
-            continue;
-        }
-
-        if (byte == SPAN_END) {
-            if (!convert_nbytes_payload(span_buffer, span_len)) {
-                return 0;
-            }
-            in_span = 0;
-            span_len = 0;
-            continue;
-        }
-
-        if (span_len >= SPAN_MAX) {
-            set_error("nbytes span too long");
             return 0;
         }
-
-        span_buffer[span_len++] = byte;
     }
 
-    if (in_span) {
-        set_error("unterminated nbytes span");
+    if (!hconv_nbytes_finish(&decoder, emit_modified_codepoint_cb, NULL)) {
+        set_error(hconv_error_detail());
         return 0;
     }
 

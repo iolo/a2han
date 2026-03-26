@@ -3,6 +3,8 @@ SHELL := /bin/sh
 .DEFAULT_GOAL := all
 
 CL65 ?= cl65
+HOST_CC ?= cc
+HOST_CFLAGS ?= -O2 -std=c99 -Wall -Wextra
 PYTHON ?= python3
 A2KIT ?= a2kit
 PACKAGER ?= a2kit
@@ -19,11 +21,14 @@ SAMPLE_STAMP := $(SAMPLE_DIR)/.dir
 
 A2HAN_SRC ?= a2han.s
 HCAT_SRC ?= hcat.c
+HCONV_CLI_SRC ?= hconv_cli.c
 DEMO_SRC ?= demo.bas
+HCONV_HOST_SRC ?= hconv.c
 
 A2HAN_PRODOS_BIN := $(BUILD_DIR)/A2HAN.PRO
 A2HAN_DOS33_BIN := $(BUILD_DIR)/A2HAN.DOS
 HCAT_BIN := $(BUILD_DIR)/HCAT
+HCONV_HOST_BIN := $(BUILD_DIR)/hconv
 PROGRAM_BINS := $(A2HAN_PRODOS_BIN) $(A2HAN_DOS33_BIN) $(HCAT_BIN)
 
 PO_IMAGE := $(BUILD_DIR)/a2han.po
@@ -53,6 +58,8 @@ images: dsk po
 
 check:
 	$(PYTHON) tests/run_golden.py
+	$(HOST_CC) $(HOST_CFLAGS) -o $(HCONV_HOST_BIN) $(HCONV_HOST_SRC) $(HCONV_CLI_SRC)
+	$(PYTHON) tests/run_c_hconv.py $(HCONV_HOST_BIN)
 	$(PYTHON) tests/run_corpus_roundtrip.py
 	$(PYTHON) tests/run_console_output_path.py
 
@@ -91,8 +98,11 @@ $(A2HAN_PRODOS_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 $(A2HAN_DOS33_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) --asm-define A2HAN_TARGET_DOS33=1 -m $(MAP_DIR)/A2HAN-DOS33.map -o $@ $<
 
-$(HCAT_BIN): $(HCAT_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
-	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/HCAT.map -o $@ $<
+$(HCAT_BIN): $(HCAT_SRC) $(HCONV_HOST_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
+	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/HCAT.map -o $@ $^
+
+$(HCONV_HOST_BIN): $(HCONV_HOST_SRC) | $(BUILD_STAMP)
+	$(HOST_CC) $(HOST_CFLAGS) -o $@ $(HCONV_HOST_SRC) $(HCONV_CLI_SRC)
 
 $(HCAT_SAMPLE_FILES): tests/han_pangram.utf8.txt tools/gen_hcat_samples.py hconv.py | $(SAMPLE_STAMP)
 	$(PYTHON) tools/gen_hcat_samples.py
