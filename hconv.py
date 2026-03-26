@@ -159,6 +159,19 @@ T_SET = set(T_TABLE[1:])
 ASCII_SAFE_NBYTES = set(" \t\r\n0123456789!\"#$%&'()*+,-./:;<=>?[\\]^_`{|}~")
 SPAN_START = "\x0b"
 SPAN_END = "\x01"
+SPAN_START_BYTE = 0x0B
+SPAN_END_BYTE = 0x01
+
+BASE_NBYTES_BYTE_TO_JAMO = {ord(key): value for key, value in BASE_NBYTES_TO_JAMO.items()}
+COMPOUND_NBYTES_BYTE_TO_JAMO = {
+    (ord(key[0]), ord(key[1])): value for key, value in COMPOUND_NBYTES_TO_JAMO.items()
+}
+C_BYTES = {ord(ch) for ch in "RrSEeFAQqTtDWwCZXVG"}
+CF_BYTES = {ord(ch) for ch in "RrSEFAQTtDWCZXVG"}
+CI_BYTES = {ord(ch) for ch in "eqw"}
+C1_BYTES = {ord(ch) for ch in "RSFQ"}
+V_BYTES = {ord(ch) for ch in "KOIoJPUpHYNBML"}
+V1_BYTES = {ord(ch) for ch in "HNM"}
 
 
 @dataclass(frozen=True)
@@ -183,7 +196,7 @@ def read_input(path: str | None, encoding: str) -> ParsedInput:
     else:
         raw = Path(path).read_bytes()
 
-    if encoding == "modified":
+    if encoding in {"modified", "nbytes"}:
         return ParsedInput("bytes", raw)
 
     try:
@@ -194,10 +207,10 @@ def read_input(path: str | None, encoding: str) -> ParsedInput:
 
 
 def write_output(path: str | None, payload: str | bytes, encoding: str) -> None:
-    if encoding == "modified":
+    if encoding in {"modified", "nbytes"}:
         data = ensure_bytes(payload)
     else:
-        data = ensure_text(payload).encode("utf-8")
+        data = payload if isinstance(payload, bytes) else ensure_text(payload).encode("utf-8")
 
     if path is None:
         sys.stdout.buffer.write(data)
@@ -247,29 +260,6 @@ def encode_modified(text: str) -> bytes:
     return bytes(out)
 
 
-def tokenize_nbytes_syllables(text: str) -> list[str]:
-    tokens: list[str] = []
-    i = 0
-    while i < len(text):
-        pair = text[i : i + 2]
-        if len(pair) == 2 and pair in COMPOUND_NBYTES_TO_JAMO:
-            tokens.append(COMPOUND_NBYTES_TO_JAMO[pair])
-            i += 2
-            continue
-
-        ch = text[i]
-        if ch in BASE_NBYTES_TO_JAMO:
-            tokens.append(BASE_NBYTES_TO_JAMO[ch])
-            i += 1
-            continue
-        if ch in ASCII_SAFE_NBYTES:
-            tokens.append(ch)
-            i += 1
-            continue
-        raise ConversionError("invalid_nbytes_byte", f"invalid nbytes byte: {ch!r}")
-    return tokens
-
-
 def compose_syllable(initial: str, medial: str, final: str = "") -> str:
     try:
         l_index = L_TABLE.index(initial)
@@ -280,37 +270,282 @@ def compose_syllable(initial: str, medial: str, final: str = "") -> str:
     return chr(0xAC00 + (l_index * 21 * 28) + (v_index * 28) + t_index)
 
 
-def decode_nbytes_syllables(text: str) -> str:
-    tokens = tokenize_nbytes_syllables(text)
+def _append_passthrough_byte(out: list[str], value: int) -> None:
+    out.append(chr(value))
+
+
+def _flush_nbytes_state(
+    out: list[str],
+    state: str,
+    initial: str | None,
+    medial: str | None,
+    final: str | None,
+) -> None:
+    if state == "S1":
+        return
+    if state == "S2":
+        out.append(ensure_text(initial))
+        return
+    if state in {"S3", "S6"}:
+        out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+        return
+    if state in {"S4", "S5", "S7", "S8"}:
+        out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final)))
+        return
+    raise AssertionError(f"unknown nbytes state: {state}")
+
+
+def decode_nbytes(raw: bytes) -> str:
     out: list[str] = []
-    i = 0
-    while i < len(tokens):
-        tok = tokens[i]
-        if tok in L_SET and i + 1 < len(tokens) and tokens[i + 1] in V_SET:
-            initial = tok
-            medial = tokens[i + 1]
-            final = ""
-            consumed = 2
+    in_span = False
+    state = "S1"
+    initial: str | None = None
+    initial_byte: int | None = None
+    medial: str | None = None
+    vowel_first_byte: int | None = None
+    final: str | None = None
+    final_first_byte: int | None = None
+    final_first_jamo: str | None = None
+    final_second_byte: int | None = None
+    final_second_jamo: str | None = None
 
-            if i + 2 < len(tokens) and tokens[i + 2] in T_SET:
-                candidate = tokens[i + 2]
-                if i + 3 < len(tokens) and tokens[i + 3] in V_SET and candidate in L_SET:
-                    final = ""
-                else:
-                    final = candidate
-                    consumed = 3
+    def reset_buffer() -> None:
+        nonlocal state, initial, initial_byte, medial, vowel_first_byte
+        nonlocal final, final_first_byte, final_first_jamo, final_second_byte, final_second_jamo
+        state = "S1"
+        initial = None
+        initial_byte = None
+        medial = None
+        vowel_first_byte = None
+        final = None
+        final_first_byte = None
+        final_first_jamo = None
+        final_second_byte = None
+        final_second_jamo = None
 
-            out.append(compose_syllable(initial, medial, final))
-            i += consumed
+    def flush_buffer() -> None:
+        _flush_nbytes_state(out, state, initial, medial, final)
+        reset_buffer()
+
+    for value in raw:
+        if not in_span:
+            if value == SPAN_START_BYTE:
+                in_span = True
+                reset_buffer()
+            else:
+                _append_passthrough_byte(out, value)
             continue
 
-        if tok in L_SET or tok in V_SET or tok in T_SET:
-            out.append(tok)
-            i += 1
+        if value == SPAN_END_BYTE:
+            flush_buffer()
+            in_span = False
             continue
 
-        out.append(tok)
-        i += 1
+        if value == SPAN_START_BYTE:
+            continue
+
+        if value not in C_BYTES and value not in V_BYTES:
+            flush_buffer()
+            _append_passthrough_byte(out, value)
+            continue
+
+        if state == "S1":
+            if value in C_BYTES:
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                state = "S2"
+            else:
+                out.append(BASE_NBYTES_BYTE_TO_JAMO[value])
+            continue
+
+        if state == "S2":
+            if value in V_BYTES:
+                medial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                vowel_first_byte = value
+                state = "S3"
+            else:
+                out.append(ensure_text(initial))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                state = "S2"
+            continue
+
+        if state == "S3":
+            pair = (ensure_bytes(bytes([vowel_first_byte]))[0], value)
+            if pair in COMPOUND_NBYTES_BYTE_TO_JAMO:
+                medial = COMPOUND_NBYTES_BYTE_TO_JAMO[pair]
+                state = "S6"
+            elif value in CF_BYTES:
+                final = BASE_NBYTES_BYTE_TO_JAMO[value]
+                final_first_byte = value
+                final_first_jamo = final
+                state = "S4"
+            elif value in CI_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                out.append(BASE_NBYTES_BYTE_TO_JAMO[value])
+                reset_buffer()
+            continue
+
+        if state == "S4":
+            pair = (ensure_bytes(bytes([final_first_byte]))[0], value)
+            if pair in COMPOUND_NBYTES_BYTE_TO_JAMO:
+                final = COMPOUND_NBYTES_BYTE_TO_JAMO[pair]
+                final_second_byte = value
+                final_second_jamo = BASE_NBYTES_BYTE_TO_JAMO[value]
+                state = "S5"
+            elif value in C_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                initial = ensure_text(final)
+                initial_byte = final_first_byte
+                medial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                vowel_first_byte = value
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S3"
+            continue
+
+        if state == "S5":
+            if value in C_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final_first_jamo)))
+                initial = ensure_text(final_second_jamo)
+                initial_byte = final_second_byte
+                medial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                vowel_first_byte = value
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S3"
+            continue
+
+        if state == "S6":
+            if value in CF_BYTES:
+                final = BASE_NBYTES_BYTE_TO_JAMO[value]
+                final_first_byte = value
+                final_first_jamo = final
+                state = "S7"
+            elif value in CI_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                out.append(BASE_NBYTES_BYTE_TO_JAMO[value])
+                reset_buffer()
+            continue
+
+        if state == "S7":
+            pair = (ensure_bytes(bytes([final_first_byte]))[0], value)
+            if pair in COMPOUND_NBYTES_BYTE_TO_JAMO:
+                final = COMPOUND_NBYTES_BYTE_TO_JAMO[pair]
+                final_second_byte = value
+                final_second_jamo = BASE_NBYTES_BYTE_TO_JAMO[value]
+                state = "S8"
+            elif value in C_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial)))
+                initial = ensure_text(final)
+                initial_byte = final_first_byte
+                medial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                vowel_first_byte = value
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S6"
+            continue
+
+        if state == "S8":
+            if value in C_BYTES:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final)))
+                initial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                initial_byte = value
+                medial = None
+                vowel_first_byte = None
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S2"
+            else:
+                out.append(compose_syllable(ensure_text(initial), ensure_text(medial), ensure_text(final_first_jamo)))
+                initial = ensure_text(final_second_jamo)
+                initial_byte = final_second_byte
+                medial = BASE_NBYTES_BYTE_TO_JAMO[value]
+                vowel_first_byte = value
+                final = None
+                final_first_byte = None
+                final_first_jamo = None
+                final_second_byte = None
+                final_second_jamo = None
+                state = "S3"
+            continue
+
+        raise AssertionError(f"unknown nbytes state: {state}")
+
+    if in_span:
+        raise ConversionError("unterminated_nbytes_span", "unterminated nbytes span")
 
     return "".join(out)
 
@@ -326,23 +561,23 @@ def decompose_syllable(ch: str) -> tuple[str, str, str]:
     return L_TABLE[l_index], V_TABLE[v_index], T_TABLE[t_index]
 
 
-def encode_nbytes_syllables(text: str) -> str:
-    out: list[str] = []
+def encode_nbytes_syllables(text: str) -> bytes:
+    out = bytearray()
     for ch in text:
         cp = ord(ch)
         if ch in ASCII_SAFE_NBYTES:
-            out.append(ch)
+            out.extend(ch.encode("ascii"))
         elif 0xAC00 <= cp <= 0xD7A3:
             initial, medial, final = decompose_syllable(ch)
-            out.append(jamo_to_nbytes(initial))
-            out.append(jamo_to_nbytes(medial))
+            out.extend(jamo_to_nbytes(initial).encode("ascii"))
+            out.extend(jamo_to_nbytes(medial).encode("ascii"))
             if final:
-                out.append(jamo_to_nbytes(final))
+                out.extend(jamo_to_nbytes(final).encode("ascii"))
         elif ch in JAMO_TO_NBYTES:
-            out.append(jamo_to_nbytes(ch))
+            out.extend(jamo_to_nbytes(ch).encode("ascii"))
         else:
             raise ConversionError("unsupported_unicode_codepoint", f"cannot encode U+{cp:04X} as nbytes syllables")
-    return "".join(out)
+    return bytes(out)
 
 
 def jamo_to_nbytes(ch: str) -> str:
@@ -352,43 +587,26 @@ def jamo_to_nbytes(ch: str) -> str:
         raise ConversionError("unsupported_unicode_codepoint", f"cannot encode jamo {ch!r} as nbytes") from exc
 
 
-def decode_nbytes(text: str) -> str:
-    out: list[str] = []
-    i = 0
-    while i < len(text):
-        ch = text[i]
-        if ch != SPAN_START:
-            out.append(ch)
-            i += 1
-            continue
-
-        end = text.find(SPAN_END, i + 1)
-        if end == -1:
-            raise ConversionError("unterminated_nbytes_span", "unterminated nbytes span")
-        payload = text[i + 1 : end]
-        out.append(decode_nbytes_syllables(payload))
-        i = end + 1
-
-    return "".join(out)
-
-
 def _is_hangul_encodable_in_nbytes(ch: str) -> bool:
     cp = ord(ch)
     return (0xAC00 <= cp <= 0xD7A3) or (ch in JAMO_TO_NBYTES)
 
 
-def encode_nbytes(text: str) -> str:
-    out: list[str] = []
+def encode_nbytes(text: str) -> bytes:
+    out = bytearray()
 
     for ch in text:
         if _is_hangul_encodable_in_nbytes(ch):
-            out.append(SPAN_START)
-            out.append(encode_nbytes_syllables(ch))
-            out.append(SPAN_END)
+            out.append(SPAN_START_BYTE)
+            out.extend(encode_nbytes_syllables(ch))
+            out.append(SPAN_END_BYTE)
             continue
-        out.append(ch)
+        cp = ord(ch)
+        if cp > 0x7F:
+            raise ConversionError("unsupported_unicode_codepoint", f"cannot encode U+{cp:04X} outside nbytes span")
+        out.append(cp)
 
-    return "".join(out)
+    return bytes(out)
 
 
 def convert(from_code: str, to_code: str, payload: str | bytes) -> str | bytes:
@@ -398,7 +616,7 @@ def convert(from_code: str, to_code: str, payload: str | bytes) -> str | bytes:
     if from_code == "modified":
         text = decode_modified(ensure_bytes(payload))
     elif from_code == "nbytes":
-        text = decode_nbytes(ensure_text(payload))
+        text = decode_nbytes(ensure_bytes(payload))
     else:
         text = ensure_text(payload)
 

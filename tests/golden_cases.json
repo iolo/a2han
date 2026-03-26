@@ -161,18 +161,39 @@
     "expected_text": "A\u0001B"
   },
   {
-    "id": "error_invalid_nbytes_symbol",
+    "id": "x_passthrough_at_sign",
     "from": "nbytes",
     "to": "utf8",
     "input_text": "\u000b@\u0001",
-    "expect_error": "invalid_nbytes_byte"
+    "expected_text": "@"
   },
   {
-    "id": "error_nested_ctrl_k_in_span",
+    "id": "ignore_nested_ctrl_k_in_span",
     "from": "nbytes",
     "to": "utf8",
     "input_text": "\u000bR\u000bK\u0001",
-    "expect_error": "invalid_nbytes_byte"
+    "expected_text": "가"
+  },
+  {
+    "id": "x_passthrough_flushes_buffer",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRK!\u0001",
+    "expected_text": "가!"
+  },
+  {
+    "id": "streaming_boundary_cv_cv",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRKRK\u0001",
+    "expected_text": "가가"
+  },
+  {
+    "id": "streaming_boundary_split_compound_final",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRKRTK\u0001",
+    "expected_text": "각사"
   },
   {
     "id": "error_unterminated_nbytes_span",
