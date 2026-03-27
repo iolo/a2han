@@ -102,11 +102,27 @@ mode:
 These samples are the current recommended smoke-test inputs for `A2HVIEW` on real
 hardware.
 
+Planned next utility: `A2HEDIT`, a simple line editor in the style of `ed`.
+
+Intended shape for the first version:
+
+- command prompt loop rather than full-screen editing
+- current-line oriented commands such as `a`, `i`, `p`, `n`, `d`, `w`, `e`, `q`
+- `.` on its own line ends append/insert mode
+- small in-memory line buffer with explicit limits
+- reuse of `hconv` rules for file import/export rather than per-keystroke conversion
+
+This is intentionally narrower than a visual editor. The Apple II target has
+strict memory and display-path constraints, and the project already has one
+known renderer-stability issue in `A2HVIEW`. A line editor is the preferred
+next step because it is much cheaper to implement and verify.
+
 ## Directory Structure
 
 ```
 a2han.s         ; main program source code
 a2hview.c       ; interactive Hangul file viewer built with cc65
+a2hedit.c       ; planned simple line editor built with cc65
 Makefile        ; build script
 hconv.py        ; utility to convert between different encodings
 build/          ; build output directory
@@ -126,6 +142,10 @@ build/          ; build output directory
   3.3 `KSW`/`CSW` hook path.
 - `a2hview` now provides a minimal interactive file-view utility for `utf8`,
   `modified`, and `nbytes` input files.
+- `a2hedit` is planned as a small `ed`-style line editor rather than a
+  full-screen text editor.
+- the first `a2hedit` target should prefer command-loop simplicity, bounded
+  buffers, and predictable file I/O over screen-oriented UX.
 - The resident install path now supports both ProDOS and DOS 3.3 builds.
 - The resident parser currently supports delimiter detection, buffered spans,
   simple syllables, compound vowels, compound final clusters in syllable

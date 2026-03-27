@@ -185,7 +185,32 @@ Exit criteria:
 - demo covers representative syllables/jamo and delimiter usage
 - manual test procedure exists for real Apple II or emulator runs
 
-### M9. Hardening
+### M9. Line Editor Utility
+
+Status:
+
+- not started
+- scope has been reduced intentionally from "text editor" to a simple
+  `ed`-style line editor
+- the first implementation should avoid full-screen editing and reuse existing
+  conversion rules at file I/O boundaries
+
+Deliverables:
+
+- `a2hedit.c` or `a2hedit.s`
+- command prompt loop
+- bounded in-memory line buffer
+- current-line commands for append, insert, print, delete, write, load, and quit
+- explicit end-of-input marker for append/insert mode
+
+Exit criteria:
+
+- operator can load or create a small text buffer
+- operator can append, insert, print, and delete lines
+- operator can save and reload the buffer in at least one supported encoding
+- memory limits and unsupported commands are documented
+
+### M10. Hardening
 
 Deliverables:
 
@@ -204,8 +229,10 @@ Immediate next steps:
 
 1. investigate the real-hardware `A2HVIEW` crash after paged output
 2. document the current resident/runtime behavior clearly
-3. add `demo.bas`
-4. write a short manual verification checklist around `A2HAN` and `A2HVIEW`
+3. define `A2HEDIT` line-editor command set and buffer limits
+4. implement an `A2HEDIT` command loop skeleton
+5. add `demo.bas`
+6. write a short manual verification checklist around `A2HAN` and `A2HVIEW`
 
 After that:
 
@@ -216,7 +243,7 @@ After that:
 ## Non-Goals for Early Milestones
 
 - advanced UX
-- generalized text editing features
+- generalized text editing features beyond a small line editor
 - broad compatibility claims beyond the documented firmware path
 - speculative optimization before behavior is stable
 

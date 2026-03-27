@@ -9,6 +9,7 @@ It is the implementation target for:
 - the host-side converter
 - the resident Apple II program
 - utilities such as `A2HVIEW`
+- utilities such as `A2HEDIT`
 - future tests and golden vectors
 
 Assembly source remains the authority for exact machine-level details such as
@@ -97,7 +98,26 @@ Resident fail-soft behavior on this path is:
 
 1. Host data is read as `utf8`, `modified`, or `nbytes`.
 2. `hconv.py` converts between encodings according to this specification.
-3. `A2HVIEW` and other utilities may reuse the same conversion rules.
+3. `A2HVIEW`, `A2HEDIT`, and other utilities may reuse the same conversion rules.
+
+### Line Editor Path
+
+`A2HEDIT` is intended to be a small line editor, not a visual full-screen
+editor.
+
+The intended first implementation model is:
+
+1. command prompt reads an operator command line
+2. editor mutates a bounded in-memory line buffer
+3. print-style commands emit line content through the normal Apple II output path
+4. load/save commands use the shared conversion rules at file I/O boundaries
+
+For the first version, this specification assumes:
+
+- no screen-oriented cursor addressing
+- no full-screen redraw model
+- no requirement for arbitrary large files
+- explicit implementation limits for line count, line length, and total buffer size
 
 ## Delimiter Semantics
 
