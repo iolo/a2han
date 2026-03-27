@@ -6,277 +6,277 @@ a2hview.o:
     BSS               Offs=000000  Size=0000E0  Align=00001  Fill=0000
     DATA              Offs=000000  Size=000004  Align=00001  Fill=0000
 hconv.o:
-    CODE              Offs=000EAE  Size=003660  Align=00001  Fill=0000
+    CODE              Offs=000EAE  Size=00372F  Align=00001  Fill=0000
     RODATA            Offs=0001C5  Size=000401  Align=00001  Fill=0000
     BSS               Offs=0000E0  Size=0000E0  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_cursor.o):
     BSS               Offs=0001C0  Size=000001  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_directerrno.o):
-    CODE              Offs=00450E  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=0045DD  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_fdesc.o):
-    CODE              Offs=004518  Size=00001D  Align=00001  Fill=0000
+    CODE              Offs=0045E7  Size=00001D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_file.o):
     DATA              Offs=000004  Size=00001E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_fopen.o):
-    CODE              Offs=004535  Size=00007B  Align=00001  Fill=0000
+    CODE              Offs=004604  Size=00007B  Align=00001  Fill=0000
     BSS               Offs=0001C1  Size=000002  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_heap.o):
     DATA              Offs=000022  Size=00000A  Align=00001  Fill=0000
     ONCE              Offs=000000  Size=000010  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_mappederrno.o):
-    CODE              Offs=0045B0  Size=000010  Align=00001  Fill=0000
+    CODE              Offs=00467F  Size=000010  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_oserror.o):
     BSS               Offs=0001C3  Size=000001  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(_seterrno.o):
-    CODE              Offs=0045C0  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=00468F  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(add.o):
-    CODE              Offs=0045C9  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=004698  Size=00001C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(addeqsp.o):
-    CODE              Offs=0045E5  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=0046B4  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(addysp.o):
-    CODE              Offs=0045F6  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=0046C5  Size=00000E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(along.o):
-    CODE              Offs=004604  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=0046D3  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(and.o):
-    CODE              Offs=004611  Size=000010  Align=00001  Fill=0000
+    CODE              Offs=0046E0  Size=000010  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(aslax1.o):
-    CODE              Offs=004621  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=0046F0  Size=000008  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(aslax2.o):
-    CODE              Offs=004629  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=0046F8  Size=00000B  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(aslax3.o):
-    CODE              Offs=004634  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=004703  Size=00000E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(aslax4.o):
-    CODE              Offs=004642  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=004711  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(asleax2.o):
-    CODE              Offs=004653  Size=000013  Align=00001  Fill=0000
+    CODE              Offs=004722  Size=000013  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(asleax4.o):
-    CODE              Offs=004666  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=004735  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(asrax3.o):
-    CODE              Offs=004677  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=004746  Size=000014  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(axlong.o):
-    CODE              Offs=00468B  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00475A  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(bneg.o):
-    CODE              Offs=004698  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=004767  Size=00000E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(callmain.o):
-    CODE              Offs=0046A6  Size=000017  Align=00001  Fill=0000
+    CODE              Offs=004775  Size=000017  Align=00001  Fill=0000
     DATA              Offs=00002C  Size=000004  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(cgetc.o):
-    CODE              Offs=0046BD  Size=000028  Align=00001  Fill=0000
+    CODE              Offs=00478C  Size=000028  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(close.o):
-    CODE              Offs=0046E5  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=0047B4  Size=00001C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(compl.o):
-    CODE              Offs=004701  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=0047D0  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(condes.o):
-    CODE              Offs=00470A  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=0047D9  Size=00000C  Align=00001  Fill=0000
     DATA              Offs=000030  Size=000025  Align=00001  Fill=0000
     ONCE              Offs=000010  Size=00000C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(cout.o):
     LOWCODE           Offs=000000  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(cputc.o):
-    CODE              Offs=004716  Size=000043  Align=00001  Fill=0000
+    CODE              Offs=0047E5  Size=000043  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(cputs.o):
-    CODE              Offs=004759  Size=000023  Align=00001  Fill=0000
+    CODE              Offs=004828  Size=000023  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(crt0.o):
-    CODE              Offs=00477C  Size=000012  Align=00001  Fill=0000
+    CODE              Offs=00484B  Size=000012  Align=00001  Fill=0000
     RODATA            Offs=0005C6  Size=000007  Align=00001  Fill=0000
     DATA              Offs=000055  Size=000003  Align=00001  Fill=0000
     STARTUP           Offs=000000  Size=000034  Align=00001  Fill=0000
     ONCE              Offs=00001C  Size=00006A  Align=00001  Fill=0000
     INIT              Offs=000000  Size=00001D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decax1.o):
-    CODE              Offs=00478E  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=00485D  Size=000007  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decax4.o):
-    CODE              Offs=004795  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=004864  Size=000007  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decsp1.o):
-    CODE              Offs=00479C  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=00486B  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decsp2.o):
-    CODE              Offs=0047A5  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=004874  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decsp4.o):
-    CODE              Offs=0047B2  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=004881  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decsp6.o):
-    CODE              Offs=0047BF  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00488E  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(decsp8.o):
-    CODE              Offs=0047CC  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00489B  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(dosdetect.o):
     DATA              Offs=000058  Size=000001  Align=00001  Fill=0000
     ONCE              Offs=000086  Size=000014  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(eq.o):
-    CODE              Offs=0047D9  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=0048A8  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(errno.o):
     BSS               Offs=0001C4  Size=000002  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(exehdr.o):
     EXEHDR            Offs=000000  Size=00003A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fclose.o):
-    CODE              Offs=0047E3  Size=000022  Align=00001  Fill=0000
+    CODE              Offs=0048B2  Size=000022  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fgetc.o):
-    CODE              Offs=004805  Size=00008C  Align=00001  Fill=0000
+    CODE              Offs=0048D4  Size=00008C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fgets.o):
-    CODE              Offs=004891  Size=0000B3  Align=00001  Fill=0000
+    CODE              Offs=004960  Size=0000B3  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(filedes.o):
-    CODE              Offs=004944  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=004A13  Size=000016  Align=00001  Fill=0000
     DATA              Offs=000059  Size=000020  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(filename.o):
-    CODE              Offs=00495A  Size=00006C  Align=00001  Fill=0000
+    CODE              Offs=004A29  Size=00006C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fmisc.o):
-    CODE              Offs=0049C6  Size=000044  Align=00001  Fill=0000
+    CODE              Offs=004A95  Size=000044  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fopen.o):
-    CODE              Offs=004A0A  Size=000018  Align=00001  Fill=0000
+    CODE              Offs=004AD9  Size=000018  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(fputs.o):
-    CODE              Offs=004A22  Size=000044  Align=00001  Fill=0000
+    CODE              Offs=004AF1  Size=000044  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(free.o):
-    CODE              Offs=004A66  Size=0001D3  Align=00001  Fill=0000
+    CODE              Offs=004B35  Size=0001D3  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(gotoxy.o):
-    CODE              Offs=004C39  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=004D08  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(icmp.o):
-    CODE              Offs=004C4A  Size=00002E  Align=00001  Fill=0000
+    CODE              Offs=004D19  Size=00002E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incax1.o):
-    CODE              Offs=004C78  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=004D47  Size=000007  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incaxy.o):
-    CODE              Offs=004C7F  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=004D4E  Size=00000B  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp1.o):
-    CODE              Offs=004C8A  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=004D59  Size=000007  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp2.o):
-    CODE              Offs=004C91  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=004D60  Size=000016  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp3.o):
-    CODE              Offs=004CA7  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D76  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp4.o):
-    CODE              Offs=004CAC  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D7B  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp5.o):
-    CODE              Offs=004CB1  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D80  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp6.o):
-    CODE              Offs=004CB6  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D85  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp7.o):
-    CODE              Offs=004CBB  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D8A  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(incsp8.o):
-    CODE              Offs=004CC0  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=004D8F  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(iobuf.o):
 /usr/share/cc65/lib/apple2.lib(jmpvec.o):
     DATA              Offs=000079  Size=000003  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ladd.o):
-    CODE              Offs=004CC5  Size=000025  Align=00001  Fill=0000
+    CODE              Offs=004D94  Size=000025  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lcmp.o):
-    CODE              Offs=004CEA  Size=00003B  Align=00001  Fill=0000
+    CODE              Offs=004DB9  Size=00003B  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ldaui.o):
-    CODE              Offs=004D25  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=004DF4  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ldaxi.o):
-    CODE              Offs=004D2E  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=004DFD  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ldaxsp.o):
-    CODE              Offs=004D3B  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=004E0A  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ldeaxi.o):
-    CODE              Offs=004D44  Size=000017  Align=00001  Fill=0000
+    CODE              Offs=004E13  Size=000017  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ldeaxysp.o):
-    CODE              Offs=004D5B  Size=000013  Align=00001  Fill=0000
+    CODE              Offs=004E2A  Size=000013  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(leaaxsp.o):
-    CODE              Offs=004D6E  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=004E3D  Size=00000C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(leq.o):
-    CODE              Offs=004D7A  Size=000006  Align=00001  Fill=0000
+    CODE              Offs=004E49  Size=000006  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lne.o):
-    CODE              Offs=004D80  Size=000006  Align=00001  Fill=0000
+    CODE              Offs=004E4F  Size=000006  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lor.o):
-    CODE              Offs=004D86  Size=000024  Align=00001  Fill=0000
+    CODE              Offs=004E55  Size=000024  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lpush.o):
-    CODE              Offs=004DAA  Size=000021  Align=00001  Fill=0000
+    CODE              Offs=004E79  Size=000021  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lsub.o):
-    CODE              Offs=004DCB  Size=000027  Align=00001  Fill=0000
+    CODE              Offs=004E9A  Size=000027  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ltest.o):
-    CODE              Offs=004DF2  Size=00000F  Align=00001  Fill=0000
+    CODE              Offs=004EC1  Size=00000F  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ludiv.o):
-    CODE              Offs=004E01  Size=00007A  Align=00001  Fill=0000
+    CODE              Offs=004ED0  Size=00007A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lule.o):
-    CODE              Offs=004E7B  Size=000006  Align=00001  Fill=0000
+    CODE              Offs=004F4A  Size=000006  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(lumod.o):
-    CODE              Offs=004E81  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=004F50  Size=000019  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(makebool.o):
-    CODE              Offs=004E9A  Size=00002C  Align=00001  Fill=0000
+    CODE              Offs=004F69  Size=00002C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(malloc.o):
-    CODE              Offs=004EC6  Size=00010E  Align=00001  Fill=0000
+    CODE              Offs=004F95  Size=00010E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(memcpy.o):
-    CODE              Offs=004FD4  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=0050A3  Size=00003C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(mli.o):
     BSS               Offs=0001C6  Size=000012  Align=00001  Fill=0000
     DATA              Offs=00007C  Size=000024  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(mul.o):
-    CODE              Offs=005010  Size=000045  Align=00001  Fill=0000
+    CODE              Offs=0050DF  Size=000045  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(mul8.o):
-    CODE              Offs=005055  Size=00003A  Align=00001  Fill=0000
+    CODE              Offs=005124  Size=00003A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(mulax3.o):
-    CODE              Offs=00508F  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00515E  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(open.o):
-    CODE              Offs=0050A0  Size=0000F9  Align=00001  Fill=0000
+    CODE              Offs=00516F  Size=0000F9  Align=00001  Fill=0000
     DATA              Offs=0000A0  Size=000009  Align=00001  Fill=0000
     ONCE              Offs=00009A  Size=000009  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(oserror.o):
-    CODE              Offs=005199  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=005268  Size=000016  Align=00001  Fill=0000
     RODATA            Offs=0005CD  Size=000032  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(pmemalign.o):
-    CODE              Offs=0051AF  Size=000202  Align=00001  Fill=0000
+    CODE              Offs=00527E  Size=000202  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(popa.o):
-    CODE              Offs=0053B1  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=005480  Size=00000C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(popptr1.o):
-    CODE              Offs=0053BD  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00548C  Size=00000E  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(pusha.o):
-    CODE              Offs=0053CB  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00549A  Size=000016  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(pushax.o):
-    CODE              Offs=0053E1  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=0054B0  Size=00001A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(pushwsp.o):
-    CODE              Offs=0053FB  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=0054CA  Size=00001C  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(rdkey.o):
     LOWCODE           Offs=00000A  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(read.o):
-    CODE              Offs=005417  Size=00005A  Align=00001  Fill=0000
+    CODE              Offs=0054E6  Size=00005A  Align=00001  Fill=0000
     ONCE              Offs=0000A3  Size=000005  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(realloc.o):
-    CODE              Offs=005471  Size=000145  Align=00001  Fill=0000
+    CODE              Offs=005540  Size=000145  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(regswap2.o):
-    CODE              Offs=0055B6  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=005685  Size=000016  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(return0.o):
-    CODE              Offs=0055CC  Size=000004  Align=00001  Fill=0000
+    CODE              Offs=00569B  Size=000004  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(rwcommon.o):
-    CODE              Offs=0055D0  Size=00003D  Align=00001  Fill=0000
+    CODE              Offs=00569F  Size=00003D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(shreax2.o):
-    CODE              Offs=00560D  Size=000013  Align=00001  Fill=0000
+    CODE              Offs=0056DC  Size=000013  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(shreax4.o):
-    CODE              Offs=005620  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=0056EF  Size=000011  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(staspidx.o):
-    CODE              Offs=005631  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=005700  Size=000016  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(staxsp.o):
-    CODE              Offs=005647  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=005716  Size=00000B  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(staxspi.o):
-    CODE              Offs=005652  Size=00001B  Align=00001  Fill=0000
+    CODE              Offs=005721  Size=00001B  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(steaxsp.o):
-    CODE              Offs=00566D  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00573C  Size=000015  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(steaxspi.o):
-    CODE              Offs=005682  Size=000022  Align=00001  Fill=0000
+    CODE              Offs=005751  Size=000022  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(strchr.o):
-    CODE              Offs=0056A4  Size=000027  Align=00001  Fill=0000
+    CODE              Offs=005773  Size=000027  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(strcmp.o):
-    CODE              Offs=0056CB  Size=000021  Align=00001  Fill=0000
+    CODE              Offs=00579A  Size=000021  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(strlen.o):
-    CODE              Offs=0056EC  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=0057BB  Size=000016  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(strncpy.o):
-    CODE              Offs=005702  Size=000044  Align=00001  Fill=0000
+    CODE              Offs=0057D1  Size=000044  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(sub.o):
-    CODE              Offs=005746  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=005815  Size=000015  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(subeqsp.o):
-    CODE              Offs=00575B  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00582A  Size=000015  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(subysp.o):
-    CODE              Offs=005770  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00583F  Size=00000D  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(toslong.o):
-    CODE              Offs=00577D  Size=000038  Align=00001  Fill=0000
+    CODE              Offs=00584C  Size=000038  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(uge.o):
-    CODE              Offs=0057B5  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=005884  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ugt.o):
-    CODE              Offs=0057BF  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=00588E  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ule.o):
-    CODE              Offs=0057C9  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=005898  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(ult.o):
-    CODE              Offs=0057D3  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=0058A2  Size=000008  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(vtabz.o):
     LOWCODE           Offs=000014  Size=00000A  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(write.o):
-    CODE              Offs=0057DB  Size=000070  Align=00001  Fill=0000
+    CODE              Offs=0058AA  Size=000070  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(zerobss.o):
-    CODE              Offs=00584B  Size=000023  Align=00001  Fill=0000
+    CODE              Offs=00591A  Size=000023  Align=00001  Fill=0000
 /usr/share/cc65/lib/apple2.lib(zeropage.o):
     ZEROPAGE          Offs=000000  Size=00001A  Align=00001  Fill=0000
 
@@ -289,117 +289,117 @@ ZEROPAGE              000080  000099  00001A  00001
 EXEHDR                0007C9  000802  00003A  00001
 STARTUP               000803  000836  000034  00001
 LOWCODE               000837  000854  00001E  00001
-CODE                  000855  0060C2  00586E  00001
-RODATA                0060C3  0066C3  000601  00001
-DATA                  0066C4  00676C  0000A9  00001
-INIT                  00676D  006789  00001D  00001
-BSS                   00678A  006961  0001D8  00001
-ONCE                  00678A  006839  0000B0  00001
+CODE                  000855  006191  00593D  00001
+RODATA                006192  006792  000601  00001
+DATA                  006793  00683B  0000A9  00001
+INIT                  00683C  006858  00001D  00001
+BSS                   006859  006A30  0001D8  00001
+ONCE                  006859  006908  0000B0  00001
 
 
 Exports list by name:
 ---------------------
 COUT                      000837 RLA    RDKEY                     000841 RLA    
-VTABZ                     00084B RLA    __BSS_RUN__               00678A RLA    
+VTABZ                     00084B RLA    __BSS_RUN__               006859 RLA    
 __BSS_SIZE__              0001D8 REA    __CONSTRUCTOR_COUNT__     000004 REA    
-__CONSTRUCTOR_TABLE__     006832 RLA    __DESTRUCTOR_COUNT__      000001 REA    
-__DESTRUCTOR_TABLE__      0066C2 RLA    __EXEHDR__                000001 REA    
+__CONSTRUCTOR_TABLE__     006901 RLA    __DESTRUCTOR_COUNT__      000001 REA    
+__DESTRUCTOR_TABLE__      006791 RLA    __EXEHDR__                000001 REA    
 __FILETYPE__              000006 REA    __HIMEM__                 009600 REA    
 __LCADDR__                00D400 REA    __LCSIZE__                000C00 REA    
 __LC_LAST__               00D400 RLA    __LC_START__              00D400 RLA    
-__MAIN_LAST__             00683A RLA    __MAIN_START__            000803 RLA    
-__ONCE_LOAD__             00678A RLA    __ONCE_RUN__              00678A RLA    
+__MAIN_LAST__             006909 RLA    __MAIN_START__            000803 RLA    
+__ONCE_LOAD__             006859 RLA    __ONCE_RUN__              006859 RLA    
 __ONCE_SIZE__             0000B0 REA    __STACKSIZE__             000800 REA    
-__STARTUP__               000001 REA    __directerrno             004D63 RLA    
-__dos_type                00671C RLA    __errno                   00694E RLA    
-__fdesc                   004D6D RLA    __filetab                 0066C8 RLA    
-__fopen                   004D8A RLA    __heapend                 0066EA RLA    
-__heapfirst               0066EC RLA    __heaplast                0066EE RLA    
-__heapptr                 0066E8 RLA    __mappederrno             004E05 RLA    
-__oserror                 00694D RLA    __osmaperrno              0059EE RLA    
-__seterrno                004E15 RLA    _cgetc                    004F12 RLA    
-_close                    004F3A RLA    _cputc                    004F70 RLA    
-_cputs                    004FB8 RLA    _fclose                   005038 RLA    
-_fflush                   005E21 REA    _fgetc                    00505A RLA    
-_fgets                    0050E6 RLA    _fopen                    00525F RLA    
-_fputs                    005277 RLA    _free                     0052BB RLA    
+__STARTUP__               000001 REA    __directerrno             004E32 RLA    
+__dos_type                0067EB RLA    __errno                   006A1D RLA    
+__fdesc                   004E3C RLA    __filetab                 006797 RLA    
+__fopen                   004E59 RLA    __heapend                 0067B9 RLA    
+__heapfirst               0067BB RLA    __heaplast                0067BD RLA    
+__heapptr                 0067B7 RLA    __mappederrno             004ED4 RLA    
+__oserror                 006A1C RLA    __osmaperrno              005ABD RLA    
+__seterrno                004EE4 RLA    _cgetc                    004FE1 RLA    
+_close                    005009 RLA    _cputc                    00503F RLA    
+_cputs                    005087 RLA    _fclose                   005107 RLA    
+_fflush                   005EF0 REA    _fgetc                    005129 RLA    
+_fgets                    0051B5 RLA    _fopen                    00532E RLA    
+_fputs                    005346 RLA    _free                     00538A RLA    
 _hconv_error_detail       00170B RLA    _hconv_map_modified_codepoint 002801 RLA    
 _hconv_nbytes_decode_byte 001A48 RLA    _hconv_nbytes_decoder_init 001983 RLA    
 _hconv_nbytes_finish      002796 RLA    _main                     0015FE RLA    
-_malloc                   00571B RLA    _memcpy                   005829 RLA    
-_open                     0058F5 RLA    _posix_memalign           005A04 RLA    
-_read                     005C6C RLA    _realloc                  005CC6 RLA    
-_stdin                    0066E0 RLA    _stdout                   0066E2 RLA    
-_strchr                   005EF9 RLA    _strcmp                   005F20 RLA    
-_strlen                   005F41 RLA    _strncpy                  005F57 RLA    
-_write                    006030 RLA    addeqysp                  004E3C RLA    
-addysp                    004E4C RLA    addysp1                   004E4B RLA    
-aslax1                    004E76 RLA    aslax2                    004E7E RLA    
-asrax3                    004ECC RLA    aulong                    004E5F RLA    
-axlong                    004EE0 RLA    axulong                   004EE6 RLA    
-bnegax                    004EED RLA    booleq                    0056F5 RLA    
-boolge                    005706 RLA    boolne                    0056EF RLA    
-booluge                   005716 RLA    boolugt                   005714 RLA    
-boolule                   00570C RLA    boolult                   00570E RLA    
-callmain                  004EFB RLA    callmli                   006740 RLA    
-closeallfiles             0059E0  LAI   closedirect               0059D6 RLA    
-complax                   004F56 RLA    cursor                    00694A RLA    
-decax1                    004FE3 RLA    decax4                    004FEA RLA    
-decsp1                    004FF1 RLA    decsp2                    004FFA RLA    
-decsp4                    005007 RLA    decsp6                    005014 RLA    
-decsp8                    005021 RLA    donelib                   004F5F RLA    
-fdtab                     00671D RLA    freebuffer                0059CE RLA    
-getfd                     005199 RLA    getlop                    005667 RLA    
-gotoxy                    00548E RLA    incax1                    0054CD RLA    
-incax4                    0054D4 RLA    incaxy                    0054D6 RLA    
-incsp1                    0054DF RLA    incsp2                    0054EE RLA    
-incsp3                    0054FC RLA    incsp4                    005501 RLA    
-incsp5                    005506 RLA    incsp6                    00550B RLA    
-incsp7                    005510 RLA    incsp8                    005515 RLA    
-initdostype               006810  LAI   initheap                  00678A  LAI   
-initlib                   00679A RLA    initprompt                00682D  LAI   
-iobuf_alloc               005A04 RLA    iobuf_free                0052BB RLA    
-jmpvec                    00673D RLA    ldauidx                   00557A RLA    
-ldax0sp                   005590 RLA    ldaxidx                   005585 RLA    
-ldaxysp                   005592 RLA    ldeaxidx                  00559B RLA    
-ldeaxysp                  0055B2 RLA    leaa0sp                   0055C3 RLA    
-mliparam                  006950 RLA    mul8x16                   0058AC RLA    
-mul8x16a                  0058B6 RLA    mulax3                    0058E4 RLA    
-popa                      005C06 RLA    popax                     0054E6 RLA    
-popname                   005216 RLA    popptr1                   005C12 RLA    
+_malloc                   0057EA RLA    _memcpy                   0058F8 RLA    
+_open                     0059C4 RLA    _posix_memalign           005AD3 RLA    
+_read                     005D3B RLA    _realloc                  005D95 RLA    
+_stdin                    0067AF RLA    _stdout                   0067B1 RLA    
+_strchr                   005FC8 RLA    _strcmp                   005FEF RLA    
+_strlen                   006010 RLA    _strncpy                  006026 RLA    
+_write                    0060FF RLA    addeqysp                  004F0B RLA    
+addysp                    004F1B RLA    addysp1                   004F1A RLA    
+aslax1                    004F45 RLA    aslax2                    004F4D RLA    
+asrax3                    004F9B RLA    aulong                    004F2E RLA    
+axlong                    004FAF RLA    axulong                   004FB5 RLA    
+bnegax                    004FBC RLA    booleq                    0057C4 RLA    
+boolge                    0057D5 RLA    boolne                    0057BE RLA    
+booluge                   0057E5 RLA    boolugt                   0057E3 RLA    
+boolule                   0057DB RLA    boolult                   0057DD RLA    
+callmain                  004FCA RLA    callmli                   00680F RLA    
+closeallfiles             005AAF  LAI   closedirect               005AA5 RLA    
+complax                   005025 RLA    cursor                    006A19 RLA    
+decax1                    0050B2 RLA    decax4                    0050B9 RLA    
+decsp1                    0050C0 RLA    decsp2                    0050C9 RLA    
+decsp4                    0050D6 RLA    decsp6                    0050E3 RLA    
+decsp8                    0050F0 RLA    donelib                   00502E RLA    
+fdtab                     0067EC RLA    freebuffer                005A9D RLA    
+getfd                     005268 RLA    getlop                    005736 RLA    
+gotoxy                    00555D RLA    incax1                    00559C RLA    
+incax4                    0055A3 RLA    incaxy                    0055A5 RLA    
+incsp1                    0055AE RLA    incsp2                    0055BD RLA    
+incsp3                    0055CB RLA    incsp4                    0055D0 RLA    
+incsp5                    0055D5 RLA    incsp6                    0055DA RLA    
+incsp7                    0055DF RLA    incsp8                    0055E4 RLA    
+initdostype               0068DF  LAI   initheap                  006859  LAI   
+initlib                   006869 RLA    initprompt                0068FC  LAI   
+iobuf_alloc               005AD3 RLA    iobuf_free                00538A RLA    
+jmpvec                    00680C RLA    ldauidx                   005649 RLA    
+ldax0sp                   00565F RLA    ldaxidx                   005654 RLA    
+ldaxysp                   005661 RLA    ldeaxidx                  00566A RLA    
+ldeaxysp                  005681 RLA    leaa0sp                   005692 RLA    
+mliparam                  006A1F RLA    mul8x16                   00597B RLA    
+mul8x16a                  005985 RLA    mulax3                    0059B3 RLA    
+popa                      005CD5 RLA    popax                     0055B5 RLA    
+popname                   0052E5 RLA    popptr1                   005CE1 RLA    
 ptr1                      000088 RLZ    ptr2                      00008A RLZ    
 ptr3                      00008C RLZ    ptr4                      00008E RLZ    
-pusha                     005C24 RLA    pusha0                    005C38 RLA    
-pushax                    005C3A RLA    pusheax                   005608 RLA    
-pushname                  0051AF RLA    pushwysp                  005C52 RLA    
-putchardirect             004FA4 RLA    raisefilelevel            006824  LAI   
+pusha                     005CF3 RLA    pusha0                    005D07 RLA    
+pushax                    005D09 RLA    pusheax                   0056D7 RLA    
+pushname                  00527E RLA    pushwysp                  005D21 RLA    
+putchardirect             005073 RLA    raisefilelevel            0068F3  LAI   
 regbank                   000094 RLZ    regsave                   000084 RLZ    
-regswap2                  005E0B RLA    return0                   005E21 RLA    
-rwcommon                  005E32 RLA    rwepilog                  005E55 RLA    
-rwprolog                  005E25 RLA    shlax1                    004E76 RLA    
-shlax2                    004E7E RLA    shlax3                    004E89 RLA    
-shlax4                    004E97 RLA    shleax2                   004EA8 RLA    
-shleax4                   004EBB RLA    shreax2                   005E62 RLA    
-shreax4                   005E75 RLA    sp                        000080 RLZ    
-sreg                      000082 RLZ    staspidx                  005E86 RLA    
-stax0sp                   005E9C RLA    staxspidx                 005EA7 RLA    
-staxysp                   005E9E RLA    steaxspidx                005ED7 RLA    
-steaxysp                  005EC4 RLA    subeqysp                  005FB2 RLA    
-subysp                    005FC5 RLA    tmp1                      000090 RLZ    
+regswap2                  005EDA RLA    return0                   005EF0 RLA    
+rwcommon                  005F01 RLA    rwepilog                  005F24 RLA    
+rwprolog                  005EF4 RLA    shlax1                    004F45 RLA    
+shlax2                    004F4D RLA    shlax3                    004F58 RLA    
+shlax4                    004F66 RLA    shleax2                   004F77 RLA    
+shleax4                   004F8A RLA    shreax2                   005F31 RLA    
+shreax4                   005F44 RLA    sp                        000080 RLZ    
+sreg                      000082 RLZ    staspidx                  005F55 RLA    
+stax0sp                   005F6B RLA    staxspidx                 005F76 RLA    
+staxysp                   005F6D RLA    steaxspidx                005FA6 RLA    
+steaxysp                  005F93 RLA    subeqysp                  006081 RLA    
+subysp                    006094 RLA    tmp1                      000090 RLZ    
 tmp2                      000091 RLZ    tmp3                      000092 RLZ    
-tmp4                      000093 RLZ    tosaddax                  004E20 RLA    
-tosaddeax                 005520 RLA    tosandax                  004E68 RLA    
-toseqax                   005032 RLA    toseqeax                  0055CF RLA    
-tosicmp                   0054A1 RLA    toslcmp                   00553F RLA    
-tosmulax                  005865 RLA    tosneeax                  0055D5 RLA    
-tosoreax                  0055E1 RLA    tossubax                  005F9D RLA    
-tossubeax                 005626 RLA    tosudiveax                00565C RLA    
-tosugeax                  00600E RLA    tosugtax                  006018 RLA    
-tosuleax                  006022 RLA    tosuleeax                 0056D0 RLA    
-tosulong                  005FD2 RLA    tosultax                  00602A RLA    
-tosumodeax                0056DC RLA    tosumulax                 005865 RLA    
-udiv32                    00568B RLA    utsteax                   005647 RLA    
-zerobss                   0060A0 RLA    
+tmp4                      000093 RLZ    tosaddax                  004EEF RLA    
+tosaddeax                 0055EF RLA    tosandax                  004F37 RLA    
+toseqax                   005101 RLA    toseqeax                  00569E RLA    
+tosicmp                   005570 RLA    toslcmp                   00560E RLA    
+tosmulax                  005934 RLA    tosneeax                  0056A4 RLA    
+tosoreax                  0056B0 RLA    tossubax                  00606C RLA    
+tossubeax                 0056F5 RLA    tosudiveax                00572B RLA    
+tosugeax                  0060DD RLA    tosugtax                  0060E7 RLA    
+tosuleax                  0060F1 RLA    tosuleeax                 00579F RLA    
+tosulong                  0060A1 RLA    tosultax                  0060F9 RLA    
+tosumodeax                0057AB RLA    tosumulax                 005934 RLA    
+udiv32                    00575A RLA    utsteax                   005716 RLA    
+zerobss                   00616F RLA    
 
 
 Exports list by value:
@@ -419,90 +419,90 @@ RDKEY                     000841 RLA    VTABZ                     00084B RLA
 __LCSIZE__                000C00 REA    _main                     0015FE RLA    
 _hconv_error_detail       00170B RLA    _hconv_nbytes_decoder_init 001983 RLA    
 _hconv_nbytes_decode_byte 001A48 RLA    _hconv_nbytes_finish      002796 RLA    
-_hconv_map_modified_codepoint 002801 RLA    __directerrno             004D63 RLA    
-__fdesc                   004D6D RLA    __fopen                   004D8A RLA    
-__mappederrno             004E05 RLA    __seterrno                004E15 RLA    
-tosaddax                  004E20 RLA    addeqysp                  004E3C RLA    
-addysp1                   004E4B RLA    addysp                    004E4C RLA    
-aulong                    004E5F RLA    tosandax                  004E68 RLA    
-aslax1                    004E76 RLA    shlax1                    004E76 RLA    
-aslax2                    004E7E RLA    shlax2                    004E7E RLA    
-shlax3                    004E89 RLA    shlax4                    004E97 RLA    
-shleax2                   004EA8 RLA    shleax4                   004EBB RLA    
-asrax3                    004ECC RLA    axlong                    004EE0 RLA    
-axulong                   004EE6 RLA    bnegax                    004EED RLA    
-callmain                  004EFB RLA    _cgetc                    004F12 RLA    
-_close                    004F3A RLA    complax                   004F56 RLA    
-donelib                   004F5F RLA    _cputc                    004F70 RLA    
-putchardirect             004FA4 RLA    _cputs                    004FB8 RLA    
-decax1                    004FE3 RLA    decax4                    004FEA RLA    
-decsp1                    004FF1 RLA    decsp2                    004FFA RLA    
-decsp4                    005007 RLA    decsp6                    005014 RLA    
-decsp8                    005021 RLA    toseqax                   005032 RLA    
-_fclose                   005038 RLA    _fgetc                    00505A RLA    
-_fgets                    0050E6 RLA    getfd                     005199 RLA    
-pushname                  0051AF RLA    popname                   005216 RLA    
-_fopen                    00525F RLA    _fputs                    005277 RLA    
-_free                     0052BB RLA    iobuf_free                0052BB RLA    
-gotoxy                    00548E RLA    tosicmp                   0054A1 RLA    
-incax1                    0054CD RLA    incax4                    0054D4 RLA    
-incaxy                    0054D6 RLA    incsp1                    0054DF RLA    
-popax                     0054E6 RLA    incsp2                    0054EE RLA    
-incsp3                    0054FC RLA    incsp4                    005501 RLA    
-incsp5                    005506 RLA    incsp6                    00550B RLA    
-incsp7                    005510 RLA    incsp8                    005515 RLA    
-tosaddeax                 005520 RLA    toslcmp                   00553F RLA    
-ldauidx                   00557A RLA    ldaxidx                   005585 RLA    
-ldax0sp                   005590 RLA    ldaxysp                   005592 RLA    
-ldeaxidx                  00559B RLA    ldeaxysp                  0055B2 RLA    
-leaa0sp                   0055C3 RLA    toseqeax                  0055CF RLA    
-tosneeax                  0055D5 RLA    tosoreax                  0055E1 RLA    
-pusheax                   005608 RLA    tossubeax                 005626 RLA    
-utsteax                   005647 RLA    tosudiveax                00565C RLA    
-getlop                    005667 RLA    udiv32                    00568B RLA    
-tosuleeax                 0056D0 RLA    tosumodeax                0056DC RLA    
-boolne                    0056EF RLA    booleq                    0056F5 RLA    
-boolge                    005706 RLA    boolule                   00570C RLA    
-boolult                   00570E RLA    boolugt                   005714 RLA    
-booluge                   005716 RLA    _malloc                   00571B RLA    
-_memcpy                   005829 RLA    tosmulax                  005865 RLA    
-tosumulax                 005865 RLA    mul8x16                   0058AC RLA    
-mul8x16a                  0058B6 RLA    mulax3                    0058E4 RLA    
-_open                     0058F5 RLA    freebuffer                0059CE RLA    
-closedirect               0059D6 RLA    closeallfiles             0059E0  LAI   
-__osmaperrno              0059EE RLA    _posix_memalign           005A04 RLA    
-iobuf_alloc               005A04 RLA    popa                      005C06 RLA    
-popptr1                   005C12 RLA    pusha                     005C24 RLA    
-pusha0                    005C38 RLA    pushax                    005C3A RLA    
-pushwysp                  005C52 RLA    _read                     005C6C RLA    
-_realloc                  005CC6 RLA    regswap2                  005E0B RLA    
-_fflush                   005E21 REA    return0                   005E21 RLA    
-rwprolog                  005E25 RLA    rwcommon                  005E32 RLA    
-rwepilog                  005E55 RLA    shreax2                   005E62 RLA    
-shreax4                   005E75 RLA    staspidx                  005E86 RLA    
-stax0sp                   005E9C RLA    staxysp                   005E9E RLA    
-staxspidx                 005EA7 RLA    steaxysp                  005EC4 RLA    
-steaxspidx                005ED7 RLA    _strchr                   005EF9 RLA    
-_strcmp                   005F20 RLA    _strlen                   005F41 RLA    
-_strncpy                  005F57 RLA    tossubax                  005F9D RLA    
-subeqysp                  005FB2 RLA    subysp                    005FC5 RLA    
-tosulong                  005FD2 RLA    tosugeax                  00600E RLA    
-tosugtax                  006018 RLA    tosuleax                  006022 RLA    
-tosultax                  00602A RLA    _write                    006030 RLA    
-zerobss                   0060A0 RLA    __DESTRUCTOR_TABLE__      0066C2 RLA    
-__filetab                 0066C8 RLA    _stdin                    0066E0 RLA    
-_stdout                   0066E2 RLA    __heapptr                 0066E8 RLA    
-__heapend                 0066EA RLA    __heapfirst               0066EC RLA    
-__heaplast                0066EE RLA    __dos_type                00671C RLA    
-fdtab                     00671D RLA    jmpvec                    00673D RLA    
-callmli                   006740 RLA    __BSS_RUN__               00678A RLA    
-__ONCE_LOAD__             00678A RLA    __ONCE_RUN__              00678A RLA    
-initheap                  00678A  LAI   initlib                   00679A RLA    
-initdostype               006810  LAI   raisefilelevel            006824  LAI   
-initprompt                00682D  LAI   __CONSTRUCTOR_TABLE__     006832 RLA    
-__MAIN_LAST__             00683A RLA    cursor                    00694A RLA    
-__oserror                 00694D RLA    __errno                   00694E RLA    
-mliparam                  006950 RLA    __HIMEM__                 009600 REA    
+_hconv_map_modified_codepoint 002801 RLA    __directerrno             004E32 RLA    
+__fdesc                   004E3C RLA    __fopen                   004E59 RLA    
+__mappederrno             004ED4 RLA    __seterrno                004EE4 RLA    
+tosaddax                  004EEF RLA    addeqysp                  004F0B RLA    
+addysp1                   004F1A RLA    addysp                    004F1B RLA    
+aulong                    004F2E RLA    tosandax                  004F37 RLA    
+aslax1                    004F45 RLA    shlax1                    004F45 RLA    
+aslax2                    004F4D RLA    shlax2                    004F4D RLA    
+shlax3                    004F58 RLA    shlax4                    004F66 RLA    
+shleax2                   004F77 RLA    shleax4                   004F8A RLA    
+asrax3                    004F9B RLA    axlong                    004FAF RLA    
+axulong                   004FB5 RLA    bnegax                    004FBC RLA    
+callmain                  004FCA RLA    _cgetc                    004FE1 RLA    
+_close                    005009 RLA    complax                   005025 RLA    
+donelib                   00502E RLA    _cputc                    00503F RLA    
+putchardirect             005073 RLA    _cputs                    005087 RLA    
+decax1                    0050B2 RLA    decax4                    0050B9 RLA    
+decsp1                    0050C0 RLA    decsp2                    0050C9 RLA    
+decsp4                    0050D6 RLA    decsp6                    0050E3 RLA    
+decsp8                    0050F0 RLA    toseqax                   005101 RLA    
+_fclose                   005107 RLA    _fgetc                    005129 RLA    
+_fgets                    0051B5 RLA    getfd                     005268 RLA    
+pushname                  00527E RLA    popname                   0052E5 RLA    
+_fopen                    00532E RLA    _fputs                    005346 RLA    
+_free                     00538A RLA    iobuf_free                00538A RLA    
+gotoxy                    00555D RLA    tosicmp                   005570 RLA    
+incax1                    00559C RLA    incax4                    0055A3 RLA    
+incaxy                    0055A5 RLA    incsp1                    0055AE RLA    
+popax                     0055B5 RLA    incsp2                    0055BD RLA    
+incsp3                    0055CB RLA    incsp4                    0055D0 RLA    
+incsp5                    0055D5 RLA    incsp6                    0055DA RLA    
+incsp7                    0055DF RLA    incsp8                    0055E4 RLA    
+tosaddeax                 0055EF RLA    toslcmp                   00560E RLA    
+ldauidx                   005649 RLA    ldaxidx                   005654 RLA    
+ldax0sp                   00565F RLA    ldaxysp                   005661 RLA    
+ldeaxidx                  00566A RLA    ldeaxysp                  005681 RLA    
+leaa0sp                   005692 RLA    toseqeax                  00569E RLA    
+tosneeax                  0056A4 RLA    tosoreax                  0056B0 RLA    
+pusheax                   0056D7 RLA    tossubeax                 0056F5 RLA    
+utsteax                   005716 RLA    tosudiveax                00572B RLA    
+getlop                    005736 RLA    udiv32                    00575A RLA    
+tosuleeax                 00579F RLA    tosumodeax                0057AB RLA    
+boolne                    0057BE RLA    booleq                    0057C4 RLA    
+boolge                    0057D5 RLA    boolule                   0057DB RLA    
+boolult                   0057DD RLA    boolugt                   0057E3 RLA    
+booluge                   0057E5 RLA    _malloc                   0057EA RLA    
+_memcpy                   0058F8 RLA    tosmulax                  005934 RLA    
+tosumulax                 005934 RLA    mul8x16                   00597B RLA    
+mul8x16a                  005985 RLA    mulax3                    0059B3 RLA    
+_open                     0059C4 RLA    freebuffer                005A9D RLA    
+closedirect               005AA5 RLA    closeallfiles             005AAF  LAI   
+__osmaperrno              005ABD RLA    _posix_memalign           005AD3 RLA    
+iobuf_alloc               005AD3 RLA    popa                      005CD5 RLA    
+popptr1                   005CE1 RLA    pusha                     005CF3 RLA    
+pusha0                    005D07 RLA    pushax                    005D09 RLA    
+pushwysp                  005D21 RLA    _read                     005D3B RLA    
+_realloc                  005D95 RLA    regswap2                  005EDA RLA    
+_fflush                   005EF0 REA    return0                   005EF0 RLA    
+rwprolog                  005EF4 RLA    rwcommon                  005F01 RLA    
+rwepilog                  005F24 RLA    shreax2                   005F31 RLA    
+shreax4                   005F44 RLA    staspidx                  005F55 RLA    
+stax0sp                   005F6B RLA    staxysp                   005F6D RLA    
+staxspidx                 005F76 RLA    steaxysp                  005F93 RLA    
+steaxspidx                005FA6 RLA    _strchr                   005FC8 RLA    
+_strcmp                   005FEF RLA    _strlen                   006010 RLA    
+_strncpy                  006026 RLA    tossubax                  00606C RLA    
+subeqysp                  006081 RLA    subysp                    006094 RLA    
+tosulong                  0060A1 RLA    tosugeax                  0060DD RLA    
+tosugtax                  0060E7 RLA    tosuleax                  0060F1 RLA    
+tosultax                  0060F9 RLA    _write                    0060FF RLA    
+zerobss                   00616F RLA    __DESTRUCTOR_TABLE__      006791 RLA    
+__filetab                 006797 RLA    _stdin                    0067AF RLA    
+_stdout                   0067B1 RLA    __heapptr                 0067B7 RLA    
+__heapend                 0067B9 RLA    __heapfirst               0067BB RLA    
+__heaplast                0067BD RLA    __dos_type                0067EB RLA    
+fdtab                     0067EC RLA    jmpvec                    00680C RLA    
+callmli                   00680F RLA    __BSS_RUN__               006859 RLA    
+__ONCE_LOAD__             006859 RLA    __ONCE_RUN__              006859 RLA    
+initheap                  006859  LAI   initlib                   006869 RLA    
+initdostype               0068DF  LAI   raisefilelevel            0068F3  LAI   
+initprompt                0068FC  LAI   __CONSTRUCTOR_TABLE__     006901 RLA    
+__MAIN_LAST__             006909 RLA    cursor                    006A19 RLA    
+__oserror                 006A1C RLA    __errno                   006A1D RLA    
+mliparam                  006A1F RLA    __HIMEM__                 009600 REA    
 __LCADDR__                00D400 REA    __LC_LAST__               00D400 RLA    
 __LC_START__              00D400 RLA    
 
@@ -683,13 +683,13 @@ _write (write.o):
     fputs.o                   ../libwrk/apple2/fputs.s(15)
 addeqysp (addeqsp.o):
     fgets.o                   ../libwrk/apple2/fgets.s(116)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -705,18 +705,18 @@ addysp (addysp.o):
     incsp4.o                  runtime/incsp4.s(8)
     incsp3.o                  runtime/incsp3.s(8)
     fgets.o                   ../libwrk/apple2/fgets.s(116)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -733,38 +733,38 @@ addysp1 (addysp.o):
 aslax1 (aslax1.o):
     a2hview.o                 a2hview.s(2143)
 aslax2 (aslax2.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 asrax3 (asrax3.o):
     a2hview.o                 a2hview.s(2143)
 aulong (along.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 axlong (axlong.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 axulong (axlong.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 bnegax (bneg.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -775,16 +775,16 @@ bnegax (bneg.o):
 booleq (makebool.o):
     leq.o                     runtime/leq.s(8)
     eq.o                      runtime/eq.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -792,14 +792,14 @@ booleq (makebool.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 boolge (makebool.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 boolne (makebool.o):
     lne.o                     runtime/lne.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -815,13 +815,13 @@ boolule (makebool.o):
     lule.o                    runtime/lule.s(8)
 boolult (makebool.o):
     ult.o                     runtime/ult.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -853,12 +853,12 @@ decsp1 (decsp1.o):
     a2hview.o                 a2hview.s(2143)
 decsp2 (decsp2.o):
     toslong.o                 runtime/toslong.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -868,21 +868,21 @@ decsp2 (decsp2.o):
 decsp4 (decsp4.o):
     lpush.o                   runtime/lpush.s(12)
     fgets.o                   ../libwrk/apple2/fgets.s(116)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 decsp6 (decsp6.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
     realloc.o                 ../libwrk/apple2/realloc.s(194)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 decsp8 (decsp8.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 donelib (condes.o):
@@ -903,11 +903,11 @@ gotoxy (gotoxy.o):
     cputs.o                   conio/cputs.s(9)
     cputc.o                   apple2/cputc.s(13)
 incax1 (incax1.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -916,12 +916,12 @@ incax4 (incaxy.o):
 incaxy (incaxy.o):
     open.o                    apple2/open.s(14)
 incsp1 (incsp1.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -935,20 +935,20 @@ incsp2 (incsp2.o):
     staxspi.o                 runtime/staxspi.s(9)
     staspidx.o                runtime/staspidx.s(8)
     popptr1.o                 runtime/popptr1.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 incsp3 (incsp3.o):
     fgetc.o                   ../libwrk/apple2/fgetc.s(96)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 incsp4 (incsp4.o):
@@ -956,37 +956,37 @@ incsp4 (incsp4.o):
     lcmp.o                    runtime/lcmp.s(9)
     _fopen.o                  common/_fopen.s(11)
     fputs.o                   ../libwrk/apple2/fputs.s(61)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 incsp5 (incsp5.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 incsp6 (incsp6.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 incsp7 (incsp7.o):
     a2hview.o                 a2hview.s(2143)
 incsp8 (incsp8.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 initlib (condes.o):
@@ -996,15 +996,15 @@ iobuf_alloc (iobuf.o):
 iobuf_free (iobuf.o):
     open.o                    apple2/open.s(13)
 jmpvec (jmpvec.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 ldauidx (ldaui.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1017,51 +1017,51 @@ ldax0sp (ldaxsp.o):
 ldaxidx (ldaxi.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
     realloc.o                 ../libwrk/apple2/realloc.s(194)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 ldaxysp (ldaxsp.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
     realloc.o                 ../libwrk/apple2/realloc.s(194)
     fputs.o                   ../libwrk/apple2/fputs.s(61)
     fgets.o                   ../libwrk/apple2/fgets.s(116)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1081,39 +1081,39 @@ ldaxysp (ldaxsp.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 ldeaxidx (ldeaxi.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 ldeaxysp (ldeaxysp.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 leaa0sp (leaaxsp.o):
     fgetc.o                   ../libwrk/apple2/fgetc.s(96)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1201,18 +1201,18 @@ ptr4 (zeropage.o):
     ludiv.o                   runtime/ludiv.s(10)
     free.o                    common/free.s(62)
 pusha (pusha.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1241,35 +1241,35 @@ pushax (pushax.o):
     fopen.o                   common/fopen.s(11)
     fgets.o                   ../libwrk/apple2/fgets.s(116)
     fgetc.o                   ../libwrk/apple2/fgetc.s(96)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1295,20 +1295,20 @@ pushax (pushax.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 pusheax (lpush.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1349,24 +1349,24 @@ rwprolog (rwcommon.o):
     write.o                   apple2/write.s(8)
     read.o                    apple2/read.s(9)
 shlax1 (aslax1.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 shlax2 (aslax2.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 shlax3 (aslax3.o):
     a2hview.o                 a2hview.s(2143)
 shlax4 (aslax4.o):
     a2hview.o                 a2hview.s(2143)
 shleax2 (asleax2.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 shleax4 (asleax4.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 shreax2 (shreax2.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 shreax4 (shreax4.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 sp (zeropage.o):
     and.o                     runtime/and.s(9)
     sub.o                     runtime/sub.s(9)
@@ -1439,11 +1439,11 @@ sreg (zeropage.o):
     hconv.o                   hconv.s(10)
     a2hview.o                 a2hview.s(10)
 staspidx (staspidx.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1455,33 +1455,33 @@ stax0sp (staxsp.o):
     fgets.o                   ../libwrk/apple2/fgets.s(116)
 staxspidx (staxspi.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 staxysp (staxsp.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
     realloc.o                 ../libwrk/apple2/realloc.s(194)
     fgets.o                   ../libwrk/apple2/fgets.s(116)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1491,19 +1491,19 @@ staxysp (staxsp.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 steaxspidx (steaxspi.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 steaxysp (steaxsp.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 subeqysp (subeqsp.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
@@ -1512,9 +1512,9 @@ subeqysp (subeqsp.o):
     a2hview.o                 a2hview.s(2143)
 subysp (subysp.o):
     filename.o                apple2/filename.s(8)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 tmp1 (zeropage.o):
     incaxy.o                  runtime/incaxy.s(8)
@@ -1558,18 +1558,18 @@ tmp4 (zeropage.o):
     lumod.o                   runtime/lumod.s(10)
     ludiv.o                   runtime/ludiv.s(10)
 tosaddax (add.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
@@ -1582,16 +1582,16 @@ tosaddax (add.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 tosaddeax (ladd.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 tosandax (and.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
 toseqax (eq.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 toseqeax (leq.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 tosicmp (icmp.o):
     ult.o                     runtime/ult.s(8)
@@ -1604,60 +1604,60 @@ toslcmp (lcmp.o):
     lne.o                     runtime/lne.s(8)
     leq.o                     runtime/leq.s(8)
 tosmulax (mul.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 tosneeax (lne.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 tosoreax (lor.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
 tossubax (sub.o):
     pmemalign.o               ../libwrk/apple2/pmemalign.s(294)
 tossubeax (lsub.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 tosudiveax (ludiv.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 tosugeax (uge.o):
     a2hview.o                 a2hview.s(2143)
 tosugtax (ugt.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 tosuleax (ule.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 tosuleeax (lule.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 tosulong (toslong.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
 tosultax (ult.o):
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
+    hconv.o                   hconv.s(6289)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 tosumodeax (lumod.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 tosumulax (mul.o):
     a2hview.o                 a2hview.s(2143)
     a2hview.o                 a2hview.s(2143)
 udiv32 (ludiv.o):
     lumod.o                   runtime/lumod.s(9)
 utsteax (ltest.o):
-    hconv.o                   hconv.s(6212)
+    hconv.o                   hconv.s(6289)
 zerobss (zerobss.o):
     crt0.o                    apple2/crt0.s(11)
 

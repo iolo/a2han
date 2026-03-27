@@ -13,13 +13,16 @@ BELL            = $FF3A
 COUT1           = $FDF0
 SPAN_END        = $01
 SPAN_START      = $0B
-NBYTES_MAX      = $20
 
-STATE_IDLE      = $00
-STATE_ACTIVE    = $01
-
-PARSE_MODE_FALLBACK    = $00
-PARSE_MODE_COMPOSEONLY = $01
+STATE_S0        = $00
+STATE_S1        = $01
+STATE_S2        = $02
+STATE_S3        = $03
+STATE_S4        = $04
+STATE_S5        = $05
+STATE_S6        = $06
+STATE_S7        = $07
+STATE_S8        = $08
 
 JAMO_KIND_INITIAL = $00
 JAMO_KIND_VOWEL   = $01
@@ -78,64 +81,459 @@ output_hook:
 
         lda     output_char
         and     #$7F
+        sta     current_char
+
+        lda     automaton_state
+        beq     output_idle
+
+        lda     current_char
         cmp     #SPAN_START
-        beq     output_start_span
+        beq     output_done
         cmp     #SPAN_END
-        beq     output_end_or_pass
+        beq     output_close_span
+        jsr     automaton_feed
+        jmp     output_done
 
-        lda     output_state
-        beq     output_passthrough
-
-        ldx     output_length
-        cpx     #NBYTES_MAX
-        bcs     output_overflow_store
-        lda     output_char
-        sta     output_buffer,x
-        inx
-        stx     output_length
-        jmp     output_return
-
-output_overflow_store:
-        lda     #$01
-        sta     output_overflow
-        jmp     output_return
-
-output_start_span:
-        lda     output_state
-        bne     output_store_literal
-        lda     #STATE_ACTIVE
-        sta     output_state
-        lda     #$00
-        sta     output_length
-        sta     output_overflow
-        jmp     output_return
-
-output_store_literal:
-        ldx     output_length
-        cpx     #NBYTES_MAX
-        bcs     output_overflow_store
-        lda     output_char
-        sta     output_buffer,x
-        inx
-        stx     output_length
-        jmp     output_return
-
-output_end_or_pass:
-        lda     output_state
-        beq     output_passthrough
-        jsr     flush_output_span
-        jmp     output_return
-
-output_passthrough:
+output_idle:
+        lda     current_char
+        cmp     #SPAN_START
+        beq     output_open_span
         lda     output_char
         jsr     call_saved_output
+        jmp     output_done
 
-output_return:
+output_open_span:
+        lda     #STATE_S1
+        sta     automaton_state
+
+output_done:
         pla
         tay
         pla
         tax
         lda     output_char
+        rts
+
+output_close_span:
+        jsr     flush_buffered_state
+        lda     #STATE_S0
+        sta     automaton_state
+        jmp     output_done
+
+automaton_feed:
+        lda     automaton_state
+        cmp     #STATE_S1
+        bne     :+
+        jmp     handle_state_s1
+:       cmp     #STATE_S2
+        bne     :+
+        jmp     handle_state_s2
+:       cmp     #STATE_S3
+        bne     :+
+        jmp     handle_state_s3
+:       cmp     #STATE_S4
+        bne     :+
+        jmp     handle_state_s4
+:       cmp     #STATE_S5
+        bne     :+
+        jmp     handle_state_s5
+:       cmp     #STATE_S6
+        bne     :+
+        jmp     handle_state_s6
+:       cmp     #STATE_S7
+        bne     :+
+        jmp     handle_state_s7
+:       jmp     handle_state_s8
+
+handle_state_s1:
+        lda     current_char
+        jsr     map_initial
+        bcs     s1_try_vowel
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s1_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s1_literal
+        lda     current_char
+        jsr     emit_standalone_vowel
+        rts
+
+s1_literal:
+        jsr     emit_literal_char
+        rts
+
+handle_state_s2:
+        lda     current_char
+        jsr     map_initial
+        bcs     s2_try_vowel
+        jsr     emit_buffered_initial
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s2_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s2_literal
+        lda     current_char
+        jsr     begin_medial
+        rts
+
+s2_literal:
+        jsr     emit_buffered_initial
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+handle_state_s3:
+        jsr     try_extend_compound_vowel
+        bcc     s3_done
+
+        lda     current_char
+        jsr     map_final_single
+        bcs     s3_try_initial
+        lda     current_char
+        jsr     begin_final_single
+        rts
+
+s3_try_initial:
+        lda     current_char
+        jsr     map_initial
+        bcs     s3_try_vowel
+        jsr     emit_buffered_syllable_open
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s3_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s3_literal
+        jsr     emit_buffered_syllable_open
+        lda     current_char
+        jsr     emit_standalone_vowel
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+s3_literal:
+        jsr     emit_buffered_syllable_open
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+
+s3_done:
+        rts
+
+handle_state_s4:
+        jsr     try_extend_compound_final
+        bcc     s4_done
+
+        lda     current_char
+        jsr     map_initial
+        bcs     s4_try_vowel
+        jsr     emit_buffered_syllable_full
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s4_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s4_literal
+        jsr     emit_buffered_syllable_open
+        lda     buffered_t1_char
+        jsr     begin_initial
+        lda     current_char
+        jsr     begin_medial
+        rts
+
+s4_literal:
+        jsr     emit_buffered_syllable_full
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+
+s4_done:
+        rts
+
+handle_state_s5:
+        lda     current_char
+        jsr     map_initial
+        bcs     s5_try_vowel
+        jsr     emit_buffered_syllable_full
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s5_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s5_literal
+        jsr     emit_buffered_syllable_split_final
+        lda     buffered_t2_char
+        jsr     begin_initial
+        lda     current_char
+        jsr     begin_medial
+        rts
+
+s5_literal:
+        jsr     emit_buffered_syllable_full
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+handle_state_s6:
+        lda     current_char
+        jsr     map_final_single
+        bcs     s6_try_initial
+        lda     current_char
+        jsr     begin_final_single
+        lda     #STATE_S7
+        sta     automaton_state
+        rts
+
+s6_try_initial:
+        lda     current_char
+        jsr     map_initial
+        bcs     s6_try_vowel
+        jsr     emit_buffered_syllable_open
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s6_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s6_literal
+        jsr     emit_buffered_syllable_open
+        lda     current_char
+        jsr     emit_standalone_vowel
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+s6_literal:
+        jsr     emit_buffered_syllable_open
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+handle_state_s7:
+        jsr     try_extend_compound_final
+        bcc     s7_done
+
+        lda     current_char
+        jsr     map_initial
+        bcs     s7_try_vowel
+        jsr     emit_buffered_syllable_full
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s7_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s7_literal
+        jsr     emit_buffered_syllable_open
+        lda     buffered_t1_char
+        jsr     begin_initial
+        lda     current_char
+        jsr     begin_medial
+        rts
+
+s7_literal:
+        jsr     emit_buffered_syllable_full
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+
+s7_done:
+        rts
+
+handle_state_s8:
+        lda     current_char
+        jsr     map_initial
+        bcs     s8_try_vowel
+        jsr     emit_buffered_syllable_full
+        lda     current_char
+        jsr     begin_initial
+        rts
+
+s8_try_vowel:
+        lda     current_char
+        jsr     map_vowel_single
+        bcs     s8_literal
+        jsr     emit_buffered_syllable_split_final
+        lda     buffered_t2_char
+        jsr     begin_initial
+        lda     current_char
+        jsr     begin_medial
+        rts
+
+s8_literal:
+        jsr     emit_buffered_syllable_full
+        jsr     emit_literal_char
+        lda     #STATE_S1
+        sta     automaton_state
+        rts
+
+flush_buffered_state:
+        lda     automaton_state
+        cmp     #STATE_S2
+        beq     flush_initial
+        cmp     #STATE_S3
+        beq     flush_open
+        cmp     #STATE_S4
+        beq     flush_full
+        cmp     #STATE_S5
+        beq     flush_full
+        cmp     #STATE_S6
+        beq     flush_open
+        cmp     #STATE_S7
+        beq     flush_full
+        cmp     #STATE_S8
+        beq     flush_full
+        rts
+
+flush_initial:
+        jsr     emit_buffered_initial
+        rts
+
+flush_open:
+        jsr     emit_buffered_syllable_open
+        rts
+
+flush_full:
+        jsr     emit_buffered_syllable_full
+        rts
+
+begin_initial:
+        sta     buffered_initial_char
+        jsr     map_initial
+        sta     buffered_l_index
+        lda     #STATE_S2
+        sta     automaton_state
+        rts
+
+begin_medial:
+        sta     buffered_vowel_char
+        jsr     map_vowel_single
+        sta     buffered_v_index
+        lda     #STATE_S3
+        sta     automaton_state
+        rts
+
+begin_final_single:
+        sta     buffered_t1_char
+        jsr     map_final_single
+        sta     buffered_t_index
+        lda     #STATE_S4
+        sta     automaton_state
+        rts
+
+try_extend_compound_vowel:
+        lda     buffered_vowel_char
+        sta     token_char
+        lda     current_char
+        sta     token_char_next
+        jsr     map_vowel_pair
+        bcs     compound_vowel_fail
+        sta     buffered_v_index
+        lda     #STATE_S6
+        sta     automaton_state
+        clc
+        rts
+
+compound_vowel_fail:
+        sec
+        rts
+
+try_extend_compound_final:
+        lda     buffered_t1_char
+        sta     token_char
+        lda     current_char
+        sta     token_char_next
+        jsr     map_final_pair
+        bcs     compound_final_fail
+        sta     buffered_t_index
+        lda     current_char
+        sta     buffered_t2_char
+        lda     automaton_state
+        cmp     #STATE_S4
+        bne     set_state_s8
+        lda     #STATE_S5
+        sta     automaton_state
+        clc
+        rts
+
+set_state_s8:
+        lda     #STATE_S8
+        sta     automaton_state
+        clc
+        rts
+
+compound_final_fail:
+        sec
+        rts
+
+emit_literal_char:
+        lda     current_char
+        ora     #$80
+        jsr     call_saved_output
+        rts
+
+emit_buffered_initial:
+        lda     buffered_l_index
+        sta     token_value
+        lda     #JAMO_KIND_INITIAL
+        sta     jamo_kind
+        jsr     emit_modified_jamo
+        rts
+
+emit_standalone_vowel:
+        jsr     map_vowel_single
+        sta     token_value
+        lda     #JAMO_KIND_VOWEL
+        sta     jamo_kind
+        jsr     emit_modified_jamo
+        rts
+
+emit_buffered_syllable_open:
+        lda     buffered_l_index
+        sta     l_index
+        lda     buffered_v_index
+        sta     v_index
+        lda     #$00
+        sta     t_index
+        jsr     emit_modified_syllable
+        rts
+
+emit_buffered_syllable_split_final:
+        lda     buffered_l_index
+        sta     l_index
+        lda     buffered_v_index
+        sta     v_index
+        lda     buffered_t1_char
+        jsr     map_final_single
+        sta     t_index
+        jsr     emit_modified_syllable
+        rts
+
+emit_buffered_syllable_full:
+        lda     buffered_l_index
+        sta     l_index
+        lda     buffered_v_index
+        sta     v_index
+        lda     buffered_t_index
+        sta     t_index
+        jsr     emit_modified_syllable
         rts
 
 input_hook:
@@ -145,199 +543,13 @@ input_hook:
         cmp     #SPAN_START
         beq     input_ring_bell
         cmp     #SPAN_END
-        bne     input_return_char
+        bne     input_return
 
 input_ring_bell:
         jsr     BELL
 
-input_return_char:
+input_return:
         lda     input_char
-        rts
-
-flush_output_span:
-        lda     output_overflow
-        bne     flush_output_raw
-        lda     #<output_buffer
-        sta     <parse_ptr
-        lda     #>output_buffer
-        sta     <parse_ptr+1
-        lda     output_length
-        sta     parse_length
-        lda     #PARSE_MODE_FALLBACK
-        sta     parse_mode
-        jsr     parse_and_emit_span
-        lda     #STATE_IDLE
-        sta     output_state
-        lda     #$00
-        sta     output_length
-        sta     output_overflow
-        rts
-
-flush_output_raw:
-        lda     #SPAN_START
-        jsr     call_saved_output
-        ldx     #$00
-
-flush_output_raw_loop:
-        cpx     output_length
-        bcs     flush_output_raw_done
-        lda     output_buffer,x
-        jsr     call_saved_output
-        inx
-        bne     flush_output_raw_loop
-
-flush_output_raw_done:
-        lda     #SPAN_END
-        jsr     call_saved_output
-        lda     #STATE_IDLE
-        sta     output_state
-        lda     #$00
-        sta     output_length
-        sta     output_overflow
-        rts
-
-parse_and_emit_span:
-        ldx     #$00
-
-parse_loop:
-        cpx     parse_length
-        bcs     parse_done
-        stx     parse_index
-        jsr     try_emit_syllable
-        bcs     parse_advance
-        jsr     try_emit_standalone_jamo
-        bcs     parse_advance
-        lda     parse_mode
-        bne     parse_skip_raw
-        ldy     parse_index
-        lda     (parse_ptr),y
-        jsr     call_saved_output
-        ldx     parse_index
-        inx
-        jmp     parse_loop
-
-parse_skip_raw:
-        ldx     parse_index
-        inx
-        jmp     parse_loop
-
-parse_advance:
-        ldx     parse_index
-        clc
-        lda     consumed_count
-        adc     parse_index
-        tax
-        jmp     parse_loop
-
-parse_done:
-        rts
-
-try_emit_syllable:
-        ldy     parse_index
-        lda     (parse_ptr),y
-        jsr     map_initial
-        bcs     try_fail
-        sta     l_index
-
-        iny
-        cpy     parse_length
-        bcs     try_fail
-        sty     token_index
-        jsr     map_vowel_token
-        bcs     try_fail
-        sta     v_index
-
-        lda     #$01
-        sta     consumed_count
-        clc
-        adc     token_size
-        sta     consumed_count
-
-        lda     #$00
-        sta     t_index
-
-        ldy     token_index
-        lda     token_size
-        cmp     #$02
-        bcc     after_vowel_extra
-        iny
-after_vowel_extra:
-        iny
-        cpy     parse_length
-        bcs     compose_current
-
-        sty     token_index
-        jsr     map_final_token
-        bcs     compose_current
-        sta     candidate_t
-
-        lda     token_size
-        cmp     #$01
-        bne     use_final
-
-        sty     lookahead_index
-        iny
-        cpy     parse_length
-        bcs     use_final
-
-        sty     token_index
-        jsr     map_vowel_token
-        bcs     use_final
-
-        ldy     lookahead_index
-        lda     (parse_ptr),y
-        jsr     is_base_consonant
-        bcc     use_final
-        jmp     compose_current
-
-use_final:
-        lda     candidate_t
-        sta     t_index
-        clc
-        lda     consumed_count
-        adc     token_size
-        sta     consumed_count
-
-compose_current:
-        jsr     emit_modified_syllable
-        sec
-        rts
-
-try_fail:
-        clc
-        rts
-
-try_emit_standalone_jamo:
-        ldy     parse_index
-        sty     token_index
-        jsr     map_vowel_token
-        bcc     emit_standalone_vowel
-
-        ldy     parse_index
-        lda     (parse_ptr),y
-        jsr     map_initial
-        bcs     standalone_fail
-        sta     token_value
-        lda     #$01
-        sta     consumed_count
-        lda     #JAMO_KIND_INITIAL
-        sta     jamo_kind
-        jsr     emit_modified_jamo
-        sec
-        rts
-
-emit_standalone_vowel:
-        sta     token_value
-        lda     token_size
-        sta     consumed_count
-        lda     #JAMO_KIND_VOWEL
-        sta     jamo_kind
-        jsr     emit_modified_jamo
-        sec
-        rts
-
-standalone_fail:
-        clc
         rts
 
 emit_modified_syllable:
@@ -415,21 +627,25 @@ map_initial_found:
         clc
         rts
 
-map_vowel_token:
-        ldy     token_index
-        lda     (parse_ptr),y
+map_vowel_single:
         and     #$7F
-        sta     token_char
-        lda     #$01
-        sta     token_size
-        cpy     parse_length
-        bcs     map_vowel_single
-        iny
-        cpy     parse_length
-        bcs     map_vowel_single
-        lda     (parse_ptr),y
-        and     #$7F
-        sta     token_char_next
+        ldx     #$00
+
+map_vowel_single_loop:
+        cmp     vowel_chars,x
+        beq     map_vowel_single_found
+        inx
+        cpx     #VOWEL_COUNT
+        bcc     map_vowel_single_loop
+        sec
+        rts
+
+map_vowel_single_found:
+        lda     vowel_indices,x
+        clc
+        rts
+
+map_vowel_pair:
         ldx     #$00
 
 map_vowel_pair_loop:
@@ -439,51 +655,38 @@ map_vowel_pair_loop:
         lda     token_char_next
         cmp     vowel_pair_second,x
         beq     map_vowel_pair_found
+
 map_vowel_pair_next:
         inx
         cpx     #VOWEL_PAIR_COUNT
         bcc     map_vowel_pair_loop
-
-map_vowel_single:
-        lda     token_char
-        ldx     #$00
-
-map_vowel_loop:
-        cmp     vowel_chars,x
-        beq     map_vowel_found
-        inx
-        cpx     #VOWEL_COUNT
-        bcc     map_vowel_loop
         sec
         rts
 
 map_vowel_pair_found:
-        lda     #$02
-        sta     token_size
         lda     vowel_pair_indices,x
         clc
         rts
 
-map_vowel_found:
-        lda     vowel_indices,x
+map_final_single:
+        and     #$7F
+        ldx     #$00
+
+map_final_single_loop:
+        cmp     final_chars,x
+        beq     map_final_single_found
+        inx
+        cpx     #FINAL_COUNT
+        bcc     map_final_single_loop
+        sec
+        rts
+
+map_final_single_found:
+        lda     final_indices,x
         clc
         rts
 
-map_final_token:
-        ldy     token_index
-        lda     (parse_ptr),y
-        and     #$7F
-        sta     token_char
-        lda     #$01
-        sta     token_size
-        cpy     parse_length
-        bcs     map_final_single
-        iny
-        cpy     parse_length
-        bcs     map_final_single
-        lda     (parse_ptr),y
-        and     #$7F
-        sta     token_char_next
+map_final_pair:
         ldx     #$00
 
 map_final_pair_loop:
@@ -493,81 +696,17 @@ map_final_pair_loop:
         lda     token_char_next
         cmp     final_pair_second,x
         beq     map_final_pair_found
+
 map_final_pair_next:
         inx
         cpx     #FINAL_PAIR_COUNT
         bcc     map_final_pair_loop
-
-map_final_single:
-        lda     token_char
-        ldx     #$00
-
-map_final_loop:
-        cmp     final_chars,x
-        beq     map_final_found
-        inx
-        cpx     #FINAL_COUNT
-        bcc     map_final_loop
         sec
         rts
 
 map_final_pair_found:
-        lda     #$02
-        sta     token_size
         lda     final_pair_indices,x
         clc
-        rts
-
-map_final_found:
-        lda     final_indices,x
-        clc
-        rts
-
-is_base_consonant:
-        and     #$7F
-        cmp     #'A'
-        beq     is_consonant_yes
-        cmp     #'C'
-        beq     is_consonant_yes
-        cmp     #'D'
-        beq     is_consonant_yes
-        cmp     #'E'
-        beq     is_consonant_yes
-        cmp     #'F'
-        beq     is_consonant_yes
-        cmp     #'G'
-        beq     is_consonant_yes
-        cmp     #'Q'
-        beq     is_consonant_yes
-        cmp     #'R'
-        beq     is_consonant_yes
-        cmp     #'S'
-        beq     is_consonant_yes
-        cmp     #'T'
-        beq     is_consonant_yes
-        cmp     #'V'
-        beq     is_consonant_yes
-        cmp     #'W'
-        beq     is_consonant_yes
-        cmp     #'X'
-        beq     is_consonant_yes
-        cmp     #'Z'
-        beq     is_consonant_yes
-        cmp     #'e'
-        beq     is_consonant_yes
-        cmp     #'q'
-        beq     is_consonant_yes
-        cmp     #'r'
-        beq     is_consonant_yes
-        cmp     #'t'
-        beq     is_consonant_yes
-        cmp     #'w'
-        beq     is_consonant_yes
-        clc
-        rts
-
-is_consonant_yes:
-        sec
         rts
 
 call_saved_input:
@@ -590,11 +729,6 @@ output_call:
         jsr     $FFFF
         rts
 
-        .segment "ZEROPAGE"
-
-parse_ptr:
-        .res    2
-
         .segment "RODATA"
 
 banner:
@@ -603,11 +737,11 @@ banner:
         .byte   $8D, $00
 
 initial_chars:
-        .byte   'R', 'r', 'S', 'E', 'e', 'F', 'A', 'Q', 'q', 'T', 't', 'D', 'W', 'w'
-        .byte   'C', 'Z', 'X', 'V', 'G'
+        .byte   'R', 'r', '-', 'S', 'E', 'e', '=', 'F', 'A', 'Q', 'q', '*', 'T', 't', '<', 'D', 'W', 'w'
+        .byte   '>', 'C', 'Z', 'X', 'V', 'G'
 initial_indices:
-        .byte   $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D
-        .byte   $0E, $0F, $10, $11, $12
+        .byte   $00, $01, $01, $02, $03, $04, $04, $05, $06, $07, $08, $08, $09, $0A, $0A, $0B, $0C, $0D
+        .byte   $0D, $0E, $0F, $10, $11, $12
 INITIAL_COUNT = * - initial_chars
 
 vowel_chars:
@@ -625,9 +759,9 @@ vowel_pair_indices:
 VOWEL_PAIR_COUNT = * - vowel_pair_first
 
 final_chars:
-        .byte   'R', 'r', 'S', 'E', 'F', 'A', 'Q', 'T', 't', 'D', 'W', 'C', 'Z', 'X', 'V', 'G'
+        .byte   'R', 'r', '-', 'S', 'E', 'F', 'A', 'Q', 'T', 't', '<', 'D', 'W', 'C', 'Z', 'X', 'V', 'G'
 final_indices:
-        .byte   $01, $02, $04, $07, $08, $10, $11, $13, $14, $15, $16, $17, $18, $19, $1A, $1B
+        .byte   $01, $02, $02, $04, $07, $08, $10, $11, $13, $14, $14, $15, $16, $17, $18, $19, $1A, $1B
 FINAL_COUNT = * - final_chars
 
 final_pair_first:
@@ -663,39 +797,34 @@ saved_input:
         .word   $0000
 .endif
 
-input_state:
-        .byte   STATE_IDLE
-input_length:
-        .byte   $00
-input_overflow:
-        .byte   $00
 input_char:
         .byte   $00
-input_buffer:
-        .res    NBYTES_MAX
 
-output_state:
-        .byte   STATE_IDLE
-output_length:
-        .byte   $00
-output_overflow:
-        .byte   $00
+automaton_state:
+        .byte   STATE_S0
 output_char:
         .byte   $00
-output_buffer:
-        .res    NBYTES_MAX
+current_char:
+        .byte   $00
 
-parse_length:
+buffered_initial_char:
         .byte   $00
-parse_index:
+buffered_l_index:
         .byte   $00
-consumed_count:
+buffered_vowel_char:
         .byte   $00
-lookahead_index:
+buffered_v_index:
         .byte   $00
-token_index:
+buffered_t1_char:
         .byte   $00
-token_size:
+buffered_t2_char:
+        .byte   $00
+buffered_t_index:
+        .byte   $00
+
+token_char:
+        .byte   $00
+token_char_next:
         .byte   $00
 
 l_index:
@@ -703,14 +832,6 @@ l_index:
 v_index:
         .byte   $00
 t_index:
-        .byte   $00
-candidate_t:
-        .byte   $00
-parse_mode:
-        .byte   $00
-token_char:
-        .byte   $00
-token_char_next:
         .byte   $00
 token_value:
         .byte   $00
