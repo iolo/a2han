@@ -146,7 +146,7 @@ Exit criteria:
 Status:
 
 - basic implementation is now in place
-- `HCAT` prompts for filename and source encoding, then streams `utf8`,
+- `A2HVIEW` prompts for filename and source encoding, then streams `utf8`,
   `modified`, or `nbytes` content to the display path
 - content rendering now bypasses stdio/conio and writes Apple II text memory
   directly
@@ -154,11 +154,11 @@ Status:
   scrolling
 - richer operator UX and broader file-handling polish remain open
 - current blocking issue: real Apple II runs can still drop to the monitor
-  after some amount of `HCAT` output, so renderer stability needs investigation
+  after some amount of `A2HVIEW` output, so renderer stability needs investigation
 
 Deliverables:
 
-- `hcat.c` or `hcat.s`
+- `a2hview.c` or `a2hview.s`
 - file display path with selectable source encoding
 
 Exit criteria:
@@ -202,10 +202,10 @@ Exit criteria:
 
 Immediate next steps:
 
-1. investigate the real-hardware `HCAT` crash after paged output
+1. investigate the real-hardware `A2HVIEW` crash after paged output
 2. document the current resident/runtime behavior clearly
 3. add `demo.bas`
-4. write a short manual verification checklist around `A2HAN` and `HCAT`
+4. write a short manual verification checklist around `A2HAN` and `A2HVIEW`
 
 After that:
 

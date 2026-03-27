@@ -8,7 +8,7 @@ It is the implementation target for:
 
 - the host-side converter
 - the resident Apple II program
-- utilities such as `HCAT`
+- utilities such as `A2HVIEW`
 - future tests and golden vectors
 
 Assembly source remains the authority for exact machine-level details such as
@@ -97,7 +97,7 @@ Resident fail-soft behavior on this path is:
 
 1. Host data is read as `utf8`, `modified`, or `nbytes`.
 2. `hconv.py` converts between encodings according to this specification.
-3. `HCAT` and other utilities may reuse the same conversion rules.
+3. `A2HVIEW` and other utilities may reuse the same conversion rules.
 
 ## Delimiter Semantics
 
@@ -372,7 +372,7 @@ The following components should conform to this document:
 
 - `hconv.py`
 - `a2han.s`
-- `hcat.s`
+- `a2hview.s`
 - Applesoft demo cases
 - host-side tests and golden vectors
 

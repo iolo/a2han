@@ -14,12 +14,12 @@ from hconv import convert
 SOURCE = ROOT / "tests" / "han_pangram.utf8.txt"
 OUT_DIR = ROOT / "build" / "samples"
 
-UTF8_OUT = OUT_DIR / "pangram_hcat.utf8.txt"
-MODIFIED_OUT = OUT_DIR / "pangram_hcat.modified.bin"
-NBYTES_OUT = OUT_DIR / "pangram_hcat.nbytes.txt"
+UTF8_OUT = OUT_DIR / "pangram_a2hview.utf8.txt"
+MODIFIED_OUT = OUT_DIR / "pangram_a2hview.modified.bin"
+NBYTES_OUT = OUT_DIR / "pangram_a2hview.nbytes.txt"
 
 
-def build_hcat_utf8_sample(text: str) -> str:
+def build_a2hview_utf8_sample(text: str) -> str:
     lines: list[str] = []
 
     for line in text.splitlines():
@@ -29,7 +29,7 @@ def build_hcat_utf8_sample(text: str) -> str:
     return "\n".join(lines)
 
 
-def encode_hcat_modified_sample(text: str) -> bytes:
+def encode_a2hview_modified_sample(text: str) -> bytes:
     out = bytearray()
 
     for ch in text:
@@ -45,19 +45,19 @@ def encode_hcat_modified_sample(text: str) -> bytes:
             mapped = cp - 0x6000
             out.extend(((mapped >> 8) & 0xFF, mapped & 0xFF))
         else:
-            raise ValueError(f"unsupported character for HCAT modified sample: U+{cp:04X}")
+            raise ValueError(f"unsupported character for A2HVIEW modified sample: U+{cp:04X}")
 
     return bytes(out)
 
 
 def main() -> int:
     source_text = SOURCE.read_text(encoding="utf-8")
-    sample_text = build_hcat_utf8_sample(source_text)
+    sample_text = build_a2hview_utf8_sample(source_text)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     UTF8_OUT.write_text(sample_text, encoding="utf-8")
-    MODIFIED_OUT.write_bytes(encode_hcat_modified_sample(sample_text))
-    NBYTES_OUT.write_text(convert("utf8", "nbytes", sample_text), encoding="utf-8")
+    MODIFIED_OUT.write_bytes(encode_a2hview_modified_sample(sample_text))
+    NBYTES_OUT.write_bytes(convert("utf8", "nbytes", sample_text))
     return 0
 
 

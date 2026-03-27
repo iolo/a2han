@@ -62,16 +62,16 @@ Run the Applesoft BASIC demo:
 
 Status: TODO/TBD.
 
-Run `HCAT` to display a Hangul text file:
+Run `A2HVIEW` to display a Hangul text file:
 
 ```
-] BRUN HCAT
+] BRUN A2HVIEW
 FILENAME: ...
 ENCODING: (U)nicode, (M)odified, (N)bytes:
 ...
 ```
 
-Status: basic implementation is in place. `HCAT` can prompt for a filename and
+Status: basic implementation is in place. `A2HVIEW` can prompt for a filename and
 source encoding, then display:
 
 - `utf8`: ASCII plus modern Hangul syllables/jamo transcoded to `modified`
@@ -83,12 +83,12 @@ Current limits:
 - UTF-8 support is intentionally narrow; unsupported non-Hangul Unicode code
   points stop the display with an error.
 - `nbytes` spans are validated and must terminate cleanly.
-- `HCAT` now renders file content by writing Apple II text-page memory
+- `A2HVIEW` now renders file content by writing Apple II text-page memory
   directly rather than using stdio/conio character output for the content
   stream.
-- `HCAT` no longer scrolls; when it reaches the bottom line it waits for a key
+- `A2HVIEW` no longer scrolls; when it reaches the bottom line it waits for a key
   press, clears the screen, and resumes from the top.
-- Real Apple II testing found that `HCAT` now displays content correctly, but
+- Real Apple II testing found that `A2HVIEW` now displays content correctly, but
   it can still crash to the monitor after some amount of output. This remains
   under investigation.
 
@@ -99,19 +99,20 @@ mode:
 - `PANGMOD` for `ENCODING: M`
 - `PANGNBYTES` for `ENCODING: N`
 
-These samples are the current recommended smoke-test inputs for `HCAT` on real
+These samples are the current recommended smoke-test inputs for `A2HVIEW` on real
 hardware.
 
 ## Directory Structure
 
 ```
 a2han.s         ; main program source code
-hcat.c          ; interactive Hangul file viewer built with cc65
+a2hview.c       ; interactive Hangul file viewer built with cc65
 Makefile        ; build script
 hconv.py        ; utility to convert between different encodings
 build/          ; build output directory
     A2HAN.PRO   ; ProDOS-specific build from a2han.s
     A2HAN.DOS   ; DOS 3.3-specific build from a2han.s
+    A2HVIEW     ; Apple II file viewer binary
     a2han.po    ; Apple II ProDOS disk image
     a2han.dsk   ; Apple II DOS disk image
 ```
@@ -123,7 +124,7 @@ build/          ; build output directory
 - `a2han` is built from a single shared source file, `a2han.s`, with
   build-time conditionals selecting either the ProDOS BASIC vectors or the DOS
   3.3 `KSW`/`CSW` hook path.
-- `hcat` now provides a minimal interactive file-view utility for `utf8`,
+- `a2hview` now provides a minimal interactive file-view utility for `utf8`,
   `modified`, and `nbytes` input files.
 - The resident install path now supports both ProDOS and DOS 3.3 builds.
 - The resident parser currently supports delimiter detection, buffered spans,
