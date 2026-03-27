@@ -16,7 +16,7 @@ class ConversionError(Exception):
         self.detail = detail
 
 
-BASE_NBYTES_TO_JAMO = {
+ENCODE_BASE_NBYTES_TO_JAMO = {
     "A": "ㅁ",
     "B": "ㅠ",
     "C": "ㅊ",
@@ -52,6 +52,17 @@ BASE_NBYTES_TO_JAMO = {
     "w": "ㅉ",
 }
 
+LEGACY_DOUBLE_CONSONANT_NBYTES_TO_JAMO = {
+    "-": "ㄲ",
+    "=": "ㄸ",
+    "*": "ㅃ",
+    "<": "ㅆ",
+    ">": "ㅉ",
+}
+
+BASE_NBYTES_TO_JAMO = dict(ENCODE_BASE_NBYTES_TO_JAMO)
+BASE_NBYTES_TO_JAMO.update(LEGACY_DOUBLE_CONSONANT_NBYTES_TO_JAMO)
+
 COMPOUND_NBYTES_TO_JAMO = {
     "HK": "ㅘ",
     "HO": "ㅙ",
@@ -73,7 +84,7 @@ COMPOUND_NBYTES_TO_JAMO = {
     "QT": "ㅄ",
 }
 
-JAMO_TO_NBYTES = {value: key for key, value in BASE_NBYTES_TO_JAMO.items()}
+JAMO_TO_NBYTES = {value: key for key, value in ENCODE_BASE_NBYTES_TO_JAMO.items()}
 JAMO_TO_NBYTES.update({value: key for key, value in COMPOUND_NBYTES_TO_JAMO.items()})
 
 L_TABLE = [
@@ -166,9 +177,9 @@ BASE_NBYTES_BYTE_TO_JAMO = {ord(key): value for key, value in BASE_NBYTES_TO_JAM
 COMPOUND_NBYTES_BYTE_TO_JAMO = {
     (ord(key[0]), ord(key[1])): value for key, value in COMPOUND_NBYTES_TO_JAMO.items()
 }
-C_BYTES = {ord(ch) for ch in "RrSEeFAQqTtDWwCZXVG"}
-CF_BYTES = {ord(ch) for ch in "RrSEFAQTtDWCZXVG"}
-CI_BYTES = {ord(ch) for ch in "eqw"}
+C_BYTES = {ord(ch) for ch in "Rr-SEe=FAQq*Tt<DWw>CZXVG"}
+CF_BYTES = {ord(ch) for ch in "Rr-SEFAQTt<DWCZXVG"}
+CI_BYTES = {ord(ch) for ch in "e=q*w>"}
 C1_BYTES = {ord(ch) for ch in "RSFQ"}
 V_BYTES = {ord(ch) for ch in "KOIoJPUpHYNBML"}
 V1_BYTES = {ord(ch) for ch in "HNM"}

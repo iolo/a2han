@@ -173,6 +173,11 @@ static uint32_t map_base_jamo(unsigned char ch)
         case 'X': return 0x314C;
         case 'Y': return 0x315B;
         case 'Z': return 0x314B;
+        case '*': return 0x3143;
+        case '-': return 0x3132;
+        case '<': return 0x3146;
+        case '=': return 0x3138;
+        case '>': return 0x3149;
         case 'e': return 0x3138;
         case 'o': return 0x3152;
         case 'p': return 0x3156;
@@ -273,9 +278,10 @@ static uint32_t map_compound_final(unsigned char first, unsigned char second)
 static int is_c(unsigned char ch)
 {
     switch (ch) {
-        case 'R': case 'r': case 'S': case 'E': case 'e':
-        case 'F': case 'A': case 'Q': case 'q': case 'T':
-        case 't': case 'D': case 'W': case 'w': case 'C':
+        case 'R': case 'r': case '-': case 'S': case 'E':
+        case 'e': case '=': case 'F': case 'A': case 'Q':
+        case 'q': case '*': case 'T': case 't': case '<':
+        case 'D': case 'W': case 'w': case '>': case 'C':
         case 'Z': case 'X': case 'V': case 'G':
             return 1;
     }
@@ -285,9 +291,10 @@ static int is_c(unsigned char ch)
 static int is_cf(unsigned char ch)
 {
     switch (ch) {
-        case 'R': case 'r': case 'S': case 'E': case 'F':
-        case 'A': case 'Q': case 'T': case 't': case 'D':
-        case 'W': case 'C': case 'Z': case 'X': case 'V':
+        case 'R': case 'r': case '-': case 'S': case 'E':
+        case 'F': case 'A': case 'Q': case 'T': case 't':
+        case '<': case 'D': case 'W': case 'C': case 'Z':
+        case 'X': case 'V':
         case 'G':
             return 1;
     }
@@ -296,7 +303,7 @@ static int is_cf(unsigned char ch)
 
 static int is_ci(unsigned char ch)
 {
-    return ch == 'e' || ch == 'q' || ch == 'w';
+    return ch == 'e' || ch == '=' || ch == 'q' || ch == '*' || ch == 'w' || ch == '>';
 }
 
 static int is_v(unsigned char ch)

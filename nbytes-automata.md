@@ -27,20 +27,20 @@ Scope:
 Single-byte consonant bytes:
 
 - `C`: consonants
-  `ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ = RrSEeFAQqTtDWwCZXVG`
-  regex: `[RrSEeFAQqTtDWwCZXVG]`
+  `ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ = Rr-SEe=FAQq*Tt<DWw>CZXVG`
+  regex: `[Rr\-SEe=FAQq*Tt<DWw>CZXVG]`
 
 Final-capable consonant bytes:
 
 - `Cf`: valid final consonants
-  `ㄱㄲㄴㄷㄹㅁㅂㅅㅆㅇㅈㅊㅋㅌㅍㅎ = RrSEFAQTtDWCZXVG`
-  regex: `[RrSEFAQTtDWCZXVG]`
+  `ㄱㄲㄴㄷㄹㅁㅂㅅㅆㅇㅈㅊㅋㅌㅍㅎ = Rr-SEFAQTt<DWCZXVG`
+  regex: `[Rr\-SEFAQTt<DWCZXVG]`
 
 Initial-only consonant bytes:
 
 - `Ci`: valid only as initials
-  `ㄸㅃㅉ = eqw`
-  regex: `[eqw]`
+  `ㄸㅃㅉ = e=q*w>`
+  regex: `[e=q*w>]`
 
 Compound final byte pairs:
 
@@ -48,6 +48,14 @@ Compound final byte pairs:
   `ㄱㄴㄹㅂ = R,S,F,Q`
   regex: `[RSFQ]`
 - `C2`: recognized compound final byte pairs
+
+Legacy note:
+
+- compound vowel pairs such as `HK` are only combined when the parser is
+  already in a syllable medial position after an initial consonant
+- a standalone sequence such as `HK` is emitted as `ㅗㅏ`
+- legacy `nbytes` is therefore lossy for some standalone compound vowels and
+  compound final clusters when mapped to Unicode
   `ㄳㄵㄶㄺㄻㄼㄽㄾㄿㅀㅄ = RT,SW,SG,FR,FA,FQ,FT,FX,FV,FG,QT`
 
 Single-byte vowel bytes:

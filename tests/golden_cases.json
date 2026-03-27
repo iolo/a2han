@@ -98,11 +98,53 @@
     "expected_text": "\u000bHK\u0001"
   },
   {
+    "id": "nbytes_to_utf8_jamo_wa",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bHK\u0001",
+    "expected_text": "ㅗㅏ"
+  },
+  {
     "id": "utf8_to_nbytes_jamo_giyeok_sios",
     "from": "utf8",
     "to": "nbytes",
     "input_text": "ㄳ",
     "expected_text": "\u000bRT\u0001"
+  },
+  {
+    "id": "legacy_nbytes_to_utf8_ssang_giyeok",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b-\u0001",
+    "expected_text": "ㄲ"
+  },
+  {
+    "id": "legacy_nbytes_to_utf8_ssang_digeut",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b=\u0001",
+    "expected_text": "ㄸ"
+  },
+  {
+    "id": "legacy_nbytes_to_utf8_ssang_bieup",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b*\u0001",
+    "expected_text": "ㅃ"
+  },
+  {
+    "id": "legacy_nbytes_to_utf8_ssang_sios",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b<\u0001",
+    "expected_text": "ㅆ"
+  },
+  {
+    "id": "legacy_nbytes_to_utf8_ssang_jieut",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b>\u0001",
+    "expected_text": "ㅉ"
   },
   {
     "id": "punctuation_passthrough_nbytes_to_utf8",
@@ -194,6 +236,20 @@
     "to": "utf8",
     "input_text": "\u000bRKRTK\u0001",
     "expected_text": "각사"
+  },
+  {
+    "id": "legacy_double_consonant_syllable_ssang_giyeok",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000b-K\u0001",
+    "expected_text": "까"
+  },
+  {
+    "id": "legacy_double_consonant_final_ssang_sios",
+    "from": "nbytes",
+    "to": "utf8",
+    "input_text": "\u000bRK<\u0001",
+    "expected_text": "갔"
   },
   {
     "id": "error_unterminated_nbytes_span",

@@ -164,12 +164,20 @@ U: ㅕ, V: ㅍ, W: ㅈ, X: ㅌ, Y: ㅛ, Z: ㅋ,
 e: ㄸ, o: ㅒ, p: ㅖ, q: ㅃ, r: ㄲ, t: ㅆ, w: ㅉ
 ```
 
+Legacy doubled-consonant aliases from [call3327.txt](/home/iolo/workspace/retro/a2han/call3327.txt) are also accepted on decode:
+
+```text
+-: ㄲ, =: ㄸ, *: ㅃ, <: ㅆ, >: ㅉ
+```
+
 This table defines the base symbol inventory. `nbytes` follows a composition
 model similar to the standard two-beolsik keyboard layout, but with this
 project's own letter assignment:
 
 - single symbols map to basic jamo
 - lowercase symbols are used only for `ㄲ`, `ㄸ`, `ㅃ`, `ㅆ`, `ㅉ`, `ㅒ`, and `ㅖ`
+- legacy `- = * < >` spellings for doubled consonants are accepted in addition
+  to the lowercase aliases above
 - compound vowels and compound final consonants are represented as multi-byte
   sequences of base symbols
 
@@ -180,6 +188,13 @@ the base table:
 
 ```text
 e: ㄸ, o: ㅒ, p: ㅖ, q: ㅃ, r: ㄲ, t: ㅆ, w: ㅉ
+```
+
+For compatibility with historical files, the following additional one-byte
+spellings are also accepted for doubled consonants:
+
+```text
+-: ㄲ, =: ㄸ, *: ㅃ, <: ㅆ, >: ㅉ
 ```
 
 Compound jamo are encoded as multi-byte sequences of their component base
@@ -198,10 +213,20 @@ QT: ㅄ
 Standalone jamo are representable directly:
 
 - basic jamo use the one-byte mapping above
-- double consonants use the documented lowercase single-byte forms
+- double consonants use the documented lowercase single-byte forms, and the
+  historical `- = * < >` aliases are also valid on decode
 - compound vowels use the multi-byte sequences in this section
 - compound final clusters are not standalone tokens by default; they become
   meaningful only when assigned to the `T` position during syllable composition
+
+Legacy compatibility note:
+
+- compound vowels are recognized as medial sequences inside a syllable after an
+  initial consonant; a plain standalone sequence such as `HK` is interpreted as
+  `ㅗㅏ`, not as a distinct standalone `ㅘ` code point
+- legacy `nbytes` is therefore intentionally lossy for some standalone compound
+  vowels and compound final clusters when converting to and from Unicode
+- doubled consonants remain directly representable and round-trip exactly
 
 ### Composition Rules
 
@@ -228,8 +253,8 @@ Important interpretation note:
   (`mo-eum`)
 - `choseong` and `jongseong` are positional roles assigned during syllable
   composition, not inherent token identities
-- consecutive consonant bytes do not merge into a doubled consonant unless the
-  explicit lowercase doubled token is used; for example, `RR` is `ㄱ` + `ㄱ`,
+- consecutive consonant bytes do not merge into a doubled consonant unless an
+  explicit doubled-consonant byte is used; for example, `RR` is `ㄱ` + `ㄱ`,
   not `ㄲ`
 
 Normative token classes:

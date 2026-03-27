@@ -204,6 +204,18 @@ e: ㄸ, o: ㅒ, p: ㅖ, q: ㅃ, r: ㄲ, t: ㅆ, w: ㅉ,
 ...
 ```
 
+For compatibility with historical files, doubled consonants also accept the
+legacy one-byte spellings from [call3327.txt](/home/iolo/workspace/retro/a2han/call3327.txt):
+
+```text
+-: ㄲ, =: ㄸ, *: ㅃ, <: ㅆ, >: ㅉ
+```
+
+Legacy `nbytes` remains intentionally lossy for standalone compound vowels and
+compound final clusters. In particular, compound vowel sequences such as `HK`
+are recognized as medial forms only after an initial consonant; a plain
+standalone `HK` decodes as `ㅗㅏ`, not as a distinct standalone `ㅘ`.
+
 ### Modified Unicode Encoding
 
 Standard Hangul code points cannot be written directly into the
