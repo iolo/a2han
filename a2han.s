@@ -9,8 +9,8 @@ KEYIN           = $FD1B
 HOOK_OUTPUT_VEC = $BE30
 HOOK_INPUT_VEC  = $BE32
 .endif
-BELL            = $FF3A
 COUT1           = $FDF0
+SPEAKER         = $C030
 SPAN_END        = $01
 SPAN_START      = $0B
 
@@ -541,15 +541,30 @@ input_hook:
         sta     input_char
         and     #$7F
         cmp     #SPAN_START
-        beq     input_ring_bell
+        beq     input_start_span
+
+        lda     input_span_state
+        beq     input_return
+        jsr     click_speaker
+        lda     input_char
+        and     #$7F
         cmp     #SPAN_END
         bne     input_return
-
-input_ring_bell:
-        jsr     BELL
+        lda     #$00
+        sta     input_span_state
 
 input_return:
         lda     input_char
+        rts
+
+input_start_span:
+        lda     #$01
+        sta     input_span_state
+        jsr     click_speaker
+        jmp     input_return
+
+click_speaker:
+        bit     SPEAKER
         rts
 
 emit_modified_syllable:
@@ -798,6 +813,8 @@ saved_input:
 .endif
 
 input_char:
+        .byte   $00
+input_span_state:
         .byte   $00
 
 automaton_state:

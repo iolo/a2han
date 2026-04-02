@@ -227,12 +227,14 @@ Exit criteria:
 
 Immediate next steps:
 
-1. investigate the real-hardware `A2HVIEW` crash after paged output
-2. document the current resident/runtime behavior clearly
-3. define `A2HEDIT` line-editor command set and buffer limits
-4. implement an `A2HEDIT` command loop skeleton
-5. add `demo.bas`
-6. write a short manual verification checklist around `A2HAN` and `A2HVIEW`
+1. add better observability for resident `A2HAN` output-hook debugging on AppleWin and real hardware
+2. isolate where emitted `modified` bytes diverge from bytes that survive the output-vector path
+3. investigate the real-hardware `A2HVIEW` crash after paged output
+4. document the current resident/runtime behavior clearly
+5. define `A2HEDIT` line-editor command set and buffer limits
+6. implement an `A2HEDIT` command loop skeleton
+7. add `demo.bas`
+8. write a short manual verification checklist around `A2HAN` and `A2HVIEW`
 
 After that:
 

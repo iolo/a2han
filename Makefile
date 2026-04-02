@@ -20,6 +20,7 @@ MAP_STAMP := $(MAP_DIR)/.dir
 SAMPLE_STAMP := $(SAMPLE_DIR)/.dir
 
 A2HAN_SRC ?= a2han.s
+A2HAN_CSWTEST_SRC ?= cswtest.s
 A2HVIEW_SRC ?= a2hview.c
 DEMO_SRC ?= demo.bas
 HCONV_HOST_SRC ?= hconv.c
@@ -27,9 +28,10 @@ HCONV_HOST_DEFS ?= -DHCONV_MAIN
 
 A2HAN_PRODOS_BIN := $(BUILD_DIR)/A2HAN.PRO
 A2HAN_DOS33_BIN := $(BUILD_DIR)/A2HAN.DOS
+A2HAN_CSWTEST_DOS33_BIN := $(BUILD_DIR)/CSWTEST
 A2HVIEW_BIN := $(BUILD_DIR)/A2HVIEW
 HCONV_HOST_BIN := $(BUILD_DIR)/hconv
-PROGRAM_BINS := $(A2HAN_PRODOS_BIN) $(A2HAN_DOS33_BIN) $(A2HVIEW_BIN)
+PROGRAM_BINS := $(A2HAN_PRODOS_BIN) $(A2HAN_DOS33_BIN) $(A2HAN_CSWTEST_DOS33_BIN) $(A2HVIEW_BIN)
 
 PO_IMAGE := $(BUILD_DIR)/a2han.po
 DSK_IMAGE := $(BUILD_DIR)/a2han.dsk
@@ -98,6 +100,9 @@ $(A2HAN_PRODOS_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 $(A2HAN_DOS33_BIN): $(A2HAN_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) --asm-define A2HAN_TARGET_DOS33=1 -m $(MAP_DIR)/A2HAN-DOS33.map -o $@ $<
 
+$(A2HAN_CSWTEST_DOS33_BIN): $(A2HAN_CSWTEST_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
+	$(CL65) -t $(CC65_TARGET) -C $(LINK_CFG) --start-addr $(A2HAN_START_ADDR) --asm-define CSWTEST_TARGET_DOS33=1 -m $(MAP_DIR)/CSWTEST-DOS33.map -o $@ $<
+
 $(A2HVIEW_BIN): $(A2HVIEW_SRC) $(HCONV_HOST_SRC) | $(BUILD_STAMP) $(MAP_STAMP)
 	$(CL65) -t $(CC65_TARGET) -m $(MAP_DIR)/A2HVIEW.map -o $@ $^
 
@@ -117,17 +122,18 @@ $(PO_IMAGE): $(A2HAN_PRODOS_BIN) $(A2HVIEW_BIN) $(A2HVIEW_SAMPLE_FILES) $(if $(w
 	$(A2KIT) put -d $@ -f PANGNBYTES -t raw < $(PANGRAM_NBYTES_SAMPLE)
 	@if [ -f "$(DEMO_SRC)" ]; then $(A2KIT) cp "$(DEMO_SRC)" "$@/DEMO"; fi
 
-$(DSK_IMAGE): $(A2HAN_DOS33_BIN) $(A2HVIEW_BIN) $(A2HVIEW_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
+$(DSK_IMAGE): $(A2HAN_DOS33_BIN) $(A2HAN_CSWTEST_DOS33_BIN) $(A2HVIEW_BIN) $(A2HVIEW_SAMPLE_FILES) $(if $(wildcard $(DEMO_SRC)),$(DEMO_SRC),) | $(BUILD_STAMP)
 	@rm -f $@
 	$(A2KIT) mkdsk -t do -o dos33 -v $(DOS33_VOLUME) -d $@
 	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_DOS33_BIN) $@/A2HAN
+	$(A2KIT) cp -a $(A2HAN_LOAD_ADDR) $(A2HAN_CSWTEST_DOS33_BIN) $@/CSWTEST
 	$(A2KIT) cp -a $(A2HVIEW_LOAD_ADDR) $(A2HVIEW_BIN) $@/A2HVIEW
 	$(A2KIT) put -d $@ -f PANGUTF8 -t raw < $(PANGRAM_UTF8_SAMPLE)
 	$(A2KIT) put -d $@ -f PANGMOD -t raw < $(PANGRAM_MODIFIED_SAMPLE)
 	$(A2KIT) put -d $@ -f PANGNBYTES -t raw < $(PANGRAM_NBYTES_SAMPLE)
 	@if [ -f "$(DEMO_SRC)" ]; then $(A2KIT) cp "$(DEMO_SRC)" "$@/DEMO"; fi
 
-$(A2HAN_SRC) $(A2HVIEW_SRC):
+$(A2HAN_SRC) $(A2HAN_CSWTEST_SRC) $(A2HVIEW_SRC):
 	@echo "missing required source: $@" >&2
 	@echo "This repository currently has the host-side converter, but the program source is not in the tree yet." >&2
 	@exit 1

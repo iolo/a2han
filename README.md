@@ -54,6 +54,35 @@ The current manual load/install path is:
 This applies to both the ProDOS and DOS 3.3 disk images. `BRUN A2HAN` should
 not yet be treated as the primary development workflow.
 
+### Repeatable `apple2ts` workflow
+
+For emulator-driven development, the preferred repeatable cycle is:
+
+```sh
+make dsk
+tools/run_apple2ts_a2han.sh
+```
+
+That helper script:
+
+- mounts `dos-3.3.dsk` on `fd1`
+- mounts `build/a2han.dsk` on `fd2`
+- boots the emulator
+- sends `CATALOG,D2`
+- sends `BRUN A2HAN`
+- prints a short machine and screen summary from `GET /api/machine`
+
+Notes:
+
+- This is the current default workflow for `apple2ts` testing after `A2HAN`
+  code changes.
+- `apple2ts` may report mounted floppy images back as `.woz` even when the
+  source image mounted was `.dsk`.
+- For quick screen inspection, `GET /api/machine` and its `textPage` field are
+  usually more convenient than raw debugger memory reads.
+- For focused span/output repros after install, use
+  `tools/repro_apple2ts_print_span.sh`.
+
 Run the Applesoft BASIC demo:
 
 ```
@@ -83,6 +112,21 @@ Current limits:
 - UTF-8 support is intentionally narrow; unsupported non-Hangul Unicode code
   points stop the display with an error.
 - `nbytes` spans are validated and must terminate cleanly.
+- `A2HAN` now uses a resident streaming automaton for delimited `nbytes`
+  output, but real Apple II and AppleWin runs still show corruption when the
+  hook emits `modified` byte pairs through the normal character-output path.
+- The immediate `A2HAN` blocker is observability: we need better tracing of
+  bytes entering the hook, bytes emitted by the hook, and the bytes that
+  actually survive the output vector path.
+- Recent debugging isolated a few separate behaviors that should not be mixed:
+  line-editor echo while typing, `INPUT` echo, stored Applesoft program text,
+  and ordinary `PRINT` output.
+- The current `apple2ts` repro for `PRINT "<Ctrl-K>RK<Ctrl-A>"` shows final
+  text-page bytes `4C 46`, `PRINT "<Ctrl-K>SK<Ctrl-A>"` shows `50 DE`, and
+  `PRINT "<Ctrl-K>GKS<Ctrl-A>"` shows `75 5C 41 59`.
+- A control program, `CSWTEST`, is now packaged on the DOS disk image to send
+  known raw byte pairs through the ordinary output vector without installing
+  `A2HAN`.
 - `A2HVIEW` now renders file content by writing Apple II text-page memory
   directly rather than using stdio/conio character output for the content
   stream.
@@ -147,14 +191,19 @@ build/          ; build output directory
 - the first `a2hedit` target should prefer command-loop simplicity, bounded
   buffers, and predictable file I/O over screen-oriented UX.
 - The resident install path now supports both ProDOS and DOS 3.3 builds.
-- The resident parser currently supports delimiter detection, buffered spans,
-  simple syllables, compound vowels, compound final clusters in syllable
-  position, and explicit lowercase doubled tokens.
+- The resident output parser is now structured as a streaming `S0..S8`
+  automaton matching `nbytes-automata.md`.
 - The program hooks keyboard input and console output to provide Hangul input
   and output.
 - Plain text is the default mode.
 - Public `nbytes` is a mixed-text encoding: plain text passes through unchanged, and bytes between `Ctrl-K` and `Ctrl-A` are treated as Hangul payloads.
 - The bytes inside a delimited `nbytes` span use the internal Hangul composition grammar and are transcoded into **modified Unicode** before reaching the text framebuffer.
+- Current debugging status: the parser/composer passes host-side checks, but
+  live runs still show that the normal Apple II output-vector path is not yet
+  behaving like a transparent transport for emitted `modified` bytes.
+- More specifically, current evidence suggests the resident line-edit/input echo
+  path and normal program output path behave differently and should be debugged
+  as separate transport layers.
 
 Design model:
 
@@ -172,6 +221,9 @@ Design model:
 - Standalone fallback should be understood as neutral `ja-eum` / `mo-eum`
   tokens. Positional roles like `choseong` and `jongseong` exist only inside a
   composed syllable.
+- Real-world caveat: this output model is still the design target, but current
+  resident tests on both AppleWin and real hardware show byte corruption after
+  the hook emits `modified` code points through the saved output vector.
 
 ### Hook Rules
 

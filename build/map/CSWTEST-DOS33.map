@@ -1,28 +1,26 @@
 Modules list:
 -------------
-a2han.o:
-    CODE              Offs=000000  Size=0004C8  Align=00001  Fill=0000
-    RODATA            Offs=000000  Size=000107  Align=00001  Fill=0000
-    DATA              Offs=000000  Size=000019  Align=00001  Fill=0000
+cswtest.o:
+    CODE              Offs=000000  Size=000086  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=00000A  Align=00001  Fill=0000
 
 
 Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-CODE                  006000  0064C7  0004C8  00001
-RODATA                0064C8  0065CE  000107  00001
-DATA                  0065CF  0065E7  000019  00001
+CODE                  006000  006085  000086  00001
+RODATA                006086  00608F  00000A  00001
 
 
 Exports list by name:
 ---------------------
-__MAIN_LAST__             0065E8 RLA    
+__MAIN_LAST__             006090 RLA    
 
 
 Exports list by value:
 ----------------------
-__MAIN_LAST__             0065E8 RLA    
+__MAIN_LAST__             006090 RLA    
 
 
 Imports list:
